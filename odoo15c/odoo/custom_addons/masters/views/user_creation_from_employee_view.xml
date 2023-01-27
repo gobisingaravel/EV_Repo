@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="hr_employee_form_inherited" model="ir.ui.view">
+            <field name="name">hr.employee.form</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//div[@class='oe_title']" position="before">
+                        <div class="row mt32">
+                        <div class="col-xs-3">
+                            <group>
+                            <field name="emp_fname" placeholder="First Name here..."/>
+                            <field name="emp_mname" placeholder="Middle Name here..."/>
+                            <field name="emp_lname" placeholder="Last Name here..."/>
+                            </group>
+                        </div>
+                        </div>
+                </xpath>
+                <field name="work_email" position="after">
+                    <field name="password" invisible="0"/>
+                    <field name="user_check_tick" invisible="1"/>
+                </field>
+                <xpath expr="//form/sheet" position="before">
+                    <header>
+                        <button name="create_user" string="Create User" type="object" class="oe_highlight"
+                                attrs="{'invisible':[('user_check_tick','=',True)]}"/>
+                    </header>
+                </xpath>
+                <field name="work_email" position="attributes">
+                    <attribute name="required">1</attribute>
+                </field>
+
+                <field name="user_id" position="after">
+                    <field name="employment_status_id" invisible="0"/>
+                    <field name="date_hired" invisible="0"/>
+                    <field name="termination_date" invisible="0"/>
+                </field>
+
+                <field name="lang" position="after">
+                    <field name="nick_name" invisible="0"/>
+                </field>
+
+                 <field name="work_location_id" position="after">
+                     <field name="employee_num" invisible="0"/>
+                     <field name="bhr_num" invisible="0"/>
+                 </field>
+
+                 <field name="department_id" position="after">
+                    <field name="designation_id" invisible="0"/>
+                </field>
+
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+
+<odoo>
+
+    <!--Clients -->
+     <record model="ir.ui.view" id="client_res_users_tree_view">
+            <field name="name">Clients</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <tree string="Clients" create="false">
+                    <field name="name"/>
+                    <field name="job_count"/>
+                    <field name="department_id"/>
+                    <field name="country_id"/>
+                    <field name="client_stage"/>
+                    <field name="client_owner_ids" widget="many2many_tags"/>
+                    <field name="client_team_ids" widget="many2many_tags"/>
+                    <field name="create_date"/>
+                </tree>
+            </field>
+     </record>
+
+
+     <record id="client_res_users_form_view_inherited" model="ir.ui.view">
+        <field name="name">res.users.form.inherited</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_simple_form" />
+        <field name="arch" type="xml">
+
+            <xpath expr="//group[@name='phone_numbers']" position="replace">
+                <group>
+                      <group name="phone_numbers">
+                            <label for="groups_id" string="Access Rights" attrs="{'invisible': [('id', '&gt;', 0)]}" groups="base.group_no_one"/>
+                            <div attrs="{'invisible': [('id', '&gt;', 0)]}" groups="base.group_no_one">
+                                <field name="groups_id" readonly="1" widget="many2many_tags" options="{'color_field': 'color'}" style="display: inline;"/> You will be able to define additional access rights by editing the newly created user under the Settings / Users menu.
+                            </div>
+                            <field name="is_company" invisible="1"/>
+                            <field name="parent_id" invisible="1"/>
+                            <span class="o_form_label o_td_label" name="address_name">
+                                <field name="type"  invisible="1" class="font-weight-bold"/>
+                                <b>Address</b>
+                            </span>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Street..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="city" placeholder="City" class="o_address_city" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="state_id" class="o_address_state" placeholder="State" options="{'no_open': True, 'no_quick_create': True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}" context="{'country_id': country_id, 'default_country_id': country_id, 'zip': zip}"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="country_id" placeholder="Country" class="o_address_country" options="{&quot;no_open&quot;: True, &quot;no_create&quot;: True}" attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            </div>
+                            <field name="phone" widget="phone" options="{'enable_sms': false}"/>
+                            <field name="mobile" widget="phone" options="{'enable_sms': false}"/>
+                      </group>
+                      <group>
+                           <field name="job_count"/>
+                           <field name="ongoing_job_pos_count"/>
+                           <field name="department_id"/>
+                           <field name="client_stage"/>
+                           <field name="compute_field" invisible="1"/>
+                           <field name="client_owner_ids" widget="many2many_tags" attrs="{'required': [('compute_field','=', True)]}"/>
+                           <field name="client_team_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>
+                      </group>
+                </group>
+                <notebook>
+                     <page string="Job Positions">
+                         <div>
+                             <field mode="tree" nolabel="1" name="job_ids">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="client_id"/>
+                                    <field name="address_id"/>
+                                    <field name="head_count"/>
+                                    <field name="state"/>
+                                    <field name="min_salary"/>
+                                    <field name="max_salary"/>
+                                    <field name="job_owner_ids" widget="many2many_tags"/>
+                                    <field name="job_team_ids" widget="many2many_tags"/>
+                                    <field name="create_date"/>
+                                </tree>
+                             </field>
+                         </div>
+                    </page>
+                    <page string="Applicants">
+                         <div>
+                             <field mode="tree" nolabel="1" name="applicant_ids">
+                                <tree>
+                                    <field name="partner_name"/>
+                                    <field name="job_id"/>
+                                    <field name="stage_id"/>
+                                </tree>
+                             </field>
+                         </div>
+                    </page>
+                </notebook>
+
+            </xpath>
+
+            <xpath expr="//form" position="attributes">
+                <attribute name="create">false</attribute>
+            </xpath>
+        </field>
+     </record>
+
+
+    <record id="action_client_res_users" model="ir.actions.act_window">
+            <field name="name">Clients</field>
+            <field name="res_model">res.users</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_id" ref="client_res_users_tree_view"/>
+            <field name="domain">[('groups_id.name', '=', 'Client')]</field>
+    </record>
+
+
+  <!--  <menuitem
+    		id="menu_client_res_users"
+    		action="action_client_res_users"
+    		name="Clients"
+    		parent="hr_recruitment.menu_crm_case_categ0_act_job"
+            groups="hr_recruitment.group_hr_recruitment_manager,hr_recruitment.group_hr_recruitment_user"
+    		sequence="5"/>-->
+
+
+
+    <record id="res_users_base_form_view_inherited" model="ir.ui.view">
+        <field name="name">res.users.form.inherited</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='preferences']" position="after">
+                <page string="Recruitment" name="recruitment" attrs="{'invisible': [('compute_field','=', False)]}">
+                     <group>
+                            <group>
+                                <field name="job_count"/>
+                                <field name="ongoing_job_pos_count"/>
+                                <field name="client_stage"/>
+                            </group>
+                            <group>
+                                <field name="compute_field" invisible="1"/>
+                                <field name="client_owner_ids" widget="many2many_tags" attrs="{'required': [('compute_field','=', True)]}"/>
+                                <field name="client_team_ids" widget="many2many_tags" options="{'no_create': True, 'no_create_edit':True}"/>
+                                <field name="department_id"/>
+                            </group>
+                     </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="client_res_users_search_view_inherited" model="ir.ui.view">
+        <field name="name">res.users.search.inherited</field>
+        <field name="model">res.users</field>
+        <field name="inherit_id" ref="base.view_users_search" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='share']" position="after">
+                <field name="client_stage"/>
+            </xpath>
+             <xpath expr="//filter[@name='Inactive']" position="after">
+                 <group expand="0" string="Group By">
+                        <filter string="Stage" name="stage" domain="[]" context="{'group_by': 'client_stage'}"/>
+                 </group>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

@@ -1,0 +1,238 @@
+<odoo>
+
+<!-- Inherited Hr Applicant Tree view(hr_recruitment) -->
+
+    <record id="hr_applicant_tree_view_inherited" model="ir.ui.view">
+        <field name="name">hr.applicant.tree.inherited</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job" />
+        <field name="arch" type="xml">
+
+            <xpath expr="//field[@name='name']" position="replace">
+                    <field name="current_location"/>
+                    <field name="current_role"/>
+                    <field name="current_company"/>
+                    <field name="notice_period" groups="hr_recruitment.group_hr_recruitment_manager,hr_recruitment.group_hr_recruitment_user"/>
+                    <field name="current_ctc" groups="ev_recruitment.group_show_ctc_client"/>
+                    <field name="salary_expected" groups="ev_recruitment.group_show_ctc_client"/>
+                    <field name="status" invisible="1"/>
+            </xpath>
+            <xpath expr="//field[@name='categ_ids']" position="replace">
+            </xpath>
+             <xpath expr="//field[@name='priority']" position="replace">
+            </xpath>
+            <xpath expr="//field[@name='user_id']" position="replace">
+                 <field name="user_recruiter_id" string="Recruiter"/>
+            </xpath>
+
+        </field>
+    </record>
+
+<!-- Inherited Hr Applicant Form view(hr_recruitment) -->
+
+    <record id="hr_applicant_form_view_inherited" model="ir.ui.view">
+        <field name="name">hr.applicant.form.inherited</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form" />
+        <field name="arch" type="xml">
+                <xpath expr="//header" position="replace">
+                    <header>
+                        <button string="Create Employee" name="create_employee_from_applicant" type="object" data-hotkey="v"
+                        class="oe_highlight o_create_employee" attrs="{'invisible': ['|',('emp_id', '!=', False),('active', '=', False)]}" groups="hr_recruitment.group_hr_recruitment_manager,hr_recruitment.group_hr_recruitment_user"/>
+                        <button string="Refuse" name="archive_applicant" type="object" attrs="{'invisible': [('active', '=', False)]}" data-hotkey="x" groups="hr_recruitment.group_hr_recruitment_manager,hr_recruitment.group_hr_recruitment_user"/>
+                        <button string="Restore" name="toggle_active" type="object" attrs="{'invisible': [('active', '=', True)]}" data-hotkey="z" groups="hr_recruitment.group_hr_recruitment_manager,hr_recruitment.group_hr_recruitment_user"/>
+                        <field name="stage_id" widget="statusbar" options="{'clickable': '1', 'fold_field': 'fold'}" attrs="{'invisible': [('active', '=', False),('emp_id', '=', False)]}" groups="hr_recruitment.group_hr_recruitment_manager,hr_recruitment.group_hr_recruitment_user"/>
+                    </header>
+                </xpath>
+
+
+                 <xpath expr="//notebook/page" position="replace">
+                    <page string="Application Summary" groups="hr_recruitment.group_hr_recruitment_manager,hr_recruitment.group_hr_recruitment_user">
+                        <field name="description" placeholder="Motivations..."/>
+                    </page>
+                 </xpath>
+
+
+                 <xpath expr="//field[@name='email_from']" position="replace">
+                     <field name="email_from" widget="email" groups="hr_recruitment.group_hr_recruitment_manager,hr_recruitment.group_hr_recruitment_user"/>
+                 </xpath>
+                 <xpath expr="//field[@name='email_cc']" position="replace">
+                     <field name="email_cc" groups="hr_recruitment.group_hr_recruitment_manager,hr_recruitment.group_hr_recruitment_user"/>
+                 </xpath>
+                 <xpath expr="//field[@name='partner_phone']" position="replace">
+                     <field name="partner_phone" widget="phone" groups="hr_recruitment.group_hr_recruitment_manager,hr_recruitment.group_hr_recruitment_user"/>
+                 </xpath>
+                 <xpath expr="//field[@name='partner_mobile']" position="replace">
+                     <field name="partner_mobile" widget="phone" groups="hr_recruitment.group_hr_recruitment_manager,hr_recruitment.group_hr_recruitment_user"/>
+                 </xpath>
+                 <xpath expr="//field[@name='priority']" position="replace">
+                     <field name="priority" widget="priority" groups="hr_recruitment.group_hr_recruitment_manager,hr_recruitment.group_hr_recruitment_user"/>
+                 </xpath>
+                 <xpath expr="//field[@name='medium_id']" position="replace">
+                     <field name="medium_id" groups="hr_recruitment.group_hr_recruitment_manager,hr_recruitment.group_hr_recruitment_user"/>
+                 </xpath>
+                 <xpath expr="//field[@name='categ_ids']" position="replace">
+                     <field name="categ_ids" placeholder="Tags" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}" invisible="1"/>
+                 </xpath>
+
+
+                 <xpath expr="//field[@name='email_cc']" position="after">
+                        <label for="current_location"/>
+                            <div class="o_row">
+                                <field name="current_location"/>
+                                <span/>
+                                <field name="country_id" placeholder="Country" required="1"/>
+                            </div>
+
+                        <!--<label for="partner_phone"/>
+                            <div class="o_row">
+                                <field name="phone_calling_code"/>
+                                <span/>
+                                <field name="partner_phone" placeholder="number"/>
+                            </div>-->
+                 </xpath>
+
+
+                <xpath expr="//field[@name='department_id']" position="after">
+                        <!--<field name="client_id"/>-->
+                        <field name="client_master_id"/>
+                        <field name="total_experience"/>
+                </xpath>
+
+                <xpath expr="//field[@name='user_id']" position="replace">
+                     <field name="user_recruiter_id" string="Recruiter" options="{'no_create': True, 'no_create_edit':True}"/>
+                     <field name="user_ids" widget="many2many_tags" string="Recruiters" invisible="1"/>
+                </xpath>
+
+
+                <xpath expr="//field[@name='source_id']" position="after">
+                            <label for="current_role"/>
+                            <div class="o_row">
+                                <field name="current_role"/>
+                                <span/>
+                                <field name="current_company" placeholder="Current Company"/>
+                            </div>
+                </xpath>
+
+
+                <xpath expr="//sheet/group/group[4]" position="replace">
+                     <group string="Contract">
+                         <label for="current_ctc" groups="ev_recruitment.group_show_ctc_client"/>
+                            <div class="o_row" groups="ev_recruitment.group_show_ctc_client">
+                                <field name="current_ctc"/><span>LPA</span>
+                                <span attrs="{'invisible':[('salary_expected_extra','=',False)]}"> + </span>
+                                <field name="salary_proposed_extra" placeholder="Extra advantages..."/>
+                            </div>
+                        <label for="salary_expected" groups="ev_recruitment.group_show_ctc_client"/>
+                        <div class="o_row" groups="ev_recruitment.group_show_ctc_client">
+                            <field name="salary_expected"/><span>LPA</span>
+                            <span attrs="{'invisible':[('salary_expected_extra','=',False)]}"> + </span>
+                            <field name="salary_expected_extra" placeholder="Extra advantages..."/>
+                        </div>
+                        <label for="salary_proposed" groups="ev_recruitment.group_show_ctc_client"/>
+                        <div class="o_row" groups="ev_recruitment.group_show_ctc_client">
+                            <field name="salary_proposed"/><span>LPA</span>
+                            <span attrs="{'invisible':[('salary_proposed_extra','=',False)]}"> + </span>
+                            <field name="salary_proposed_extra" placeholder="Extra advantages..."/>
+                        </div>
+                         <field name="availability"/>
+                         <field name="exam_date"/>
+                         <field name="endorsed_date"/>
+                         <field name="status" groups="hr_recruitment.group_hr_recruitment_manager,hr_recruitment.group_hr_recruitment_user"/>
+                         <field name="emp_id" invisible="1"/>
+                    </group>
+                </xpath>
+
+
+                <xpath expr="//field[@name='description']" position="after">
+                    <notebook>
+                         <page name="public" string="Resumé">
+                             <group>
+                                  <field name="resume_upload"/>
+                             </group>
+                            <div class="row">
+                                <div class="o_hr_skills_editable o_hr_skills_group o_group_resume col-lg-7 d-flex">
+                                    <!-- This field uses a custom tree view rendered by the 'hr_resume' widget.
+                                        Adding fields in the tree arch below makes them accessible to the widget
+                                    -->
+                                    <field mode="tree" nolabel="1" name="resume_line_ids" widget="hr_resume">
+                                        <tree>
+                                            <field name="line_type_id"/>
+                                            <field name="name"/>
+                                            <field name="description"/>
+                                            <field name="date_start"/>
+                                            <field name="date_end"/>
+                                            <field name="display_type" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </div>
+                                <div class="o_hr_skills_editable o_hr_skills_group o_group_skills col-lg-5 d-flex flex-column">
+                                    <separator string="Skills"/>
+                                    <field mode="tree" nolabel="1" name="employee_skill_ids"  widget="hr_skills">
+                                        <tree>
+                                            <field name="skill_type_id" invisible="1"/>
+                                            <field name="skill_id"/>
+                                            <field name="skill_level_id"/>
+                                            <field name="level_progress" widget="progressbar"/>
+                                        </tree>
+                                    </field>
+                                </div>
+                            </div>
+                        </page>
+                    </notebook>
+                </xpath>
+
+        </field>
+    </record>
+
+
+<!-- Inherited Hr Applicant search view(hr_recruitment) -->
+   <record id="hr_applicant_search_view_inherited" model="ir.ui.view">
+        <field name="name">hr.applicant.search.inherited</field>
+        <field name="model">hr.applicant</field>
+        <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_search_bis" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_name']" position="after">
+
+                <field name="employee_skill_ids" filter_domain="[('employee_skill_ids.skill_id.name','ilike',self)]" string="Skills"/>
+
+               <!-- <field name="employee_skill_ids" string="Skills" domain="[('employee_skill_ids','ilike',self)]"/>-->
+
+            </xpath>
+
+            <xpath expr="//field[@name='job_id']" position="after">
+<!--                 <field name="client_id" string="Client"/>-->
+                 <field name="client_master_id"/>
+                 <field name="country_id" string="Location"/>
+                 <field name="total_experience" string="Experience" filter_domain="[('total_experience', 'ilike', self)]"/>
+            </xpath>
+             <xpath expr="//filter[@name='job']" position="before">
+                  <!--<filter string="Client" name="client" domain="[]" context="{'group_by': 'client_id'}"/>-->
+                  <filter string="Client" name="client_master" domain="[]" context="{'group_by': 'client_master_id'}"/>
+                  <filter string="Location" name="location" domain="[]" context="{'group_by': 'country_id'}"/>
+                  <filter string="Experience" name="experience" context="{'group_by': 'total_experience'}"/>
+            </xpath>
+        </field>
+    </record>
+
+
+     <record model="ir.ui.view" id="hr_recruitment.hr_applicant_calendar_view">
+        <field name="name">Hr Applicants Calendar</field>
+        <field name="model">hr.applicant</field>
+        <field name="priority" eval="2"/>
+        <field name="arch" type="xml">
+            <calendar string="Applicants" mode="month" date_start="availability" color="user_id" event_limit="5" hide_time="true">
+                <field name="partner_name"/>
+                <field name="job_id"/>
+                <field name="priority" widget="priority"/>
+                <field name="activity_summary"/>
+                <field name="user_recruiter_id" filters="1" invisible="1"/>
+            </calendar>
+        </field>
+    </record>
+
+
+
+
+
+</odoo>

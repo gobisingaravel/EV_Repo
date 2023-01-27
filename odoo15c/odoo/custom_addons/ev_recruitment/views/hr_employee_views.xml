@@ -1,0 +1,17 @@
+<odoo>
+
+<!-- Inherited Hr Employee Form view(hr_recruitment) -->
+
+     <record id="hr_employee_form_view_inherited" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherited</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='coach_id']" position="after">
+                    <field name="applicant_id" invisible="1"/>
+                    <field name="client_master_id" invisible="0"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

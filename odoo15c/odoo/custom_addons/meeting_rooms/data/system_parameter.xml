@@ -1,0 +1,8 @@
+<odoo>
+  <data noupdate="0">
+    <record id="auth_password_minlength" model="ir.config_parameter">
+      <field name="key">evox_url</field>
+      <field name="value">https://evox2.eastvantage.com/login</field>
+    </record>
+  </data>
+</odoo>

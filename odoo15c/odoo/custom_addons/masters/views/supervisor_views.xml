@@ -1,0 +1,70 @@
+<odoo>
+  <data>
+
+
+    <!-- Supervisors master list view definition -->
+    <record model="ir.ui.view" id="client_master_list_view">
+        <field name="name">supervisor.master.list</field>
+        <field name="model">supervisor.master</field>
+        <field name="arch" type="xml">
+            <tree string="Supervisors">
+                <field name="name"/>
+                <field name="supervisorid"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="client_master_form_view" model="ir.ui.view">
+        <field name="name">supervisor.master.view.form</field>
+        <field name="model">supervisor.master</field>
+        <field name="priority">32</field>
+        <field name="arch" type="xml">
+            <form string="Supervisors">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Name"/>
+                        <h1><field name="name" required="1"/></h1>
+                    </div>
+                    <notebook>
+                        <page name="supervisor_details" string="Supervisor Details">
+                            <group>
+                                 <group>
+                                    <field name="supervisorid"/>
+                                    <field name="user_id"/>
+                                </group>
+                                 <group>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+
+
+    <!-- action opening view on supervisor master -->
+    <record model="ir.actions.act_window" id="supervisor_master_action_window">
+        <field name="name">Supervisors</field>
+        <field name="res_model">supervisor.master</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+
+    <menuitem name="Supervisors"
+              id="menu_supervisor_master"
+              parent="menu_masters"
+              action="supervisor_master_action_window"/>
+
+  </data>
+</odoo>

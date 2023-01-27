@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<odoo>
+    <data>
+        <record model="ir.actions.act_url" id="action_evox_url">
+            <field name="name">EVOX</field>
+            <field name="url">https://evox2.eastvantage.com/login</field>
+            <field name="target">new</field>
+        </record>
+
+
+        <menuitem name="EVOX"
+                  id="menu_evox"
+                  action="action_evox_url"
+                  sequence="6"
+                  web_icon="meeting_rooms,static/description/evox.jpg"
+        />
+    </data>
+</odoo>
+

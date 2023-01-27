@@ -1,0 +1,3997 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data noupdate="1">
+
+          <!-- Load Users from EVOX -->
+        <record id="load_users_from_evox_id" model="ir.cron">
+            <field name="name">Fetch Users from EVOX</field>
+            <field name="model_id" ref="model_res_users"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.get_users()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+<!--          &lt;!&ndash; Load Employees from EVOX &ndash;&gt;-->
+<!--        <record id="load-employees_from_evox_id" model="ir.cron">-->
+<!--            <field name="name">Fetch Employees from EVOX</field>-->
+<!--            <field name="model_id" ref="model_hr_employee"/>-->
+<!--            <field name="type">ir.actions.server</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.get_data()</field>-->
+<!--            <field name="interval_number">1</field>-->
+<!--            <field name="interval_type">days</field>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--        </record>-->
+
+
+         <!-- Load Clients from EVOX -->
+        <record id="load_clients_from_evox_id" model="ir.cron">
+            <field name="name">Fetch Clients from EVOX</field>
+            <field name="model_id" ref="model_client_master"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.get_clients()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+         <!-- Load Departments from EVOX -->
+        <record id="load_departments_from_evox_id" model="ir.cron">
+            <field name="name">Fetch Departments from EVOX</field>
+            <field name="model_id" ref="model_hr_department"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.get_department()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+         <!-- Load Designations from EVOX -->
+        <record id="load_designations_from_evox_id" model="ir.cron">
+            <field name="name">Fetch Designations from EVOX</field>
+            <field name="model_id" ref="model_designation_master"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.get_designation()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+         <!-- Load Emp Status from EVOX -->
+        <record id="load_status_from_evox_id" model="ir.cron">
+            <field name="name">Fetch Employment Status from EVOX</field>
+            <field name="model_id" ref="model_status_master"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.get_status()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+          <!-- Load Country from EVOX -->
+        <record id="load_country_from_evox_id" model="ir.cron">
+            <field name="name">Fetch Country from EVOX</field>
+            <field name="model_id" ref="model_country_master"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.get_country()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+         <!-- Load Location from EVOX -->
+        <record id="load_location_from_evox_id" model="ir.cron">
+            <field name="name">Fetch Location from EVOX</field>
+            <field name="model_id" ref="model_location_master"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.get_location()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+         <!-- Load Supervisors from EVOX -->
+        <record id="load_supervisor_from_evox_id" model="ir.cron">
+            <field name="name">Fetch Supervisors from EVOX</field>
+            <field name="model_id" ref="model_supervisor_master"/>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="code">model.get_supervisor()</field>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+
+
+
+        <!-- Employment Status -->
+
+        <record id="registered_user" model="status.master">
+            <field name="name">Registered User</field>
+            <field name="status_code">REG</field>
+        </record>
+
+        <record id="ojt" model="status.master">
+            <field name="name">OJT</field>
+            <field name="status_code">OJT</field>
+        </record>
+
+        <record id="hire_fallout" model="status.master">
+            <field name="name">Hire fallout / no-show</field>
+            <field name="status_code">HIR</field>
+        </record>
+
+        <record id="probationary" model="status.master">
+            <field name="name">Probationary</field>
+            <field name="status_code">PRO</field>
+        </record>
+
+        <record id="temporary_layoff" model="status.master">
+            <field name="name">Temporary Lay-off</field>
+            <field name="status_code">TEM</field>
+        </record>
+
+        <record id="wfh" model="status.master">
+            <field name="name">WFH Work From Home</field>
+            <field name="status_code">WFH</field>
+        </record>
+
+        <record id="hired" model="status.master">
+            <field name="name">Hired</field>
+            <field name="status_code">HIR</field>
+        </record>
+
+        <record id="contractual" model="status.master">
+            <field name="name">Contractual</field>
+            <field name="status_code">CON</field>
+        </record>
+
+        <record id="consultant_id" model="status.master">
+            <field name="name">Consultant</field>
+            <field name="status_code">CON</field>
+        </record>
+
+        <record id="terminated" model="status.master">
+            <field name="name">Terminated</field>
+            <field name="status_code">TER</field>
+        </record>
+
+        <record id="laternal_transfer" model="status.master">
+            <field name="name">Lateral Transfer</field>
+            <field name="status_code">LAT</field>
+        </record>
+
+        <record id="visa_assistance" model="status.master">
+            <field name="name">VISA ASSISTANCE</field>
+            <field name="status_code">VIS</field>
+        </record>
+
+         <record id="not_employed" model="status.master">
+            <field name="name">Not employed</field>
+            <field name="status_code">NOT</field>
+        </record>
+
+         <record id="project_based" model="status.master">
+            <field name="name">Project-based</field>
+            <field name="status_code">PRO</field>
+        </record>
+
+         <record id="full_time" model="status.master">
+            <field name="name">Full-time</field>
+            <field name="status_code">FUL</field>
+        </record>
+
+        <record id="new_hire_prob" model="status.master">
+            <field name="name">New Hire - Probationary</field>
+            <field name="status_code">NEW</field>
+        </record>
+
+        <record id="client" model="status.master">
+            <field name="name">Client</field>
+            <field name="status_code">CLI</field>
+        </record>
+
+        <record id="part_time" model="status.master">
+            <field name="name">Part-Time (50%)</field>
+            <field name="status_code">PAR</field>
+        </record>
+
+        <record id="maternity_leave" model="status.master">
+            <field name="name">Maternity Leave</field>
+            <field name="status_code">MAT</field>
+        </record>
+
+
+
+        <!-- HR Department -->
+
+         <record id="ops_product_dev" model="hr.department">
+             <field name="name">OPS - Product Dev</field>
+             <field name="department_id">1</field>
+         </record>
+
+         <record id="c21_century21" model="hr.department">
+            <field name="name">C21 - Century21</field>
+             <field name="department_id">2</field>
+         </record>
+
+         <record id="pact_group" model="hr.department">
+            <field name="name">PCT - Pact Group</field>
+             <field name="department_id">3</field>
+         </record>
+
+         <record id="ops_marketing" model="hr.department">
+            <field name="name">OPS - Marketing</field>
+             <field name="department_id">4</field>
+         </record>
+
+         <record id="magic" model="hr.department">
+            <field name="name">MGC-Magic</field>
+             <field name="department_id">5</field>
+         </record>
+
+         <record id="hard_to_find" model="hr.department">
+            <field name="name">HTF-Hard to Find</field>
+             <field name="department_id">6</field>
+         </record>
+
+        <record id="solutions_30" model="hr.department">
+            <field name="name">S30 - Solutions30</field>
+            <field name="department_id">7</field>
+         </record>
+
+        <record id="single_life" model="hr.department">
+            <field name="name">SGL - SInglIfe</field>
+            <field name="department_id">8</field>
+         </record>
+
+        <record id="hobby_king" model="hr.department">
+            <field name="name">HKI-Hobbyking</field>
+            <field name="department_id">9</field>
+         </record>
+
+        <record id="learnship" model="hr.department">
+            <field name="name">LRS - Learnship</field>
+            <field name="department_id">10</field>
+         </record>
+
+        <record id="corporate" model="hr.department">
+            <field name="name">OPS - Corporate</field>
+            <field name="department_id">11</field>
+         </record>
+
+        <record id="ethan_group" model="hr.department">
+            <field name="name">ETG - Ethan Group</field>
+            <field name="department_id">12</field>
+         </record>
+
+        <record id="compliance" model="hr.department">
+            <field name="name">OPS - Compliance</field>
+            <field name="department_id">13</field>
+         </record>
+
+        <record id="jarvis" model="hr.department">
+            <field name="name">JRV-Jarvis</field>
+            <field name="department_id">14</field>
+         </record>
+
+        <record id="modibodi" model="hr.department">
+            <field name="name">MDB - Modibodi</field>
+            <field name="department_id">15</field>
+         </record>
+
+        <record id="optimy" model="hr.department">
+            <field name="name">OTM-Optimy</field>
+            <field name="department_id">16</field>
+         </record>
+
+        <record id="traffic_diversion_grp" model="hr.department">
+            <field name="name">TDG - Traffic Diversion Group</field>
+            <field name="department_id">17</field>
+         </record>
+
+        <record id="spot_buy_center" model="hr.department">
+            <field name="name">SBC - Spot Buy Center</field>
+            <field name="department_id">18</field>
+         </record>
+
+        <record id="finacct" model="hr.department">
+            <field name="name">OPS - Fin and Acct</field>
+            <field name="department_id">19</field>
+         </record>
+
+        <record id="optia_partners" model="hr.department">
+            <field name="name">OPT-Optia Partners KK.</field>
+            <field name="department_id">20</field>
+         </record>
+
+        <record id="mgu_magic" model="hr.department">
+            <field name="name">MGU-Magic</field>
+            <field name="department_id">21</field>
+         </record>
+
+        <record id="ops_recruitment" model="hr.department">
+            <field name="name">OPS - Recruitment</field>
+            <field name="department_id">22</field>
+         </record>
+
+        <record id="imerys" model="hr.department">
+            <field name="name">Imerys SA</field>
+            <field name="department_id">23</field>
+         </record>
+
+        <record id="boondoggle" model="hr.department">
+            <field name="name">BDG-Boondoggle</field>
+            <field name="department_id">24</field>
+         </record>
+
+        <record id="magic" model="hr.department">
+            <field name="name">MGC - Magic HR</field>
+            <field name="department_id">25</field>
+         </record>
+
+        <record id="airthings" model="hr.department">
+            <field name="name">ATS - Airthings</field>
+            <field name="department_id">26</field>
+         </record>
+
+        <record id="ops_operations" model="hr.department">
+            <field name="name">OPS - Operations</field>
+            <field name="department_id">27</field>
+         </record>
+
+        <record id="ops_info_tech" model="hr.department">
+            <field name="name">OPS - Information Technology</field>
+            <field name="department_id">28</field>
+         </record>
+
+        <record id="trafman_solutions" model="hr.department">
+            <field name="name">TMS-Trafman Solutions</field>
+            <field name="department_id">29</field>
+         </record>
+
+        <record id="ops_facilities" model="hr.department">
+            <field name="name">OPS - Facilities</field>
+            <field name="department_id">30</field>
+         </record>
+
+        <record id="freight_and_logistics" model="hr.department">
+            <field name="name">FAL - Freight and Logistics</field>
+            <field name="department_id">31</field>
+         </record>
+
+         <record id="dummy_dept" model="hr.department">
+            <field name="name">DD - Dummy Department</field>
+             <field name="department_id">32</field>
+        </record>
+
+         <record id="db_watch" model="hr.department">
+            <field name="name">DBW - DB Watch</field>
+             <field name="department_id">33</field>
+        </record>
+
+         <record id="nimbulis" model="hr.department">
+            <field name="name">NIM - Nimbulis</field>
+             <field name="department_id">34</field>
+        </record>
+
+         <record id="ops_sales" model="hr.department">
+            <field name="name">OPS - Sales</field>
+             <field name="department_id">35</field>
+        </record>
+
+         <record id="eshopping_group" model="hr.department">
+            <field name="name">ESG - eShopping Group</field>
+             <field name="department_id">36</field>
+        </record>
+
+         <record id="belgium_in_box" model="hr.department">
+            <field name="name">BIB - Belgium in a Box</field>
+             <field name="department_id">37</field>
+        </record>
+
+         <record id="verifact" model="hr.department">
+            <field name="name">VRF - Verifact</field>
+             <field name="department_id">38</field>
+        </record>
+
+         <record id="ops_human_resources" model="hr.department">
+            <field name="name">OPS - Human Resources</field>
+             <field name="department_id">39</field>
+        </record>
+
+         <record id="integrity_traffic" model="hr.department">
+            <field name="name">ITT-Integrity Traffic</field>
+             <field name="department_id">40</field>
+        </record>
+
+         <record id="bramble" model="hr.department">
+            <field name="name">BMB - Bramble</field>
+             <field name="department_id">41</field>
+        </record>
+
+         <record id="synergy" model="hr.department">
+            <field name="name">SYG - Synergy</field>
+             <field name="department_id">42</field>
+        </record>
+
+         <record id="expleo_solutions" model="hr.department">
+            <field name="name">SQS - Expleo Solutions Limited</field>
+             <field name="department_id">43</field>
+        </record>
+
+         <record id="level_app" model="hr.department">
+            <field name="name">LVA - Level App</field>
+             <field name="department_id">44</field>
+        </record>
+
+         <record id="dangerous_good_ntwrk" model="hr.department">
+            <field name="name">DGN - Dangerous Goods Network</field>
+             <field name="department_id">45</field>
+        </record>
+
+         <record id="mainpac" model="hr.department">
+            <field name="name">MPC - Mainpac</field>
+             <field name="department_id">46</field>
+        </record>
+
+         <record id="global_english" model="hr.department">
+            <field name="name">GBE - Global English</field>
+             <field name="department_id">47</field>
+        </record>
+
+         <record id="cronos" model="hr.department">
+            <field name="name">CRN - Cronos</field>
+             <field name="department_id">48</field>
+        </record>
+
+         <record id="gfm" model="hr.department">
+            <field name="name">GfM - Gesellschaft für Messdienstleistungen</field>
+             <field name="department_id">49</field>
+        </record>
+
+         <record id="beko" model="hr.department">
+            <field name="name">BKO - Beko</field>
+             <field name="department_id">50</field>
+        </record>
+
+         <record id="hexagon" model="hr.department">
+            <field name="name">HXG - Hexagon</field>
+             <field name="department_id">51</field>
+        </record>
+
+         <record id="vidandco" model="hr.department">
+            <field name="name">VID - Vida and Co</field>
+             <field name="department_id">52</field>
+        </record>
+
+         <record id="cibes" model="hr.department">
+            <field name="name">CLG-Cibes</field>
+             <field name="department_id">53</field>
+        </record>
+
+         <record id="deliberate_capital" model="hr.department">
+            <field name="name">DLC - Deliberate Capital</field>
+             <field name="department_id">54</field>
+        </record>
+
+         <record id="cloud_tech24" model="hr.department">
+            <field name="name">C24 - CloudTech24</field>
+             <field name="department_id">55</field>
+        </record>
+
+         <record id="ops_project_teams" model="hr.department">
+            <field name="name">OPS - Projects Team</field>
+             <field name="department_id">56</field>
+        </record>
+
+         <record id="clt_cloud_tech24" model="hr.department">
+            <field name="name">CLT - CloudTech24</field>
+             <field name="department_id">57</field>
+        </record>
+
+         <record id="whz_wheelzy" model="hr.department">
+            <field name="name">WHZ - Wheelzy</field>
+             <field name="department_id">58</field>
+        </record>
+
+         <record id="wlz_wheelzy" model="hr.department">
+            <field name="name">WLZ - Wheelzy</field>
+             <field name="department_id">59</field>
+        </record>
+
+         <record id="henry_jackson_found" model="hr.department">
+            <field name="name">HJF - Henry Jackson Foundation</field>
+             <field name="department_id">60</field>
+        </record>
+
+         <record id="multi_local_media" model="hr.department">
+            <field name="name">MLM - Multi Local Media</field>
+             <field name="department_id">61</field>
+        </record>
+
+         <record id="abacus_service" model="hr.department">
+            <field name="name">ABC - Abacus Service</field>
+             <field name="department_id">62</field>
+        </record>
+
+         <record id="across" model="hr.department">
+            <field name="name">Across</field>
+             <field name="department_id">63</field>
+        </record>
+
+         <record id="elevate" model="hr.department">
+            <field name="name">ELE-Elevate</field>
+             <field name="department_id">64</field>
+        </record>
+
+         <record id="eastvantage" model="hr.department">
+            <field name="name">Eastvantage</field>
+             <field name="department_id">65</field>
+        </record>
+
+         <record id="hr_finance_it" model="hr.department">
+            <field name="name">HR Finance and IT</field>
+             <field name="department_id">66</field>
+        </record>
+
+         <record id="boo_boondoggle" model="hr.department">
+            <field name="name">BOO-Boondoggle</field>
+             <field name="department_id">68</field>
+        </record>
+
+         <record id="think_to_act" model="hr.department">
+            <field name="name">TTA-Think To Act</field>
+             <field name="department_id">69</field>
+        </record>
+
+         <record id="aurora_funds" model="hr.department">
+            <field name="name">Aurora Funds</field>
+             <field name="department_id">71</field>
+        </record>
+
+         <record id="oracle_sage" model="hr.department">
+            <field name="name">Oracle - Sage</field>
+             <field name="department_id">72</field>
+        </record>
+
+        <record id="ops_operations_id" model="hr.department">
+            <field name="name">OPS-Operations</field>
+             <field name="department_id">73</field>
+        </record>
+
+         <record id="trackzen" model="hr.department">
+            <field name="name">TZN- TrackZen</field>
+             <field name="department_id">74</field>
+        </record>
+
+         <record id="alpha_fight_guru" model="hr.department">
+            <field name="name">AFG-Alpha Flight Guru</field>
+             <field name="department_id">75</field>
+        </record>
+
+         <record id="vyspa" model="hr.department">
+            <field name="name">VSP - Vyspa Ltd</field>
+             <field name="department_id">76</field>
+        </record>
+
+         <record id="RWDI" model="hr.department">
+            <field name="name">RWDI</field>
+             <field name="department_id">77</field>
+        </record>
+
+         <record id="Webcotrans" model="hr.department">
+            <field name="name">Webcotrans</field>
+             <field name="department_id">78</field>
+        </record>
+
+         <record id="capaciti" model="hr.department">
+            <field name="name">CAP-Capaciti</field>
+             <field name="department_id">79</field>
+        </record>
+
+         <record id="ictjob_philippines" model="hr.department">
+            <field name="name">ITJ - ICTjob Philippines</field>
+             <field name="department_id">80</field>
+        </record>
+
+         <record id="rebel_grp" model="hr.department">
+            <field name="name">Rebel Group</field>
+             <field name="department_id">81</field>
+        </record>
+
+         <record id="calculation_bureau" model="hr.department">
+            <field name="name">Calculation Bureau</field>
+             <field name="department_id">82</field>
+        </record>
+
+         <record id="chevin_fleet_support_sales" model="hr.department">
+            <field name="name">CFS - Chevin Fleet Support (Sales)</field>
+             <field name="department_id">83</field>
+        </record>
+
+         <record id="lovestock_and_leaf" model="hr.department">
+            <field name="name">Lovestock and Leaf</field>
+             <field name="department_id">84</field>
+        </record>
+
+         <record id="code360" model="hr.department">
+            <field name="name">COD-Code 360</field>
+             <field name="department_id">85</field>
+        </record>
+
+         <record id="adv_comp_soft_supp" model="hr.department">
+            <field name="name">ACS - Advanced Computer Software Supplies</field>
+             <field name="department_id">86</field>
+        </record>
+
+         <record id="best_jet" model="hr.department">
+            <field name="name">BSJ - Best Jet</field>
+             <field name="department_id">87</field>
+        </record>
+
+         <record id="search_insights" model="hr.department">
+            <field name="name">SIS-Search Insights</field>
+             <field name="department_id">88</field>
+        </record>
+
+         <record id="chevin_fleet_supp" model="hr.department">
+            <field name="name">CFS-Chevin Fleet Support</field>
+             <field name="department_id">89</field>
+        </record>
+
+         <record id="ps_marketing_id1" model="hr.department">
+            <field name="name">OPS-Marketing</field>
+             <field name="department_id">90</field>
+        </record>
+
+         <record id="opt_optia_partner_kk" model="hr.department">
+            <field name="name">OPT-Optia Partners K.K.</field>
+             <field name="department_id">91</field>
+        </record>
+
+         <record id="emcys" model="hr.department">
+            <field name="name">EMC- Em-Cys</field>
+             <field name="department_id">92</field>
+        </record>
+
+         <record id="servi_tek" model="hr.department">
+            <field name="name">SVT-Servi-Tek</field>
+             <field name="department_id">93</field>
+        </record>
+
+         <record id="neptune" model="hr.department">
+            <field name="name">NPT-Neptune</field>
+             <field name="department_id">94</field>
+        </record>
+
+         <record id="western_edge_medical" model="hr.department">
+            <field name="name">WEM-Western Edge Medical</field>
+             <field name="department_id">95</field>
+        </record>
+
+         <record id="global_bpo_sol" model="hr.department">
+            <field name="name">GBS - Global BPO Solutions</field>
+             <field name="department_id">96</field>
+        </record>
+
+         <record id="global_buss_sol" model="hr.department">
+            <field name="name">GBS-Global Business Solutions </field>
+             <field name="department_id">97</field>
+        </record>
+
+         <record id="vsp_vyspa_ltd" model="hr.department">
+            <field name="name">VSP-Vyspa Ltd</field>
+             <field name="department_id">98</field>
+        </record>
+
+         <record id="agile_wings" model="hr.department">
+            <field name="name">AGW - Agile Wings</field>
+             <field name="department_id">99</field>
+        </record>
+
+         <record id="ace_displays" model="hr.department">
+            <field name="name">ACE - Ace Displays</field>
+             <field name="department_id">100</field>
+        </record>
+
+         <record id="oxford_edtech_labs" model="hr.department">
+            <field name="name">OEL-  Oxford Edtech Labs</field>
+             <field name="department_id">101</field>
+        </record>
+
+         <record id="calculation_bureau_cab" model="hr.department">
+            <field name="name">CAB - Calculation Bureau</field>
+             <field name="department_id">102</field>
+        </record>
+
+         <record id="kodella" model="hr.department">
+            <field name="name">KDL - Kodella</field>
+             <field name="department_id">103</field>
+        </record>
+
+         <record id="better_support" model="hr.department">
+            <field name="name">BTS - Better Support</field>
+             <field name="department_id">104</field>
+        </record>
+
+         <record id="bigo" model="hr.department">
+            <field name="name">BGO - Bigo</field>
+             <field name="department_id">105</field>
+        </record>
+
+         <record id="nutrinnocent" model="hr.department">
+            <field name="name">NNT - Nutrinnocent</field>
+             <field name="department_id">106</field>
+        </record>
+
+         <record id="tyneso" model="hr.department">
+            <field name="name">TYN - Tyneso</field>
+             <field name="department_id">107</field>
+        </record>
+
+         <record id="my_dream_works" model="hr.department">
+            <field name="name">MDW - My Dream Works</field>
+             <field name="department_id">108</field>
+        </record>
+
+         <record id="kindred_bravely" model="hr.department">
+            <field name="name">KBR - Kindred Bravely</field>
+             <field name="department_id">109</field>
+        </record>
+
+         <record id="valor_grp" model="hr.department">
+            <field name="name">TVG - The Valor Group</field>
+             <field name="department_id">110</field>
+        </record>
+
+        <record id="logitail" model="hr.department">
+            <field name="name">LGT - Logitail</field>
+            <field name="department_id">111</field>
+        </record>
+
+        <record id="simcorp" model="hr.department">
+            <field name="name">SIM - SimCorp</field>
+            <field name="department_id">112</field>
+        </record>
+
+        <record id="rj_reliance" model="hr.department">
+            <field name="name">RJR - RJ Reliance</field>
+            <field name="department_id">113</field>
+        </record>
+
+        <record id="riverstreamz" model="hr.department">
+            <field name="name">RSZ - Riverstreamz</field>
+            <field name="department_id">114</field>
+        </record>
+
+        <record id="solution30_india" model="hr.department">
+            <field name="name">S30 - Solutions30 (India)</field>
+            <field name="department_id">115</field>
+        </record>
+
+        <record id="one_agency" model="hr.department">
+            <field name="name">One Agency</field>
+            <field name="department_id">116</field>
+        </record>
+
+        <record id="sta_capaciti" model="hr.department">
+            <field name="name">STA/Capaciti</field>
+            <field name="department_id">117</field>
+        </record>
+
+        <record id="leanovation" model="hr.department">
+            <field name="name">Leanovation</field>
+            <field name="department_id">118</field>
+        </record>
+
+        <record id="value_link" model="hr.department">
+            <field name="name">Valuelink</field>
+            <field name="department_id">119</field>
+        </record>
+
+        <record id="avenue_hr" model="hr.department">
+            <field name="name">AvenueHR</field>
+            <field name="department_id">120</field>
+        </record>
+
+        <record id="snaplion" model="hr.department">
+            <field name="name">Snaplion</field>
+            <field name="department_id">121</field>
+        </record>
+
+        <record id="the_good_deal" model="hr.department">
+            <field name="name">The Good Deal</field>
+            <field name="department_id">122</field>
+        </record>
+
+        <record id="oracle_cloud" model="hr.department">
+            <field name="name">Oracle - Cloud</field>
+            <field name="department_id">123</field>
+        </record>
+
+        <record id="oracle" model="hr.department">
+            <field name="name">Oracle</field>
+            <field name="department_id">124</field>
+        </record>
+
+        <record id="oracle_cx" model="hr.department">
+            <field name="name">Oracle CX</field>
+            <field name="department_id">125</field>
+        </record>
+
+        <record id="any_connect" model="hr.department">
+            <field name="name">ANC- Any Connect </field>
+            <field name="department_id">126</field>
+        </record>
+
+        <record id="global_talent_pool" model="hr.department">
+            <field name="name">GTP - Global Talent Pool</field>
+            <field name="department_id">127</field>
+        </record>
+
+        <record id="intelligent" model="hr.department">
+            <field name="name">ITL - Intelligent</field>
+            <field name="department_id">128</field>
+        </record>
+
+        <record id="jci_inc" model="hr.department">
+            <field name="name">JCI - JCI Inc.</field>
+            <field name="department_id">129</field>
+        </record>
+
+        <record id="koda_brands" model="hr.department">
+            <field name="name">KDB - Koda Brands</field>
+            <field name="department_id">130</field>
+        </record>
+
+        <record id="cool_comp_india" model="hr.department">
+            <field name="name">CCP - Cool Components (India)</field>
+            <field name="department_id">131</field>
+        </record>
+
+        <record id="calibre9" model="hr.department">
+            <field name="name">CLN - Calibre9</field>
+            <field name="department_id">132</field>
+        </record>
+
+        <record id="docusketch" model="hr.department">
+            <field name="name">DSK - DocuSketch</field>
+            <field name="department_id">133</field>
+        </record>
+
+        <record id="rush" model="hr.department">
+            <field name="name">RSH - Rush</field>
+            <field name="department_id">135</field>
+        </record>
+
+        <record id="amber_grp" model="hr.department">
+            <field name="name">AMG - Amber Group</field>
+            <field name="department_id">136</field>
+        </record>
+
+        <record id="beacon_insurance_advisers" model="hr.department">
+            <field name="name">BIA - Beacon Insurance Advisers</field>
+            <field name="department_id">137</field>
+        </record>
+
+        <record id="saberpoint" model="hr.department">
+            <field name="name">SAB - Saberpoint</field>
+            <field name="department_id">138</field>
+        </record>
+
+        <record id="cool_comp" model="hr.department">
+            <field name="name">CCP - Cool Components</field>
+            <field name="department_id">139</field>
+        </record>
+
+        <record id="agile_analytics" model="hr.department">
+            <field name="name">AGA - Agile Analytics</field>
+            <field name="department_id">140</field>
+        </record>
+
+        <record id="arabian_establishment" model="hr.department">
+            <field name="name">AET - Arabian Establishment for Trade and Shipping</field>
+            <field name="department_id">141</field>
+        </record>
+
+        <record id="expleo_sol_ltd" model="hr.department">
+            <field name="name">EXP - Expleo Solutions Limited</field>
+            <field name="department_id">142</field>
+        </record>
+
+        <record id="coolzy" model="hr.department">
+            <field name="name">CZY - Coolzy</field>
+            <field name="department_id">143</field>
+        </record>
+
+        <record id="learnship_bulgaria" model="hr.department">
+            <field name="name">LRS - Learnship (Bulgaria)</field>
+            <field name="department_id">144</field>
+        </record>
+
+        <record id="gk_software" model="hr.department">
+            <field name="name">GKS - GK Software</field>
+            <field name="department_id">145</field>
+        </record>
+
+        <record id="creative_financial_solutions" model="hr.department">
+            <field name="name">CRS - Creative Financial Solutions</field>
+            <field name="department_id">146</field>
+        </record>
+
+         <record id="bmakers" model="hr.department">
+            <field name="name">BMK - BMakers</field>
+            <field name="department_id">147</field>
+        </record>
+
+         <record id="fei_systems" model="hr.department">
+            <field name="name">FEI - FEI Systems</field>
+            <field name="department_id">148</field>
+        </record>
+
+        <record id="stryze" model="hr.department">
+            <field name="name">STR - Stryze</field>
+            <field name="department_id">149</field>
+        </record>
+
+        <record id="maze_map" model="hr.department">
+            <field name="name">MZM - Maze Map</field>
+            <field name="department_id">150</field>
+        </record>
+
+        <record id="dynapps" model="hr.department">
+            <field name="name">DYN - Dynapps</field>
+            <field name="department_id">151</field>
+        </record>
+
+        <record id="besix" model="hr.department">
+            <field name="name">BSX - Besix</field>
+            <field name="department_id">152</field>
+        </record>
+
+        <record id="health_tech_solutions" model="hr.department">
+            <field name="name">HTS - Health Technology Solutions</field>
+            <field name="department_id">153</field>
+        </record>
+
+        <record id="aus_diag" model="hr.department">
+            <field name="name">AUS - AUS Diagnostics</field>
+            <field name="department_id">154</field>
+        </record>
+
+        <record id="promosuns" model="hr.department">
+            <field name="name">PRO - Promosuns</field>
+            <field name="department_id">155</field>
+        </record>
+
+        <record id="allstate" model="hr.department">
+            <field name="name">ALL - Allstate</field>
+            <field name="department_id">156</field>
+        </record>
+
+        <record id="afg_alpha_flight_guru" model="hr.department">
+            <field name="name">AFG - Alpha Flight Guru</field>
+            <field name="department_id">157</field>
+        </record>
+
+        <record id="marketopia" model="hr.department">
+            <field name="name">MKP - Marketopia</field>
+            <field name="department_id">158</field>
+        </record>
+
+
+        <!-- Client Master -->
+
+         <record id="solutions30" model="client.master">
+             <field name="name">Solutions30</field>
+             <field name="account_code">S30</field>
+        </record>
+
+        <!-- Designation Master -->
+
+         <record id="second_in_command" model="designation.master">
+            <field name="name">Second-In-Command (2IC)/ QA Analyst</field>
+        </record>
+
+        <record id="coric_appl_support_engg" model="designation.master">
+            <field name="name">Coric Application Support Engineer</field>
+        </record>
+
+        <record id="data_warehouse_engg" model="designation.master">
+            <field name="name">Data Warehouse Engineer</field>
+        </record>
+
+        <record id="senior_buss_cons" model="designation.master">
+            <field name="name">Senior Business Consultant</field>
+        </record>
+
+        <record id="production_qa" model="designation.master">
+            <field name="name">Production QA</field>
+        </record>
+
+        <record id="senior_operation_director" model="designation.master">
+            <field name="name">Senior Operations Director</field>
+        </record>
+
+        <record id="net_developer" model="designation.master">
+            <field name="name">Net Developer</field>
+        </record>
+
+        <record id="data_analyst" model="designation.master">
+            <field name="name">Data Analyst/Dedicated Recruitment</field>
+        </record>
+
+        <record id="seo_manager" model="designation.master">
+            <field name="name">SEO Manager</field>
+        </record>
+
+        <record id="unified_comm_lead" model="designation.master">
+            <field name="name">Unified Communications Lead</field>
+        </record>
+
+        <record id="senior_service_delivery" model="designation.master">
+            <field name="name">Senior Service Delivery Technical Consultant</field>
+        </record>
+
+        <record id="magic_dedicated_qi_analyst" model="designation.master">
+            <field name="name">Magic Dedicated QI Analyst</field>
+        </record>
+
+        <record id="administrative_asst" model="designation.master">
+            <field name="name">Administrative Assistant</field>
+        </record>
+
+        <record id="content_monitoring" model="designation.master">
+            <field name="name">Content Monitoring Moderator</field>
+        </record>
+
+        <record id="lead_sales_generator" model="designation.master">
+            <field name="name">Lead Sales Generator</field>
+        </record>
+
+        <record id="facilities_housekeeping" model="designation.master">
+            <field name="name">Facilities and Housekeeping Associate</field>
+        </record>
+
+        <record id="hr_emp_rel_spec" model="designation.master">
+            <field name="name">HR - Employee Relations Specialist</field>
+        </record>
+
+        <record id="specialist_sales_dev_out" model="designation.master">
+            <field name="name">Specialist, Sales Development (Outbound)</field>
+        </record>
+
+        <record id="recruitment_ass" model="designation.master">
+            <field name="name">Recruitment Associate</field>
+        </record>
+
+        <record id="vip_relationship_manager" model="designation.master">
+            <field name="name">VIP Relationship Manager</field>
+        </record>
+
+        <record id="it_helpdesk_analyst" model="designation.master">
+            <field name="name">IT HelpDesk Analyst</field>
+        </record>
+
+        <record id="system_engg_l3" model="designation.master">
+            <field name="name">System Engineer L3</field>
+        </record>
+
+         <record id="team_captain_qa_l1" model="designation.master">
+            <field name="name">Team Captain QA L1</field>
+        </record>
+
+         <record id="client_relation_manager" model="designation.master">
+            <field name="name">Client Relations Manager</field>
+        </record>
+
+         <record id="qa_lead" model="designation.master">
+            <field name="name">QA Lead</field>
+        </record>
+
+         <record id="junior_recruiter" model="designation.master">
+            <field name="name">Junior Recruiter</field>
+        </record>
+
+         <record id="general_accountant" model="designation.master">
+            <field name="name">General Accountant</field>
+        </record>
+
+         <record id="full_stack_soft_engg" model="designation.master">
+            <field name="name">Full Stack Software Engineer</field>
+        </record>
+
+         <record id="email_admn" model="designation.master">
+            <field name="name">Email Administrator</field>
+        </record>
+
+         <record id="engagement_specialist" model="designation.master">
+            <field name="name">Engagement Specialist</field>
+        </record>
+
+         <record id="sales_manager" model="designation.master">
+            <field name="name">Sales Manager</field>
+        </record>
+
+         <record id="odoo_dev_l2" model="designation.master">
+            <field name="name">Odoo Developer L2</field>
+        </record>
+
+         <record id="inbound_sales_representative" model="designation.master">
+            <field name="name">Inbound Sales Representative</field>
+        </record>
+
+         <record id="senipr_service_del_consultant" model="designation.master">
+            <field name="name">Senior Service Delivery Consultant - Coric</field>
+        </record>
+
+         <record id="accounting_admin_aast" model="designation.master">
+            <field name="name">Accounting and Admin Assistant</field>
+        </record>
+
+         <record id="hr_service_del_asst" model="designation.master">
+            <field name="name">HR Service Delivery Associate</field>
+        </record>
+
+         <record id="quality_insight_dat_analyst" model="designation.master">
+            <field name="name">Quality Insight Data Analyst</field>
+        </record>
+
+         <record id="opr_supp" model="designation.master">
+            <field name="name">Operations Support</field>
+        </record>
+
+         <record id="senior_buss_cons_adcp3" model="designation.master">
+            <field name="name">Senior Business Consultant, ADC - P3</field>
+        </record>
+
+         <record id="etl_specilaist" model="designation.master">
+            <field name="name">ETL Specialist</field>
+        </record>
+
+         <record id="netsuite_qa" model="designation.master">
+            <field name="name">NetSuite QA</field>
+        </record>
+
+         <record id="marketing_graphic_designer" model="designation.master">
+            <field name="name">Marketing Graphic Designer</field>
+        </record>
+
+         <record id="web_designer" model="designation.master">
+            <field name="name">Web Designer</field>
+        </record>
+
+         <record id="data_specilaist" model="designation.master">
+            <field name="name">Data Specialist</field>
+        </record>
+
+         <record id="it_specilaist" model="designation.master">
+            <field name="name">IT Specialist</field>
+        </record>
+
+         <record id="vp_alliances" model="designation.master">
+            <field name="name">VP Alliances</field>
+        </record>
+
+         <record id="buss_cons_p2" model="designation.master">
+            <field name="name">Business Consultant â€“ P2</field>
+        </record>
+
+         <record id="cem_specialist" model="designation.master">
+            <field name="name">CRM Specialist</field>
+        </record>
+
+         <record id="interim_team_leader" model="designation.master">
+            <field name="name">Interim Team Leader</field>
+        </record>
+
+         <record id="legal_counsel" model="designation.master">
+            <field name="name">Legal Counsel</field>
+        </record>
+
+         <record id="sales_opr_dealdesk_asst" model="designation.master">
+            <field name="name">Sales Operations and Deal Desk Associate</field>
+        </record>
+
+         <record id="asst_rel_teamlead" model="designation.master">
+            <field name="name">Assistant Relations Team Lead</field>
+        </record>
+
+         <record id="jr_web_designer" model="designation.master">
+            <field name="name">Jr Web Designer</field>
+        </record>
+
+        <record id="consultant" model="designation.master">
+            <field name="name">Consultant</field>
+        </record>
+
+        <record id="tech_supp_enggl1" model="designation.master">
+            <field name="name">Technical Support Engineer L1</field>
+        </record>
+
+        <record id="impl_pdt_owner" model="designation.master">
+            <field name="name">Implementation Product Owner</field>
+        </record>
+
+        <record id="full_stack_dev" model="designation.master">
+            <field name="name">Full Stack Developer</field>
+        </record>
+
+        <record id="report_cons_datcommp2" model="designation.master">
+            <field name="name">Reporting Consultant - Data and Communications - P2</field>
+        </record>
+
+        <record id="site_reliab_engg" model="designation.master">
+            <field name="name">Site Reliability Engineer</field>
+        </record>
+
+        <record id="au_traffic_planner" model="designation.master">
+            <field name="name">AU Traffic Planner</field>
+        </record>
+
+        <record id="impl_spec_l3" model="designation.master">
+            <field name="name">Implementation Specialist L3</field>
+        </record>
+
+        <record id="adv_opr_mgr" model="designation.master">
+            <field name="name">Advertising Operations Manager</field>
+        </record>
+
+        <record id="asst_fac_mgr" model="designation.master">
+            <field name="name">Assistant Facilities Manager</field>
+        </record>
+
+        <record id="service_mngmt_cons" model="designation.master">
+            <field name="name">Service Management Consultant</field>
+        </record>
+
+        <record id="adc_consu" model="designation.master">
+            <field name="name">ADC Consultant</field>
+        </record>
+
+        <record id="sr_web_designer" model="designation.master">
+            <field name="name">Sr Web Designer</field>
+        </record>
+
+        <record id="qa_func_tester" model="designation.master">
+            <field name="name">QA Functional Tester</field>
+        </record>
+
+        <record id="asst_workforce_mngr" model="designation.master">
+            <field name="name">Assistant Workforce Manager</field>
+        </record>
+
+        <record id="tech_serv_del_cons" model="designation.master">
+            <field name="name">Technical Service Delivery Consultant</field>
+        </record>
+
+        <record id="senr_instr_dev" model="designation.master">
+            <field name="name">Senior Instructional Developer</field>
+        </record>
+
+        <record id="recr_spec" model="designation.master">
+            <field name="name">Recruitment Specialist</field>
+        </record>
+
+        <record id="snr_appl_dev" model="designation.master">
+            <field name="name">Senior Application Developer</field>
+        </record>
+
+        <record id="snrmngr_sales_dev(out)" model="designation.master">
+            <field name="name">Senior Manager, Sales Development (Outbound)</field>
+        </record>
+
+        <record id="snr_site_relengg" model="designation.master">
+            <field name="name">Senior Site Reliability Engineer</field>
+        </record>
+
+        <record id="opr_analyst" model="designation.master">
+            <field name="name">Operations Analyst</field>
+        </record>
+
+        <record id="brand_part_markexec" model="designation.master">
+            <field name="name">Brand and Partnerships Marketing Executive</field>
+        </record>
+
+        <record id="snr_tax_analyst" model="designation.master">
+            <field name="name">Senior Tax Analyst</field>
+        </record>
+
+        <record id="billing_analyst" model="designation.master">
+            <field name="name">Billing Analyst</field>
+        </record>
+
+        <record id="principal_buss_analyst" model="designation.master">
+            <field name="name">Principal Business Analyst</field>
+        </record>
+
+        <record id="channel_custserv_analyst" model="designation.master">
+            <field name="name">Channel Customer Service Analyst</field>
+        </record>
+
+        <record id="mark_specilaist" model="designation.master">
+            <field name="name">Marketing Specialist</field>
+        </record>
+
+        <record id="eng_learning_spec" model="designation.master">
+            <field name="name">English Learning Specialist</field>
+        </record>
+
+        <record id="head_b2b_custsucc" model="designation.master">
+            <field name="name">Head of B2B Customer Success</field>
+        </record>
+
+        <record id="snr_biling_custserv" model="designation.master">
+            <field name="name">Senior Billing Customer Service Representative</field>
+        </record>
+
+        <record id="serv_del_consp2" model="designation.master">
+            <field name="name">Service Delivery Consultant â€“ P2</field>
+        </record>
+
+        <record id="jr_tester" model="designation.master">
+            <field name="name">Junior Tester</field>
+        </record>
+
+        <record id="serv_del_dbaoracle" model="designation.master">
+            <field name="name">Service Delivery DBA Oracle</field>
+        </record>
+
+        <record id="it_recruiter" model="designation.master">
+            <field name="name">IT Recruiter</field>
+        </record>
+
+        <record id="qa_engg_l1" model="designation.master">
+            <field name="name">QA Engineer L1</field>
+        </record>
+
+        <record id="chied_finance_off" model="designation.master">
+            <field name="name">Chief Finance Officer</field>
+        </record>
+
+        <record id="opr_buss_part" model="designation.master">
+            <field name="name">Operations Business Partner</field>
+        </record>
+
+        <record id="jnr_sca_dev" model="designation.master">
+            <field name="name">Junior SCA Developer</field>
+        </record>
+
+        <record id="java_dev" model="designation.master">
+            <field name="name">Java Developer</field>
+        </record>
+
+        <record id="it_helpdesk_supp" model="designation.master">
+            <field name="name">IT Helpdesk Support</field>
+        </record>
+
+        <record id="soft_engg_lead" model="designation.master">
+            <field name="name">Software Engineering Lead</field>
+        </record>
+
+        <record id="snr_brandng_spec" model="designation.master">
+            <field name="name">Senior Branding Specialist</field>
+        </record>
+
+        <record id="serv_del_busscons" model="designation.master">
+            <field name="name">Service Delivery - Business Consultant</field>
+        </record>
+
+        <record id="emp_engagement_spec" model="designation.master">
+            <field name="name">Employee Engagement Specialist</field>
+        </record>
+
+        <record id="data_migration_spec" model="designation.master">
+            <field name="name">Data Migration Specialist</field>
+        </record>
+
+        <record id="paid_search_manager" model="designation.master">
+            <field name="name">Paid Search Manager</field>
+        </record>
+
+        <record id="jr_seo_spec" model="designation.master">
+            <field name="name">JR. SEO Specialist</field>
+        </record>
+
+        <record id="customer_serv" model="designation.master">
+            <field name="name">Customer Service</field>
+        </record>
+
+        <record id="payroll_spec" model="designation.master">
+            <field name="name">Payroll Specialist</field>
+        </record>
+
+        <record id="finance_supervisor" model="designation.master">
+            <field name="name">Finance Supervisor</field>
+        </record>
+
+        <record id="snr_soft_engg" model="designation.master">
+            <field name="name">Senior Software Engineer</field>
+        </record>
+
+        <record id="syst_dev" model="designation.master">
+            <field name="name">System Developer</field>
+        </record>
+
+        <record id="global_talent_acqpart" model="designation.master">
+            <field name="name">Global Talent Acquisition Partner</field>
+        </record>
+
+        <record id="buss_dev_exec" model="designation.master">
+            <field name="name">Business Development Executive</field>
+        </record>
+
+         <record id="odoo_dev" model="designation.master">
+            <field name="name">Odoo Developer</field>
+        </record>
+
+         <record id="billing_coll_supervisor" model="designation.master">
+            <field name="name">Billing and Collection Supervisor</field>
+        </record>
+
+         <record id="serv_del_cons_buss" model="designation.master">
+            <field name="name">Service Delivery Consultant â€“ Business Consultant</field>
+        </record>
+
+         <record id="serv_del_buscons" model="designation.master">
+            <field name="name">Service Delivery Business Consultant</field>
+        </record>
+
+         <record id="happ_ambassador" model="designation.master">
+            <field name="name">Happiness Ambassador</field>
+        </record>
+
+         <record id="retention_data_analyst" model="designation.master">
+            <field name="name">Retention Data Analyst</field>
+        </record>
+
+         <record id="email_supp_spec" model="designation.master">
+            <field name="name">Email Support Specialist</field>
+        </record>
+
+         <record id="travel_reserv_spec" model="designation.master">
+            <field name="name">Travel Reservations Specialist</field>
+        </record>
+
+         <record id="bookkeeper" model="designation.master">
+            <field name="name">Bookkeeper</field>
+        </record>
+
+         <record id="virtual_teacher" model="designation.master">
+            <field name="name">Virtual Teacher</field>
+        </record>
+
+         <record id="outbound_lead_gen_spec" model="designation.master">
+            <field name="name">Outbound Leads Generation Specialist</field>
+        </record>
+
+         <record id="broker_supp_mngr" model="designation.master">
+            <field name="name">Broker Support Manager</field>
+        </record>
+
+         <record id="sr_acnt_exec" model="designation.master">
+            <field name="name">Sr. Account Executive</field>
+        </record>
+
+         <record id="snr_client_rltn_mngr" model="designation.master">
+            <field name="name">Senior Client Relations Manager</field>
+        </record>
+
+         <record id="hr_prjt_servdel_offcr" model="designation.master">
+            <field name="name">HR Projects and Service Delivery Officer</field>
+        </record>
+
+         <record id="korean_eng_learspec" model="designation.master">
+            <field name="name">Korean- English Learning Specialist</field>
+        </record>
+
+         <record id="shopify_asst" model="designation.master">
+            <field name="name">Shopify Assistant</field>
+        </record>
+
+         <record id="key_acnt_dir" model="designation.master">
+            <field name="name">Key Account Director</field>
+        </record>
+
+         <record id="c#_net_dev" model="designation.master">
+            <field name="name">C# .Net Developer</field>
+        </record>
+
+         <record id="german_eng_larspec" model="designation.master">
+            <field name="name">German- English Learning Specialist</field>
+        </record>
+
+         <record id="dev_engg_l1" model="designation.master">
+            <field name="name">DevOps Engineer L1</field>
+        </record>
+
+         <record id="cust_supp_agent" model="designation.master">
+            <field name="name">Customer Support Agent</field>
+        </record>
+
+         <record id="web_Des_seo_spec" model="designation.master">
+            <field name="name">Web Designer/SEO Specialist</field>
+        </record>
+
+         <record id="itil_change_mngr" model="designation.master">
+            <field name="name">ITIL Change Manager</field>
+        </record>
+
+         <record id="social_media_virtual_asst" model="designation.master">
+            <field name="name">Social Media Virtual Assistant</field>
+        </record>
+
+         <record id="quality_insight_analyst" model="designation.master">
+            <field name="name">Quality Insight Analyst</field>
+        </record>
+
+         <record id="ass_project_mngr" model="designation.master">
+            <field name="name">Associate Project Manager</field>
+        </record>
+
+         <record id="data_engg_l4" model="designation.master">
+            <field name="name">Data Engineer L4</field>
+        </record>
+
+         <record id="multi_channel_supp_spec" model="designation.master">
+            <field name="name">Multi-Channel Support Specialist</field>
+        </record>
+
+         <record id="buss_intelli_spec" model="designation.master">
+            <field name="name">Business Intelligence Specialist</field>
+        </record>
+
+         <record id="opr_mngr" model="designation.master">
+            <field name="name">Operations Manager</field>
+        </record>
+
+         <record id="engagement_spec1" model="designation.master">
+            <field name="name">engagement Specialist I</field>
+        </record>
+
+         <record id="graphic_designer" model="designation.master">
+            <field name="name">Graphics Designer</field>
+        </record>
+
+         <record id="social_media_spec" model="designation.master">
+            <field name="name">Social Media Specialist</field>
+        </record>
+
+         <record id="portugeese_spanish_spec" model="designation.master">
+            <field name="name">Portuguese/Spanish Learning Specialist</field>
+        </record>
+
+         <record id="head_oper" model="designation.master">
+            <field name="name">Head of Operations</field>
+        </record>
+
+         <record id="aml_advisory_kyc_spec" model="designation.master">
+            <field name="name">AML Advisory and KYC Specialist</field>
+        </record>
+
+         <record id="hubspot_adm" model="designation.master">
+            <field name="name">Hubspot Administrator</field>
+        </record>
+
+         <record id="ojt1" model="designation.master">
+            <field name="name">OJT</field>
+        </record>
+
+         <record id="cust_supp" model="designation.master">
+            <field name="name">Customer Support</field>
+        </record>
+
+         <record id="sourcing_coord" model="designation.master">
+            <field name="name">Sourcing Coordinator</field>
+        </record>
+
+         <record id="jr_ntwk_engg" model="designation.master">
+            <field name="name">Junior Network Engineer</field>
+        </record>
+
+         <record id="syst_engg" model="designation.master">
+            <field name="name">System Engineer</field>
+        </record>
+
+         <record id="enganement_Spec_leve2" model="designation.master">
+            <field name="name">Engagement Specialist Level 2</field>
+        </record>
+
+         <record id="func_tester" model="designation.master">
+            <field name="name">Functional Tester</field>
+        </record>
+
+         <record id="office_admin" model="designation.master">
+            <field name="name">Office Admin</field>
+        </record>
+
+         <record id="mark_mngr" model="designation.master">
+            <field name="name">Marketing Manager</field>
+        </record>
+
+         <record id="new_prjt_lead" model="designation.master">
+            <field name="name">New Projects Lead</field>
+        </record>
+
+         <record id="prestashop_dev" model="designation.master">
+            <field name="name">Prestashop Developer</field>
+        </record>
+
+         <record id="cust_care_lead" model="designation.master">
+            <field name="name">Customer Care Lead</field>
+        </record>
+
+         <record id="document_spec" model="designation.master">
+            <field name="name">Document Specialist</field>
+        </record>
+
+         <record id="snr_cust_serv_rep" model="designation.master">
+            <field name="name">Senior Customer Service Representative</field>
+        </record>
+
+         <record id="pho_backend_dev" model="designation.master">
+            <field name="name">PHP Backend Developer</field>
+        </record>
+
+         <record id="hiring_asst" model="designation.master">
+            <field name="name">Hiring Assistant</field>
+        </record>
+
+         <record id="cloud_tesch_team_lead" model="designation.master">
+            <field name="name">Cloud Technician / Team Lead</field>
+        </record>
+
+         <record id="service_del_cons_qatester" model="designation.master">
+            <field name="name">Service Delivery Consultant - QA Tester</field>
+        </record>
+
+         <record id="data_encoder" model="designation.master">
+            <field name="name">Data Encoder</field>
+        </record>
+
+         <record id="multimedia_artist" model="designation.master">
+            <field name="name">Multimedia Artist</field>
+        </record>
+
+         <record id="hr_director" model="designation.master">
+            <field name="name">HR Director</field>
+        </record>
+
+         <record id="opr_project_spec" model="designation.master">
+            <field name="name">Operations Project Specialist</field>
+        </record>
+
+         <record id="cloud_server_engg" model="designation.master">
+            <field name="name">Cloud Server Engineer</field>
+        </record>
+
+         <record id="trainer_mngr" model="designation.master">
+            <field name="name">Trainer Manager</field>
+        </record>
+
+         <record id="snr_hr_generalist" model="designation.master">
+            <field name="name">Senior HR Generalist</field>
+        </record>
+
+         <record id="soft_engg_l4" model="designation.master">
+            <field name="name">Software Engineer L4</field>
+        </record>
+
+         <record id="snr_qa_engg" model="designation.master">
+            <field name="name">Senior QA Engineer</field>
+        </record>
+
+         <record id="snr_prov_agent" model="designation.master">
+            <field name="name">Senior Provisioning Agent</field>
+        </record>
+
+         <record id="tech_del_cons" model="designation.master">
+            <field name="name">Technical Delivery Consultant</field>
+        </record>
+
+         <record id="compliance_mngr" model="designation.master">
+            <field name="name">Compliance Manager</field>
+        </record>
+
+         <record id="socialmedia_cmnty_mngr" model="designation.master">
+            <field name="name">Social Media and Community Manager</field>
+        </record>
+
+         <record id="dedicated_qimagic_mngr" model="designation.master">
+            <field name="name">Dedicated - QI Magic Manager</field>
+        </record>
+
+         <record id="interim_brand_admn" model="designation.master">
+            <field name="name">Interim Brand Ambassador</field>
+        </record>
+
+         <record id="soft_engg_mngr" model="designation.master">
+            <field name="name">Software Engineering Manager</field>
+        </record>
+
+         <record id="wholesale_report" model="designation.master">
+            <field name="name">Wholesale Report</field>
+        </record>
+
+         <record id="tech_supp_engg_l2" model="designation.master">
+            <field name="name">Technical Support Engineer L2</field>
+        </record>
+
+         <record id="data_entry_spec" model="designation.master">
+            <field name="name">Data Entry Specialist</field>
+        </record>
+
+         <record id="snr_acnt_mngr" model="designation.master">
+            <field name="name">Senior Account Manager</field>
+        </record>
+
+         <record id="snr_tech_recruiter" model="designation.master">
+            <field name="name">Senior Technical Recruiter</field>
+        </record>
+
+         <record id="cloud_consultant" model="designation.master">
+            <field name="name">Cloud Consultant</field>
+        </record>
+
+         <record id="bi_analyst_l2" model="designation.master">
+            <field name="name">BI Analyst L2</field>
+        </record>
+
+         <record id="engagement_specilaist_l3" model="designation.master">
+            <field name="name">Engagement Specialist Level 3</field>
+        </record>
+
+         <record id="kyc_spec" model="designation.master">
+            <field name="name">KYC Specialist</field>
+        </record>
+
+         <record id="snr_people_asiamerica" model="designation.master">
+            <field name="name">Senior People Coordinator Asia and Americas</field>
+        </record>
+
+         <record id="buss_sol_spec" model="designation.master">
+            <field name="name">Business Solutions Specialist</field>
+        </record>
+
+         <record id="team_captain_pythonl2" model="designation.master">
+            <field name="name">Team Captain Python L2</field>
+        </record>
+
+         <record id="recruiter" model="designation.master">
+            <field name="name">Recruiter</field>
+        </record>
+
+         <record id="recruitment_sourmngr" model="designation.master">
+            <field name="name">Recruitment Sourcing Manager</field>
+        </record>
+
+         <record id="tech_writer" model="designation.master">
+            <field name="name">Technical Writer</field>
+        </record>
+
+         <record id="cust_happ_spec" model="designation.master">
+            <field name="name">Customer Happiness Specialist</field>
+        </record>
+
+         <record id="operations_spec" model="designation.master">
+            <field name="name">Operations Specialist</field>
+        </record>
+
+         <record id="snr_general_acnt" model="designation.master">
+            <field name="name">Senior General Accountant</field>
+        </record>
+
+         <record id="team_lead_traffic_planner" model="designation.master">
+            <field name="name">Team Lead- Traffic Planner</field>
+        </record>
+
+         <record id="recruitment_officer" model="designation.master">
+            <field name="name">Recruitment Officer</field>
+        </record>
+
+         <record id="qa_engineer_l4" model="designation.master">
+            <field name="name">QA Engineer L4</field>
+        </record>
+
+         <record id="customer_serv_supervisor" model="designation.master">
+            <field name="name">Customer Service Supervisor</field>
+        </record>
+
+         <record id="m365_spec" model="designation.master">
+            <field name="name">M365 Specialist</field>
+        </record>
+
+         <record id="prod_mngr" model="designation.master">
+            <field name="name">Product Manager</field>
+        </record>
+
+         <record id="sales_exec" model="designation.master">
+            <field name="name">Sales Executive</field>
+        </record>
+
+         <record id="employee_rel_spec" model="designation.master">
+            <field name="name">Employee Relations Specialist</field>
+        </record>
+
+         <record id="media_outreach_virt_asst" model="designation.master">
+            <field name="name">Media and Outreach Virtual Assistant</field>
+        </record>
+
+         <record id="staff_acnt" model="designation.master">
+            <field name="name">Staff Accountant</field>
+        </record>
+
+         <record id="contract_leader" model="designation.master">
+            <field name="name">Contract Loader</field>
+        </record>
+
+         <record id="tech_supp_spec" model="designation.master">
+            <field name="name">Technical Support Specialist</field>
+        </record>
+
+         <record id="netsuite_admin" model="designation.master">
+            <field name="name">NetSuite Administrator</field>
+        </record>
+
+         <record id="teachera_oper_asso" model="designation.master">
+            <field name="name">Teachers Operations Associate</field>
+        </record>
+
+         <record id="c#_consultant" model="designation.master">
+            <field name="name">C# Consultant</field>
+        </record>
+
+         <record id="ecommerce_cons" model="designation.master">
+            <field name="name">E-Commerce Assistant</field>
+        </record>
+
+         <record id="jr_firstimp_officer" model="designation.master">
+            <field name="name">Junior First Impressions Officer</field>
+        </record>
+
+         <record id="netsuite_staff_acnt2" model="designation.master">
+            <field name="name">NetSuite Staff Accountant II</field>
+        </record>
+
+         <record id="recruit_mngr" model="designation.master">
+            <field name="name">Recruitment Manager</field>
+        </record>
+
+         <record id="digital_engg" model="designation.master">
+            <field name="name">Digital Engineer</field>
+        </record>
+
+         <record id="liasion_officer" model="designation.master">
+            <field name="name">Liaison Officer</field>
+        </record>
+
+         <record id="recruit_admin" model="designation.master">
+            <field name="name">Recruitment Admin</field>
+        </record>
+
+         <record id="recruit_lead" model="designation.master">
+            <field name="name">Recruitment Lead</field>
+        </record>
+
+         <record id="ntwrk_security_engg" model="designation.master">
+            <field name="name">Network and Security Engineer</field>
+        </record>
+
+         <record id="acntnt" model="designation.master">
+            <field name="name">Accountant</field>
+        </record>
+
+         <record id="recruit_opr_asstmngr" model="designation.master">
+            <field name="name">Recruitment Operations Assistant Manager</field>
+        </record>
+
+         <record id="it_security_anlyst" model="designation.master">
+            <field name="name">IT Security Analyst</field>
+        </record>
+
+         <record id="hr_consultant" model="designation.master">
+            <field name="name">HR Consultant</field>
+        </record>
+
+         <record id="employee_trainer" model="designation.master">
+            <field name="name">Employee Trainer</field>
+        </record>
+
+         <record id="training_manager" model="designation.master">
+            <field name="name">Training Manager</field>
+        </record>
+
+         <record id="buss_cons_p2" model="designation.master">
+            <field name="name">Business Consultant, ADC - P2</field>
+        </record>
+
+         <record id="snr_serv_desk_analyst" model="designation.master">
+            <field name="name">Senior Service Desk Analyst</field>
+        </record>
+
+         <record id="acnt_exec" model="designation.master">
+            <field name="name">Account Executive</field>
+        </record>
+
+         <record id="it_compliance_Sec_officer" model="designation.master">
+            <field name="name">IT Compliance and Security Officer</field>
+        </record>
+
+         <record id="it_analyst" model="designation.master">
+            <field name="name">IT Analyst</field>
+        </record>
+
+         <record id="teamlead_snr_soft_engg" model="designation.master">
+            <field name="name">Team Lead / Senior Software Quality Engineer</field>
+        </record>
+
+         <record id="platform_mngr" model="designation.master">
+            <field name="name">Platform Manager</field>
+        </record>
+
+         <record id="adc_buss_supp" model="designation.master">
+            <field name="name">ADC Business Consultant</field>
+        </record>
+
+         <record id="cloud_appl_supp" model="designation.master">
+            <field name="name">Cloud Application Support</field>
+        </record>
+
+         <record id="jr_it_prjt_mngr" model="designation.master">
+            <field name="name">Jr. IT Project Manager</field>
+        </record>
+
+         <record id="sr_payroll_exec" model="designation.master">
+            <field name="name">Sr. Payroll Executive</field>
+        </record>
+
+         <record id="opr_director" model="designation.master">
+            <field name="name">Operations Director</field>
+        </record>
+
+         <record id="buss_serv_dir" model="designation.master">
+            <field name="name">Business Services Director</field>
+        </record>
+
+         <record id="quality_insight_mngr" model="designation.master">
+            <field name="name">Quality Insight Manager</field>
+        </record>
+
+         <record id="snr_acntng_officer" model="designation.master">
+            <field name="name">Senior Accounting Officer</field>
+        </record>
+
+         <record id="snr_quality_assurance_spec" model="designation.master">
+            <field name="name">Senior Quality Assurance Specialist</field>
+        </record>
+
+         <record id="wintel_sys_engg" model="designation.master">
+            <field name="name">Wintel System Engineer</field>
+        </record>
+
+         <record id="sys_analyst" model="designation.master">
+            <field name="name">System Analyst</field>
+        </record>
+
+         <record id="legal_asst" model="designation.master">
+            <field name="name">Legal Assistant</field>
+        </record>
+
+         <record id="power_bi_dev" model="designation.master">
+            <field name="name">Power BI Developer</field>
+        </record>
+
+         <record id="qa_robot_framework_engg" model="designation.master">
+            <field name="name">QA Robot Framework Engineer</field>
+        </record>
+
+         <record id="appl_supp_engg" model="designation.master">
+            <field name="name">Application Support Engineer</field>
+        </record>
+
+         <record id="tech_virtual_asst" model="designation.master">
+            <field name="name">Technical Virtual Assistant</field>
+        </record>
+
+         <record id="research_spec3" model="designation.master">
+            <field name="name">Research Specialist 3</field>
+        </record>
+
+         <record id="mortgage_closer" model="designation.master">
+            <field name="name">Mortgage Closer</field>
+        </record>
+
+         <record id="finance_spec" model="designation.master">
+            <field name="name">Finance Specialist</field>
+        </record>
+
+         <record id="snr_netsuite_dev" model="designation.master">
+            <field name="name">Senior NetSuite Developer</field>
+        </record>
+
+         <record id="paypal_submatter_expert" model="designation.master">
+            <field name="name">Paypal Subject Matter Expert</field>
+        </record>
+
+         <record id="asst_recruit_oprmngr" model="designation.master">
+            <field name="name">Assistant Recruitment Operations Manager</field>
+        </record>
+
+         <record id="database_prdt_spec" model="designation.master">
+            <field name="name">Database Product Specialist</field>
+        </record>
+
+         <record id="return_merchandise_auth_spec" model="designation.master">
+            <field name="name">Return Merchandise Authorization Specialist</field>
+        </record>
+
+         <record id="hum_res_mngr" model="designation.master">
+            <field name="name">Human Resources Manager</field>
+        </record>
+
+         <record id="french_eng_spec" model="designation.master">
+            <field name="name">French- English Learning Specialist</field>
+        </record>
+
+         <record id="global_talent_poocoord" model="designation.master">
+            <field name="name">Global Talent Pool Coordinator</field>
+        </record>
+
+         <record id="customer_supportl1/l2" model="designation.master">
+            <field name="name">Customer Support L1 / L2</field>
+        </record>
+
+         <record id="leadgen_mark_spec" model="designation.master">
+            <field name="name">Lead Generation and Marketing Specialist</field>
+        </record>
+
+         <record id="quality_analyst" model="designation.master">
+            <field name="name">Quality Analyst</field>
+        </record>
+
+         <record id="potu_eng_learning_spec" model="designation.master">
+            <field name="name">Portugese - English Learning Specialist</field>
+        </record>
+
+         <record id="market_res" model="designation.master">
+            <field name="name">Market Researcher</field>
+        </record>
+
+         <record id="buss_acnt_exec" model="designation.master">
+            <field name="name">Business Account Executive</field>
+        </record>
+
+         <record id="sr_web_Dev" model="designation.master">
+            <field name="name">Sr Web Developer</field>
+        </record>
+
+         <record id="serv_assurance_coord" model="designation.master">
+            <field name="name">Service Assurance Coordinator</field>
+        </record>
+
+         <record id="snr_marketing_mngr" model="designation.master">
+            <field name="name">Senior Marketing Manager</field>
+        </record>
+
+         <record id="biling_spec" model="designation.master">
+            <field name="name">Billing Specialist</field>
+        </record>
+
+         <record id="service_desk_mngr" model="designation.master">
+            <field name="name">Service Desk Manager</field>
+        </record>
+
+         <record id="serv_delcons_gainp2" model="designation.master">
+            <field name="name">Service Delivery Consultant (Gain Delivery) â€“ P2</field>
+        </record>
+
+         <record id="manila_deliver_centerhead" model="designation.master">
+            <field name="name">Manila Deliver Center Head</field>
+        </record>
+
+         <record id="snr_tech_engg" model="designation.master">
+            <field name="name">Senior Technical Engineer</field>
+        </record>
+
+         <record id="serv_del_associate" model="designation.master">
+            <field name="name">Service Delivery Associate</field>
+        </record>
+
+         <record id="asst_training_mngr" model="designation.master">
+            <field name="name">Assistant Training Manager</field>
+        </record>
+
+         <record id="cloud_supp_engg" model="designation.master">
+            <field name="name">Cloud Support Engineer</field>
+        </record>
+
+         <record id="internal_sales_resource" model="designation.master">
+            <field name="name">Internal Sales Resource</field>
+        </record>
+
+         <record id="nodejs_dev" model="designation.master">
+            <field name="name">NodeJS Developer</field>
+        </record>
+
+         <record id="acnts_payable_spec" model="designation.master">
+            <field name="name">Accounts Payable Specialist</field>
+        </record>
+
+         <record id="snr_opr_advisor" model="designation.master">
+            <field name="name">Senior Operations Advisor</field>
+        </record>
+
+         <record id="qa_coordinator" model="designation.master">
+            <field name="name">QA Coordinator</field>
+        </record>
+
+         <record id="asst_sourcing_mngr" model="designation.master">
+            <field name="name">Assistant Sourcing Manager</field>
+        </record>
+
+         <record id="head_of_sales" model="designation.master">
+            <field name="name">Head of Sales</field>
+        </record>
+
+         <record id="digital_mark_associate" model="designation.master">
+            <field name="name">Digital Marketing Associate</field>
+        </record>
+
+         <record id="jnr_soft_tester" model="designation.master">
+            <field name="name">Jnr Software Tester</field>
+        </record>
+
+         <record id="serv_delivery_itcons" model="designation.master">
+            <field name="name">Service Delivery IT Consultant</field>
+        </record>
+
+         <record id="talent_acquis_partnerp2" model="designation.master">
+            <field name="name">Talent Acquisition Partner â€“ P2</field>
+        </record>
+
+         <record id="snr_serv_del_cons" model="designation.master">
+            <field name="name">Senior Service Delivery Consultant</field>
+        </record>
+
+         <record id="pdt_spec_supervisor" model="designation.master">
+            <field name="name">Product Specialist Supervisor</field>
+        </record>
+
+         <record id="snr_broker_supp" model="designation.master">
+            <field name="name">Senior Broker Support</field>
+        </record>
+
+         <record id="client_serv_coord" model="designation.master">
+            <field name="name">Client Services Coordinator</field>
+        </record>
+
+         <record id="art_director" model="designation.master">
+            <field name="name">Art Director</field>
+        </record>
+
+         <record id="qa_engg" model="designation.master">
+            <field name="name">QA Engineer</field>
+        </record>
+
+         <record id="snr_paid_acqui_mngr" model="designation.master">
+            <field name="name">Senior Paid Acquisition Manager</field>
+        </record>
+
+         <record id="snr_opr_team_leader" model="designation.master">
+            <field name="name">Senior Operations Team Leader</field>
+        </record>
+
+         <record id="recruit_intern" model="designation.master">
+            <field name="name">Recruitment Intern</field>
+        </record>
+
+         <record id="snr_project_engg" model="designation.master">
+            <field name="name">Senior Project Engineer</field>
+        </record>
+
+         <record id="qa_spec" model="designation.master">
+            <field name="name">QA Specialist</field>
+        </record>
+
+         <record id="soft_spec" model="designation.master">
+            <field name="name">Software Specialist</field>
+        </record>
+
+         <record id="penetration_tester" model="designation.master">
+            <field name="name">Penetration Tester</field>
+        </record>
+
+         <record id="asst_reltn_spec" model="designation.master">
+            <field name="name">Assistant Relations Specialist</field>
+        </record>
+
+         <record id="serv_deliver_con_qatester" model="designation.master">
+            <field name="name">Service Deliver Consultant QA Tester</field>
+        </record>
+
+         <record id="snr_spft_dev" model="designation.master">
+            <field name="name">Senior Software Developer</field>
+        </record>
+
+         <record id="web_dev_designer" model="designation.master">
+            <field name="name">Web Developer / Designer</field>
+        </record>
+
+         <record id="paid_adv_coord" model="designation.master">
+            <field name="name">Paid Advertising Coordinator</field>
+        </record>
+
+         <record id="it_serv_desk_analyst" model="designation.master">
+            <field name="name">IT Service Desk Analyst</field>
+        </record>
+
+         <record id="campaign_strategist" model="designation.master">
+            <field name="name">Campaign Strategist</field>
+        </record>
+
+           <record id="acntng_analyst" model="designation.master">
+            <field name="name">Accounting Analyst</field>
+        </record>
+
+         <record id="snr_brand_mark_manager" model="designation.master">
+            <field name="name">Senior Brand Marketing Manager</field>
+        </record>
+
+         <record id="imp_specl2" model="designation.master">
+            <field name="name">Implementation Specialist L2</field>
+        </record>
+
+         <record id="snr_exec_l1" model="designation.master">
+            <field name="name">Senior Executive - (Level 1)</field>
+        </record>
+
+         <record id="consultant_data_engg" model="designation.master">
+            <field name="name">Consultant Data Engineer</field>
+        </record>
+
+         <record id="seo_spec" model="designation.master">
+            <field name="name">SEO Specialist</field>
+        </record>
+
+           <record id="tech_lead" model="designation.master">
+            <field name="name">Technical Lead</field>
+        </record>
+
+         <record id="snr_dir_dev" model="designation.master">
+            <field name="name">Senior Director of Development</field>
+        </record>
+
+         <record id="instrumental_designer" model="designation.master">
+            <field name="name">Instructional Designer</field>
+        </record>
+
+         <record id="netsuite_staff_acnt" model="designation.master">
+            <field name="name">NetSuite Staff Accountant</field>
+        </record>
+
+         <record id="wordpress_plugin_dev" model="designation.master">
+            <field name="name">WordPress Plugin Developer</field>
+        </record>
+
+         <record id="soft_engg_l2" model="designation.master">
+            <field name="name">Software Engineer L2</field>
+        </record>
+
+           <record id="treasurer_mngng_director" model="designation.master">
+            <field name="name">Treasurer and Managing Director</field>
+        </record>
+
+         <record id="financial_analyst" model="designation.master">
+            <field name="name">Financial Analyst</field>
+        </record>
+
+         <record id="head_asst_recruit" model="designation.master">
+            <field name="name">Head of Assistant Recruiting</field>
+        </record>
+
+         <record id="snr_ralent_coord" model="designation.master">
+            <field name="name">Senior Talent Coordinator</field>
+        </record>
+
+         <record id="pod_lead" model="designation.master">
+            <field name="name">Pod Lead</field>
+        </record>
+
+         <record id="snr_acnt_exec" model="designation.master">
+            <field name="name">Senior Account Executive</field>
+        </record>
+
+           <record id="sr_front_end_dev" model="designation.master">
+            <field name="name">Sr Front End Developer</field>
+        </record>
+
+         <record id="admin_asst" model="designation.master">
+            <field name="name">Admin Assistant</field>
+        </record>
+
+         <record id="country_sales_mngr" model="designation.master">
+            <field name="name">Country Sales Manager</field>
+        </record>
+
+         <record id="jnr_php_dev" model="designation.master">
+            <field name="name">Junior PHP Developer</field>
+        </record>
+
+         <record id="quality_analystl1" model="designation.master">
+            <field name="name">Quality Analyst L1</field>
+        </record>
+
+         <record id="tech_direc)clinical_sevr" model="designation.master">
+            <field name="name">Technical Director - Clinical Services</field>
+        </record>
+
+           <record id="team_lead_trainee" model="designation.master">
+            <field name="name">Team Lead Trainee</field>
+        </record>
+
+         <record id="customer_supp_consultant" model="designation.master">
+            <field name="name">Customer Support Consultant</field>
+        </record>
+
+         <record id="cust_exp_asst" model="designation.master">
+            <field name="name">Customer Experience Assistant</field>
+        </record>
+
+         <record id="qa_engg_l2" model="designation.master">
+            <field name="name">QA Engineer L2</field>
+        </record>
+
+         <record id="eng_spec_l4" model="designation.master">
+            <field name="name">Engagement Specialist Level 4</field>
+        </record>
+
+         <record id="snr_pro_officer" model="designation.master">
+            <field name="name">Senior Procurement Officer</field>
+        </record>
+
+           <record id="tech_recruit_spec" model="designation.master">
+            <field name="name">Technical Recruitment Specialist</field>
+        </record>
+
+         <record id="product_oper_spec" model="designation.master">
+            <field name="name">Product Operations Specialist</field>
+        </record>
+
+         <record id="serv_desk_analyst" model="designation.master">
+            <field name="name">Service Desk Analyst</field>
+        </record>
+
+         <record id="snr_hr_bussiness_partner" model="designation.master">
+            <field name="name">Senior HR Business Partner</field>
+        </record>
+
+         <record id="training_spec" model="designation.master">
+            <field name="name">Training Specialist</field>
+        </record>
+
+         <record id="euc_spec" model="designation.master">
+            <field name="name">EUC Specialist</field>
+        </record>
+
+           <record id="snr_payroll_spec" model="designation.master">
+            <field name="name">Senior Payroll Specialist</field>
+        </record>
+
+         <record id="qa_mngr" model="designation.master">
+            <field name="name">QA Manager</field>
+        </record>
+
+         <record id="acnt_lead" model="designation.master">
+            <field name="name">Account Lead</field>
+        </record>
+
+         <record id="japanes_eng_spec" model="designation.master">
+            <field name="name">Japanese - English Learning Specialist</field>
+        </record>
+
+         <record id="buss_partner" model="designation.master">
+            <field name="name">Business Partner</field>
+        </record>
+
+         <record id="quality_assurance_tester" model="designation.master">
+            <field name="name">Quality Assurance Tester</field>
+        </record>
+
+           <record id="power_bi_analyst" model="designation.master">
+            <field name="name">Power BI Analyst</field>
+        </record>
+
+         <record id="customer_serv_agent" model="designation.master">
+            <field name="name">Customer Service Agent</field>
+        </record>
+
+         <record id="snr_buss_analyst" model="designation.master">
+            <field name="name">Senior Business Analyst</field>
+        </record>
+
+         <record id="jnr_opr_buss_partner" model="designation.master">
+            <field name="name">Junior Operations Business Partner</field>
+        </record>
+
+         <record id="cust_supp_spec" model="designation.master">
+            <field name="name">Customer Support Specialist</field>
+        </record>
+
+         <record id="credit_analyst" model="designation.master">
+            <field name="name">Credit Analyst</field>
+        </record>
+
+           <record id="data_project_coord" model="designation.master">
+            <field name="name">Data and Project Coordinator</field>
+        </record>
+
+         <record id="qa_automation_spec" model="designation.master">
+            <field name="name">QA Automation Specialist</field>
+        </record>
+
+         <record id="tech_engg" model="designation.master">
+            <field name="name">Technical Engineer</field>
+        </record>
+
+         <record id="buss_dev_associate" model="designation.master">
+            <field name="name">Business Dev Associate</field>
+        </record>
+
+         <record id="netsuite_developer" model="designation.master">
+            <field name="name">NetSuite Developer</field>
+        </record>
+
+         <record id="seasonal_custserv_rep" model="designation.master">
+            <field name="name">Seasonal Customer Service Representative</field>
+        </record>
+
+           <record id="snr_test_aut_engg" model="designation.master">
+            <field name="name">Senior Test Automation Engineer</field>
+        </record>
+
+         <record id="sales_develope_rep" model="designation.master">
+            <field name="name">Sales Development Representative</field>
+        </record>
+
+         <record id="service_del_tech_cons" model="designation.master">
+            <field name="name">Service Delivery Technical Consultant</field>
+        </record>
+
+         <record id="sof_engg_l5" model="designation.master">
+            <field name="name">Software Engineer L5</field>
+        </record>
+
+         <record id="outbound_data_verifier" model="designation.master">
+            <field name="name">Outbound Data Verifier</field>
+        </record>
+
+         <record id="mark_socilamedia_spec" model="designation.master">
+            <field name="name">Marketing and Social Media Specialist</field>
+        </record>
+
+           <record id="project_finance_spec" model="designation.master">
+            <field name="name">Project Finance Specialist</field>
+        </record>
+
+         <record id="buss_cons" model="designation.master">
+            <field name="name">Business Consultant</field>
+        </record>
+
+         <record id="online_marketing_mngr" model="designation.master">
+            <field name="name">Online Marketing Manager</field>
+        </record>
+
+         <record id="team_lead" model="designation.master">
+            <field name="name">Team Lead</field>
+        </record>
+
+         <record id="snr_finance_data_operator" model="designation.master">
+            <field name="name">Senior Financial Data Operator</field>
+        </record>
+
+         <record id="office_support" model="designation.master">
+            <field name="name">Office Support</field>
+        </record>
+
+           <record id="tech_officer" model="designation.master">
+            <field name="name">Technical Officer</field>
+        </record>
+
+         <record id="funs_test_engg" model="designation.master">
+            <field name="name">Functional Test Engineer</field>
+        </record>
+
+         <record id="compliance_analyst" model="designation.master">
+            <field name="name">Compliance Analyst</field>
+        </record>
+
+         <record id="tech_proj_mngr" model="designation.master">
+            <field name="name">Technical Project Manager</field>
+        </record>
+
+         <record id="serv_desk_team_leader" model="designation.master">
+            <field name="name">Service Desk Team Leader</field>
+        </record>
+
+         <record id="syst_analyst_l2" model="designation.master">
+            <field name="name">System Analyst L2</field>
+        </record>
+
+           <record id="infrastructure_engg" model="designation.master">
+            <field name="name">Infrastructure Engineer</field>
+        </record>
+
+         <record id="real_time_analyst" model="designation.master">
+            <field name="name">Real-Time Analyst</field>
+        </record>
+
+         <record id="qa_eng_lead" model="designation.master">
+            <field name="name">QA Engineer Lead</field>
+        </record>
+
+         <record id="vendor_rel_associate" model="designation.master">
+            <field name="name">Vendor Relations Associate</field>
+        </record>
+
+         <record id="qualtiy_coordinator" model="designation.master">
+            <field name="name">Quality Coordinator</field>
+        </record>
+
+         <record id="team_captain" model="designation.master">
+            <field name="name">Team Captain</field>
+        </record>
+
+           <record id="snr_sca_dev" model="designation.master">
+            <field name="name">Senior SCA Developer</field>
+        </record>
+
+         <record id="project_mngr_buss_devl" model="designation.master">
+            <field name="name">Project Manager â€“ Business Development</field>
+        </record>
+
+         <record id="branch_opr_mnr_manila" model="designation.master">
+            <field name="name">Branch Operations Manager - Manila</field>
+        </record>
+
+         <record id="snr_recruit_mngr" model="designation.master">
+            <field name="name">Senior Recruitment Manager</field>
+        </record>
+
+         <record id="sales_closer" model="designation.master">
+            <field name="name">Sales Closer</field>
+        </record>
+
+         <record id="reports_supervisor" model="designation.master">
+            <field name="name">Reports Supervisor</field>
+        </record>
+
+           <record id="snr_busns_partner" model="designation.master">
+            <field name="name">Senior Business Partner</field>
+        </record>
+
+         <record id="tagalog_csr" model="designation.master">
+            <field name="name">Tagalog CSR</field>
+        </record>
+
+         <record id="drafter" model="designation.master">
+            <field name="name">Drafter</field>
+        </record>
+
+         <record id="security_guard" model="designation.master">
+            <field name="name">Security Guard</field>
+        </record>
+
+         <record id="business_support" model="designation.master">
+            <field name="name">Business Support</field>
+        </record>
+
+         <record id="senior_recruitment_officer" model="designation.master">
+            <field name="name">Senior Recruitment Officer</field>
+        </record>
+
+           <record id="virtual_english_teacher" model="designation.master">
+            <field name="name">Virtual English Teacher</field>
+        </record>
+
+         <record id="trainer" model="designation.master">
+            <field name="name">Trainer</field>
+        </record>
+
+         <record id="finance_acntng_director" model="designation.master">
+            <field name="name">Finance and Accounting Director</field>
+        </record>
+
+         <record id="product_owner" model="designation.master">
+            <field name="name">Product Owner</field>
+        </record>
+
+         <record id="project_lead" model="designation.master">
+            <field name="name">Project Lead</field>
+        </record>
+
+         <record id="service_del_consultant" model="designation.master">
+            <field name="name">Service Delivery Consultant (SCDaaS)</field>
+        </record>
+
+           <record id="photo_editor" model="designation.master">
+            <field name="name">Photo Editor</field>
+        </record>
+
+         <record id="asst_dir_operations" model="designation.master">
+            <field name="name">Assistant Director of Operations</field>
+        </record>
+
+         <record id="securuty_analyst" model="designation.master">
+            <field name="name">Security Analyst</field>
+        </record>
+
+         <record id="client_serv_manager" model="designation.master">
+            <field name="name">Client Services Manager</field>
+        </record>
+
+         <record id="end_user_compute_engg" model="designation.master">
+            <field name="name">End User Compute Engineer</field>
+        </record>
+
+         <record id="full_stack_engg" model="designation.master">
+            <field name="name">Full Stack Engineer</field>
+        </record>
+
+           <record id="talent_coordinator" model="designation.master">
+            <field name="name">Talent Coordinator</field>
+        </record>
+
+         <record id="quality_insight_team_lead" model="designation.master">
+            <field name="name">Quality Insight Team Lead</field>
+        </record>
+
+         <record id="senior_opeartions_bsns_partner" model="designation.master">
+            <field name="name">Senior Operations Business Partner</field>
+        </record>
+
+         <record id="research_specialist" model="designation.master">
+            <field name="name">Research Specialist</field>
+        </record>
+
+         <record id="telesales_representative" model="designation.master">
+            <field name="name">Telesales Representative</field>
+        </record>
+
+         <record id="lead_operations_advisor" model="designation.master">
+            <field name="name">Lead Operations Advisor</field>
+        </record>
+
+           <record id="vip_talent_cordinator" model="designation.master">
+            <field name="name">VIP Talent Coordinator</field>
+        </record>
+
+         <record id="content_writer" model="designation.master">
+            <field name="name">Content Writer</field>
+        </record>
+
+         <record id="certified_public_acntnt" model="designation.master">
+            <field name="name">Certified Public Accountant</field>
+        </record>
+
+         <record id="asean_sales_team_coord" model="designation.master">
+            <field name="name">Asean Sales Team Coordinator</field>
+        </record>
+
+         <record id="chief_exec_officer" model="designation.master">
+            <field name="name">Chief Executive Officer</field>
+        </record>
+
+         <record id="lead_data_scientist" model="designation.master">
+            <field name="name">Lead Data Scientist</field>
+        </record>
+
+           <record id="python_developer_l2" model="designation.master">
+            <field name="name">Python Developer L2</field>
+        </record>
+
+         <record id="order_processing_officer" model="designation.master">
+            <field name="name">Order Processing Officer</field>
+        </record>
+
+         <record id="medical_author" model="designation.master">
+            <field name="name">Medical Author</field>
+        </record>
+
+         <record id="recruitment_operations_manager" model="designation.master">
+            <field name="name">Recruitment Operations Manager</field>
+        </record>
+
+         <record id="office_assistant" model="designation.master">
+            <field name="name">Office Assistant</field>
+        </record>
+
+         <record id="customer_assistance_associate" model="designation.master">
+            <field name="name">Customer Assistance Associate</field>
+        </record>
+
+           <record id="ict_mngr" model="designation.master">
+            <field name="name">ICT Manager</field>
+        </record>
+
+         <record id="sales_develop_specialist" model="designation.master">
+            <field name="name">Sales Development Specialist</field>
+        </record>
+
+         <record id="finance_director" model="designation.master">
+            <field name="name">Finance Director</field>
+        </record>
+
+         <record id="jnr_data_entry_spec" model="designation.master">
+            <field name="name">Junior Data Entry Specialist</field>
+        </record>
+
+         <record id="hr_finance_assistant" model="designation.master">
+            <field name="name">HR/ Finance Assistant</field>
+        </record>
+
+         <record id="acnts_receivable_officer" model="designation.master">
+            <field name="name">Accounts Receivable Officer</field>
+        </record>
+
+           <record id="asst_mngr_client_retention" model="designation.master">
+            <field name="name">Assistant Manager for Client Retention</field>
+        </record>
+
+         <record id="dev" model="designation.master">
+            <field name="name">Developer</field>
+             <field name="designation_code">DEV</field>
+        </record>
+
+         <record id="solutions_architect" model="designation.master">
+            <field name="name">Solutions Architect</field>
+        </record>
+
+         <record id="us_recruiter" model="designation.master">
+            <field name="name">US Recruiter</field>
+        </record>
+
+         <record id="content_moderator_expert" model="designation.master">
+            <field name="name">Content Moderator (Expert)</field>
+        </record>
+
+         <record id="global_software_lead" model="designation.master">
+            <field name="name">Global Software Lead</field>
+        </record>
+
+           <record id="data_migration_consp2" model="designation.master">
+            <field name="name">Data Migration - Business Consultant â€“ P2</field>
+        </record>
+
+         <record id="client_relation_officer" model="designation.master">
+            <field name="name">Client Relations Officer</field>
+        </record>
+
+         <record id="operations_associate" model="designation.master">
+            <field name="name">Operations Associate</field>
+        </record>
+
+         <record id="creative_solutions_specialist" model="designation.master">
+            <field name="name">Creative Solution Specialist</field>
+        </record>
+
+         <record id="director" model="designation.master">
+            <field name="name">Director</field>
+        </record>
+
+         <record id="snr_admin_procurement_officer" model="designation.master">
+            <field name="name">Senior Admin and Procurement Officer</field>
+        </record>
+
+           <record id="thirdy_party_appl_supp" model="designation.master">
+            <field name="name">Third Party Application Support</field>
+        </record>
+
+         <record id="global_cs_manager" model="designation.master">
+            <field name="name">Global CS Manager</field>
+        </record>
+
+         <record id="sourcing_manager" model="designation.master">
+            <field name="name">Sourcing Manager</field>
+        </record>
+
+         <record id="graphic_designer" model="designation.master">
+            <field name="name">Graphic designer</field>
+        </record>
+
+         <record id="hr_head" model="designation.master">
+            <field name="name">HR Head</field>
+        </record>
+
+         <record id="compensatiobs_benefits_specialist" model="designation.master">
+            <field name="name">Compensation and Benefits Specialist</field>
+        </record>
+
+           <record id="jnr_branding_spec" model="designation.master">
+            <field name="name">Junior Branding Specialist</field>
+        </record>
+
+         <record id="php_developer_l4" model="designation.master">
+            <field name="name">PHP Developer L4</field>
+        </record>
+
+         <record id="bsns_integration_cons" model="designation.master">
+            <field name="name">Business (Integration) Consultant</field>
+        </record>
+
+         <record id="admin_logistics_coord" model="designation.master">
+            <field name="name">Admin and Logistics Coordinator</field>
+        </record>
+
+         <record id="paypal_specialist" model="designation.master">
+            <field name="name">Paypal Specialist</field>
+        </record>
+
+         <record id="sales_admin" model="designation.master">
+            <field name="name">Sales Admin</field>
+        </record>
+
+           <record id="ecommerce_marketing_spec" model="designation.master">
+            <field name="name">eCommerce Marketing Specialist</field>
+        </record>
+
+         <record id="project_coordinator" model="designation.master">
+            <field name="name">Project Coordinator</field>
+        </record>
+
+         <record id="technical_recruiter" model="designation.master">
+            <field name="name">Technical Recruiter</field>
+        </record>
+
+         <record id="hr_admin" model="designation.master">
+            <field name="name">HR Admin</field>
+        </record>
+
+         <record id="senior_graphic_designer" model="designation.master">
+            <field name="name">Senior Graphic Designer</field>
+        </record>
+
+         <record id="creative_mngr" model="designation.master">
+            <field name="name">Creative Manager</field>
+        </record>
+
+           <record id="bsns_analyst" model="designation.master">
+            <field name="name">Business Analyst</field>
+        </record>
+
+         <record id="personal_assistant" model="designation.master">
+            <field name="name">Personal Assistant</field>
+        </record>
+
+         <record id="network_engineer" model="designation.master">
+            <field name="name">Network Engineer</field>
+        </record>
+
+         <record id="software_engg_fullstack" model="designation.master">
+            <field name="name">Software Engineer (Full Stack)</field>
+        </record>
+
+         <record id="laravel_developer" model="designation.master">
+            <field name="name">Laravel Developer</field>
+        </record>
+
+         <record id="sr_netsuite_sca_dveloper" model="designation.master">
+            <field name="name">Sr. Netsuite SCA Developer</field>
+        </record>
+
+           <record id="contract_loader_quality_ass_spec" model="designation.master">
+            <field name="name">Contract Loader Quality Assurance Specialist</field>
+        </record>
+
+         <record id="client_rltns_specialist" model="designation.master">
+            <field name="name">Client Relations Specialist</field>
+        </record>
+
+          <record id="reporting_spec_bi" model="designation.master">
+            <field name="name">Reporting Specialist - Power BI</field>
+        </record>
+
+         <record id="qa_tester" model="designation.master">
+            <field name="name">QA Tester</field>
+        </record>
+
+           <record id="service_Delivery_mngr_p2" model="designation.master">
+            <field name="name">Service Delivery Manager - P2</field>
+        </record>
+
+         <record id="operations_executive" model="designation.master">
+            <field name="name">Operations Executive</field>
+        </record>
+
+         <record id="jnr_system_developer" model="designation.master">
+            <field name="name">Junior System Developer</field>
+        </record>
+
+         <record id="finance_associate" model="designation.master">
+            <field name="name">Finance Associate</field>
+        </record>
+
+         <record id="french_learning_specialist" model="designation.master">
+            <field name="name">French Learning Specialist</field>
+        </record>
+
+         <record id="program_cordinator" model="designation.master">
+            <field name="name">Program Coordinator</field>
+        </record>
+
+           <record id="client_support" model="designation.master">
+            <field name="name">Client Support</field>
+        </record>
+
+         <record id="copywriter" model="designation.master">
+            <field name="name">Copywriter</field>
+        </record>
+
+         <record id="hr_manager" model="designation.master">
+            <field name="name">HR Manager</field>
+        </record>
+
+         <record id="jnr_software_developer" model="designation.master">
+            <field name="name">Junior Software Developer</field>
+        </record>
+
+         <record id="service_del_cons_ba" model="designation.master">
+            <field name="name">Service Delivery Consultant BA</field>
+        </record>
+
+         <record id="quality_assurance_specialist" model="designation.master">
+            <field name="name">Quality Assurance Specialist</field>
+        </record>
+
+           <record id="sourcing_specialist" model="designation.master">
+            <field name="name">Sourcing Specialist</field>
+        </record>
+
+         <record id="wind_engineer" model="designation.master">
+            <field name="name">Wind Engineer</field>
+        </record>
+
+          <record id="service_del_consultantp2" model="designation.master">
+            <field name="name">Service Delivery Consultant - P2</field>
+        </record>
+
+         <record id="it_support_engineer" model="designation.master">
+            <field name="name">IT Support Engineer</field>
+        </record>
+
+           <record id="funstional_finance_cons" model="designation.master">
+            <field name="name">Functional Finance Consultant</field>
+        </record>
+
+         <record id="financial_data_opr_mngr" model="designation.master">
+            <field name="name">Financial Data Operations Manager</field>
+        </record>
+
+         <record id="training_associate" model="designation.master">
+            <field name="name">Training Associate</field>
+        </record>
+
+         <record id="brocker_administrator" model="designation.master">
+            <field name="name">Broker Administrator</field>
+        </record>
+
+         <record id="asst_operations_mngr" model="designation.master">
+            <field name="name">Assistant Operations Manager</field>
+        </record>
+
+         <record id="service_delivery_cons_p3" model="designation.master">
+            <field name="name">Service Delivery Consultant â€“ P3</field>
+        </record>
+
+           <record id="onboarding_specialist" model="designation.master">
+            <field name="name">Onboarding Specialist</field>
+        </record>
+
+         <record id="front_end_developer" model="designation.master">
+            <field name="name">Front End Developer</field>
+        </record>
+
+         <record id="senior_contract_mngr" model="designation.master">
+            <field name="name">Senior Contract Manager</field>
+        </record>
+
+         <record id="medical_office_scheduling_agent" model="designation.master">
+            <field name="name">Medical Office Scheduling Agent</field>
+        </record>
+
+         <record id="recruitment_supervisor" model="designation.master">
+            <field name="name">Recruitment Supervisor</field>
+        </record>
+
+         <record id="content_moderator_jnr" model="designation.master">
+            <field name="name">Content Moderator (Junior)</field>
+        </record>
+
+           <record id="release_train_engineer" model="designation.master">
+            <field name="name">Release Train Engineer</field>
+        </record>
+
+         <record id="database_administrator" model="designation.master">
+            <field name="name">Database Administrator</field>
+        </record>
+
+          <record id="spanish_eng_learning_spec" model="designation.master">
+            <field name="name">Spanish English Learning Specialist</field>
+        </record>
+
+         <record id="operations_project_mngr" model="designation.master">
+            <field name="name">Operations Project Manager</field>
+        </record>
+
+           <record id="workforce_mnger" model="designation.master">
+            <field name="name">Workforce Manager</field>
+        </record>
+
+         <record id="it_support" model="designation.master">
+            <field name="name">IT Support</field>
+        </record>
+
+         <record id="data_engineer_l2" model="designation.master">
+            <field name="name">Data Engineer L2</field>
+        </record>
+
+         <record id="crm_recruitment_lead" model="designation.master">
+            <field name="name">CRM Recruitment Lead</field>
+        </record>
+
+         <record id="scrum_coordinator" model="designation.master">
+            <field name="name">Scrum Coordinator</field>
+        </record>
+
+         <record id="reactjs_developer" model="designation.master">
+            <field name="name">ReactJS Developer</field>
+        </record>
+
+           <record id="qualifying_specialist" model="designation.master">
+            <field name="name">Qualifying Specialist</field>
+        </record>
+
+         <record id="c#_developer" model="designation.master">
+            <field name="name">C# Developer</field>
+        </record>
+
+         <record id="country_manager" model="designation.master">
+            <field name="name">Country Manager</field>
+        </record>
+
+         <record id="market_research_analyst" model="designation.master">
+            <field name="name">Market Research Analyst</field>
+        </record>
+
+         <record id="project_mngr" model="designation.master">
+            <field name="name">Project Manager</field>
+        </record>
+
+         <record id="voice_transcriptionist" model="designation.master">
+            <field name="name">Voice Transcriptionist</field>
+        </record>
+
+           <record id="broker_support_officer" model="designation.master">
+            <field name="name">Broker Support Officer</field>
+        </record>
+
+         <record id="php_developer" model="designation.master">
+            <field name="name">PHP Developer</field>
+        </record>
+
+          <record id="data_analyst" model="designation.master">
+            <field name="name">Data Analyst</field>
+        </record>
+
+         <record id="bilingual_english_spec" model="designation.master">
+            <field name="name">Bilingual English - Japanese Learning Specialist</field>
+        </record>
+
+           <record id="ticketing_officer" model="designation.master">
+            <field name="name">Ticketing Officer</field>
+        </record>
+
+         <record id="learning_develop_lead" model="designation.master">
+            <field name="name">Learning and Development Lead</field>
+        </record>
+
+         <record id="devops_engineer" model="designation.master">
+            <field name="name">DevOps Engineer</field>
+        </record>
+
+         <record id="service_gain_deliver_p2" model="designation.master">
+            <field name="name">Service Delivery Consultant (Gain Delivery) - P2</field>
+        </record>
+
+         <record id="email_marketing_specialist" model="designation.master">
+            <field name="name">Email Marketing Specialist</field>
+        </record>
+
+         <record id="snr_frontend_developers" model="designation.master">
+            <field name="name">Senior Front End Developer</field>
+        </record>
+
+           <record id="flight_engineer" model="designation.master">
+            <field name="name">Flight Engineer</field>
+        </record>
+
+         <record id="operations_supervisor" model="designation.master">
+            <field name="name">Operations Supervisor</field>
+        </record>
+
+         <record id="bsns_develop_mngr" model="designation.master">
+            <field name="name">Business Development Manager</field>
+        </record>
+
+         <record id="php_wordpress_developer" model="designation.master">
+            <field name="name">PHP Wordpress Developer</field>
+        </record>
+
+         <record id="appointment_setter" model="designation.master">
+            <field name="name">Appointment Setter</field>
+        </record>
+
+         <record id="tech_recruitment_lead" model="designation.master">
+            <field name="name">Tech Recruitment Lead</field>
+        </record>
+
+           <record id="assistant_project_mngr" model="designation.master">
+            <field name="name">Assistant Project Manager</field>
+        </record>
+
+         <record id="marketing_director" model="designation.master">
+            <field name="name">Marketing Director</field>
+        </record>
+
+          <record id="adc_bsns_rep_p2" model="designation.master">
+            <field name="name">ADC Business (Reporting) Consultant - P2</field>
+        </record>
+
+         <record id="qa_associate" model="designation.master">
+            <field name="name">QA Associate</field>
+        </record>
+
+           <record id="sales_admmin_asst" model="designation.master">
+            <field name="name">Sales Administrative Assistant</field>
+        </record>
+
+         <record id="netsuite_sol_architect" model="designation.master">
+            <field name="name">NetSuite Solutions Architect</field>
+        </record>
+
+         <record id="intern" model="designation.master">
+            <field name="name">Intern</field>
+        </record>
+
+         <record id="snr_software_development_mngr" model="designation.master">
+            <field name="name">Senior Software Development Manager</field>
+        </record>
+
+         <record id="python_developr" model="designation.master">
+            <field name="name">Python Developer</field>
+        </record>
+
+         <record id="senior_operations" model="designation.master">
+            <field name="name">Senior Operations</field>
+        </record>
+
+           <record id="ph_customer_serv_supervisor" model="designation.master">
+            <field name="name">PH Customer Service Supervisor</field>
+        </record>
+
+         <record id="quality_assurance_mngr" model="designation.master">
+            <field name="name">Quality Assurance Manager</field>
+        </record>
+
+         <record id="netsuite_functional_consulatnat" model="designation.master">
+            <field name="name">NetSuite Functional Consultant</field>
+        </record>
+
+         <record id="senior_analytic_engineer" model="designation.master">
+            <field name="name">Senior Analytics Engineer</field>
+        </record>
+
+         <record id="jnr_netsuite_administrator" model="designation.master">
+            <field name="name">Junior NetSuite Administrator</field>
+        </record>
+
+           <record id="sales_outbound_closer" model="designation.master">
+            <field name="name">Sales Outbound Closer</field>
+        </record>
+
+         <record id="sql_dba_cloud_support_engineer" model="designation.master">
+            <field name="name">SQL DBA and Cloud Support Engineer</field>
+        </record>
+
+         <record id="interim_hr_supervisor" model="designation.master">
+            <field name="name">Interim HR Supervisor</field>
+        </record>
+
+         <record id="asst_retention_mngr" model="designation.master">
+            <field name="name">Assistant Retention Manager</field>
+        </record>
+
+         <record id="sqa_test_lead" model="designation.master">
+            <field name="name">SQA Test Lead</field>
+        </record>
+
+         <record id="offshore_client_mngr" model="designation.master">
+            <field name="name">Offshore Client Manager</field>
+        </record>
+
+           <record id="senior_erp_adminstrator" model="designation.master">
+            <field name="name">Senior ERP Administrator</field>
+        </record>
+
+         <record id="associate_prdt_mngr" model="designation.master">
+            <field name="name">Associate Product Manager</field>
+        </record>
+
+         <record id="engagement_onboarding_team_lead" model="designation.master">
+            <field name="name">Engagement and Onboarding Team Lead</field>
+        </record>
+
+         <record id="virtual_asst" model="designation.master">
+            <field name="name">Virtual Assistant</field>
+        </record>
+
+         <record id="intern_operations" model="designation.master">
+            <field name="name">Intern for Operations</field>
+        </record>
+
+           <record id="marketing_editor" model="designation.master">
+            <field name="name">Marketing Editor</field>
+        </record>
+
+         <record id="customer_serv_asst" model="designation.master">
+            <field name="name">Customer Service Assistant</field>
+        </record>
+
+         <record id="legal_services_associate" model="designation.master">
+            <field name="name">Legal Services Associate</field>
+        </record>
+
+         <record id="customer_client_support" model="designation.master">
+            <field name="name">Customer/Client support</field>
+        </record>
+
+         <record id="acntng_mngr" model="designation.master">
+            <field name="name">Accounting Manager</field>
+        </record>
+
+         <record id="tech_servise_desk_agent" model="designation.master">
+            <field name="name">Tech Service Desk Agent</field>
+        </record>
+
+           <record id="jnr_graphic_designer" model="designation.master">
+            <field name="name">Junior Graphic Designer</field>
+        </record>
+
+         <record id="intern_itj" model="designation.master">
+            <field name="name">Intern for ITJ</field>
+        </record>
+
+         <record id="service_delivery_cons" model="designation.master">
+            <field name="name">Service Delivery Consultant</field>
+        </record>
+
+         <record id="internal_communications_spec" model="designation.master">
+            <field name="name">Internal Communications Specialist</field>
+        </record>
+
+         <record id="director_operations" model="designation.master">
+            <field name="name">Director of Operations</field>
+        </record>
+
+           <record id="housekeeping" model="designation.master">
+            <field name="name">Housekeeping</field>
+        </record>
+
+         <record id="jnr_bsns_partner" model="designation.master">
+            <field name="name">Junior Business Partner</field>
+        </record>
+
+         <record id="marketing_prjct_mngr" model="designation.master">
+            <field name="name">Marketing Project Manager</field>
+        </record>
+
+         <record id="creative_writer" model="designation.master">
+            <field name="name">Creative Writer</field>
+        </record>
+
+         <record id="customer_support_l1l2" model="designation.master">
+            <field name="name">Customer Support L1/L2</field>
+        </record>
+
+         <record id="service_del_mngr" model="designation.master">
+            <field name="name">Service Delivery Manager</field>
+        </record>
+
+           <record id="sourcing_associate" model="designation.master">
+            <field name="name">Sourcing Associate</field>
+        </record>
+
+         <record id="research_spec_data_mining" model="designation.master">
+            <field name="name">Research Specialist Data Mining</field>
+        </record>
+
+         <record id="procurment_analyst" model="designation.master">
+            <field name="name">Procurement Analyst</field>
+        </record>
+
+         <record id="jnr_sales_represntative" model="designation.master">
+            <field name="name">Junior Sales Representative</field>
+        </record>
+
+         <record id="product_insignts_analyst" model="designation.master">
+            <field name="name">Product Insights Analyst</field>
+        </record>
+
+           <record id="hr_generalists" model="designation.master">
+            <field name="name">HR Generalist</field>
+        </record>
+
+         <record id="mortgage_support_manager" model="designation.master">
+            <field name="name">Mortgage Support Manager</field>
+        </record>
+
+         <record id="marketing_comm_mngr" model="designation.master">
+            <field name="name">Marketing and Communications Manager</field>
+        </record>
+
+         <record id="conveyancing_spec" model="designation.master">
+            <field name="name">Conveyancing Specialist</field>
+        </record>
+
+         <record id="senior_qa_tester" model="designation.master">
+            <field name="name">Senior QA Tester</field>
+        </record>
+
+         <record id="recruitment_sourcing_officer" model="designation.master">
+            <field name="name">Recruitment Sourcing Officer</field>
+        </record>
+
+           <record id="organic_security_guard" model="designation.master">
+            <field name="name">Organic Security Guard</field>
+        </record>
+
+         <record id="brand_manager" model="designation.master">
+            <field name="name">Brand Manager</field>
+        </record>
+
+         <record id="logistics_supp_specialist" model="designation.master">
+            <field name="name">Logistics Support Specialist</field>
+        </record>
+
+         <record id="asset_consultant" model="designation.master">
+            <field name="name">Asset Consultant</field>
+        </record>
+
+         <record id="customer_channel_analyst" model="designation.master">
+            <field name="name">Customer Channel Analyst</field>
+        </record>
+
+           <record id="mandarin_eng_specialist" model="designation.master">
+            <field name="name">Mandarin- English Learning Specialist</field>
+        </record>
+
+         <record id="traffic_planner" model="designation.master">
+            <field name="name">Traffic Planner</field>
+        </record>
+
+         <record id="data_admin_specialist" model="designation.master">
+            <field name="name">Data Admin Specialist</field>
+        </record>
+
+         <record id="engagement_specialist_level1" model="designation.master">
+            <field name="name">Engagement Specialist Level 1</field>
+        </record>
+
+         <record id="native_php_developer" model="designation.master">
+            <field name="name">Native PHP Developer</field>
+        </record>
+
+         <record id="quality_control_analyst" model="designation.master">
+            <field name="name">Quality Control Analyst</field>
+        </record>
+
+           <record id="training_specialist_quality" model="designation.master">
+            <field name="name">Training Specialist/Quality Analyst</field>
+        </record>
+
+         <record id="senior_admin_specilaist" model="designation.master">
+            <field name="name">Senior Admin Specialist</field>
+        </record>
+
+         <record id="jnr_mortgage_loan_closer" model="designation.master">
+            <field name="name">Junior Mortgage Loan Closer</field>
+        </record>
+
+         <record id="kyc_specialist_spanish" model="designation.master">
+            <field name="name">KYC Specialist (Spanish Bilingual)</field>
+        </record>
+
+         <record id="manager" model="designation.master">
+            <field name="name">Manager</field>
+        </record>
+
+           <record id="international_develop_coord" model="designation.master">
+            <field name="name">International Development Coordinator</field>
+        </record>
+
+         <record id="snr_c#_developer" model="designation.master">
+            <field name="name">Senior C# Developer</field>
+        </record>
+
+         <record id="php_support_engineer" model="designation.master">
+            <field name="name">PHP Support Engineer</field>
+        </record>
+
+         <record id="support_mngr" model="designation.master">
+            <field name="name">Support Manager</field>
+        </record>
+
+         <record id="b2b_oprntn_mngr" model="designation.master">
+            <field name="name">B2B Operations Manager</field>
+        </record>
+
+         <record id="application_developer" model="designation.master">
+            <field name="name">Application Developer</field>
+        </record>
+
+           <record id="coric_application_support" model="designation.master">
+            <field name="name">Coric Application Support</field>
+        </record>
+
+         <record id="creative_spl_specialist" model="designation.master">
+            <field name="name">Creative Solutions Specialist</field>
+        </record>
+
+         <record id="director_delivery" model="designation.master">
+            <field name="name">Director of Delivery</field>
+        </record>
+
+         <record id="sales_supervisor" model="designation.master">
+            <field name="name">Sales Supervisor</field>
+        </record>
+
+         <record id="technical_support_engineer" model="designation.master">
+            <field name="name">Technical Support Engineer</field>
+        </record>
+
+           <record id="lead_generation_specialist" model="designation.master">
+            <field name="name">Lead Generation Specialist</field>
+        </record>
+
+         <record id="agile_project_mngr" model="designation.master">
+            <field name="name">Agile Project Manager (SCRUM)</field>
+        </record>
+
+         <record id="dba_product_spec" model="designation.master">
+            <field name="name">DBA Product Specialist</field>
+        </record>
+
+         <record id="training_developement_mngr" model="designation.master">
+            <field name="name">Training and Development Manager</field>
+        </record>
+
+         <record id="qa_engg_l3" model="designation.master">
+            <field name="name">QA Engineer L3</field>
+        </record>
+
+         <record id="training_developer" model="designation.master">
+            <field name="name">Training Developer</field>
+        </record>
+
+           <record id="content_proposal_writer" model="designation.master">
+            <field name="name">Content and Proposal Writer</field>
+        </record>
+
+         <record id="customer_care_representative" model="designation.master">
+            <field name="name">Customer Care Representative</field>
+        </record>
+
+         <record id="b2b_acnt_mngr" model="designation.master">
+            <field name="name">B2B Account Manager</field>
+        </record>
+
+         <record id="php_frontend_developer" model="designation.master">
+            <field name="name">PHP Frontend Developer</field>
+        </record>
+
+         <record id="broker_support" model="designation.master">
+            <field name="name">Broker Support</field>
+        </record>
+
+           <record id="snr_network_engg" model="designation.master">
+            <field name="name">Senior Network Engineer</field>
+        </record>
+
+         <record id="snr_client_rltnsp_mngr" model="designation.master">
+            <field name="name">Senior Client Relationship Manager</field>
+        </record>
+
+         <record id="bsns_consu_comm_mngmnt" model="designation.master">
+            <field name="name">Business Consultant â€“ Commercial Management</field>
+        </record>
+
+         <record id="head_recruitment_operations" model="designation.master">
+            <field name="name">Head of Recruitment Operations</field>
+        </record>
+
+         <record id="associate_operations" model="designation.master">
+            <field name="name">Associate Operations</field>
+        </record>
+
+         <record id="software_tester" model="designation.master">
+            <field name="name">Software Tester</field>
+        </record>
+
+           <record id="dedicated_team_lead" model="designation.master">
+            <field name="name">Dedicated Team Lead</field>
+        </record>
+
+         <record id="snr_it_spec" model="designation.master">
+            <field name="name">Senior IT Specialist</field>
+        </record>
+
+         <record id="profiler" model="designation.master">
+            <field name="name">Profiler</field>
+        </record>
+
+         <record id="jnr_it_project_mngr" model="designation.master">
+            <field name="name">Junior IT Project Manager</field>
+        </record>
+
+         <record id="us_lead_recruiter" model="designation.master">
+            <field name="name">US Lead Recruiter</field>
+        </record>
+
+           <record id="technical_team_leader" model="designation.master">
+            <field name="name">Technical Team Leader</field>
+        </record>
+
+         <record id="junior_accountanat" model="designation.master">
+            <field name="name">Junior Accountant</field>
+        </record>
+
+         <record id="first_imp_officer" model="designation.master">
+            <field name="name">First Impressions Officer</field>
+        </record>
+
+         <record id="senior_training_mngr" model="designation.master">
+            <field name="name">Senior Training Manager</field>
+        </record>
+
+         <record id="italian_learning_spec" model="designation.master">
+            <field name="name">Italian Learning Specialist</field>
+        </record>
+
+         <record id="adc_p2" model="designation.master">
+            <field name="name">ADC Business Consultant â€“ P2</field>
+        </record>
+
+           <record id="client_rentention_mngr" model="designation.master">
+            <field name="name">Client Retention Manager</field>
+        </record>
+
+         <record id="junior_it_administrator" model="designation.master">
+            <field name="name">Junior IT Administrator</field>
+        </record>
+
+         <record id="office_manager" model="designation.master">
+            <field name="name">Office Manager</field>
+        </record>
+
+         <record id="compliance_officer" model="designation.master">
+            <field name="name">Compliance Officer</field>
+        </record>
+
+         <record id="accounts_manager" model="designation.master">
+            <field name="name">Account Manager</field>
+        </record>
+
+        <record id="bsns_partner_mngr" model="designation.master">
+            <field name="name">Business Partner Manager</field>
+        </record>
+
+         <record id="snr_python_developer" model="designation.master">
+            <field name="name">Senior Python Developer</field>
+        </record>
+
+         <record id="team_leader" model="designation.master">
+            <field name="name">Team Leader</field>
+        </record>
+
+         <record id="jnr_software_tester" model="designation.master">
+            <field name="name">Junior Software Tester</field>
+        </record>
+
+         <record id="jnr_java_developer" model="designation.master">
+            <field name="name">Junior Java Developer</field>
+        </record>
+
+         <record id="it_adminstrator" model="designation.master">
+            <field name="name">IT Administrator</field>
+        </record>
+
+           <record id="snr_netsuite_admin" model="designation.master">
+            <field name="name">Senior NetSuite Administrator</field>
+        </record>
+
+         <record id="action_partner" model="designation.master">
+            <field name="name">Action Partner</field>
+        </record>
+
+         <record id="manual_tester" model="designation.master">
+            <field name="name">Manual Tester</field>
+        </record>
+
+         <record id="seo_content_writer" model="designation.master">
+            <field name="name">SEO Content Writer</field>
+        </record>
+
+         <record id="manager_inside_sale_out" model="designation.master">
+            <field name="name">Manager, Inside Sales (Outbound)</field>
+        </record>
+
+           <record id="functional_erp_cons" model="designation.master">
+            <field name="name">Functional ERP Consultant</field>
+        </record>
+
+         <record id="hr_helpdesk" model="designation.master">
+            <field name="name">HR Helpdesk</field>
+        </record>
+
+         <record id="us_mortgage_closer" model="designation.master">
+            <field name="name">US Mortgage Closer</field>
+        </record>
+
+         <record id="principal_servdel_cons" model="designation.master">
+            <field name="name">Principal Service Delivery Consultant</field>
+        </record>
+
+         <record id="scrum_master" model="designation.master">
+            <field name="name">Scrum Master</field>
+        </record>
+
+         <record id="hr_shared_service_supervisor" model="designation.master">
+            <field name="name">HR Shared Services Supervisor</field>
+        </record>
+
+           <record id="seo_content_spec" model="designation.master">
+            <field name="name">SEO Content Specialist</field>
+        </record>
+
+         <record id="content_moderator_senior" model="designation.master">
+            <field name="name">Content Moderator (Senior)</field>
+        </record>
+
+         <record id="senior_dataentry_spec" model="designation.master">
+            <field name="name">Senior Data Entry Specialist</field>
+        </record>
+
+         <record id="prospect_engagement_cons" model="designation.master">
+            <field name="name">Prospect Engagement Consultant</field>
+        </record>
+
+         <record id="data_scientist" model="designation.master">
+            <field name="name">Data Scientist</field>
+        </record>
+
+           <record id="public_reltn_associate" model="designation.master">
+            <field name="name">Public Relations Associate</field>
+        </record>
+
+         <record id="python_develop_l1" model="designation.master">
+            <field name="name">Python Developer L1</field>
+        </record>
+
+         <record id="netsuite_accountant" model="designation.master">
+            <field name="name">NetSuite Accountant</field>
+        </record>
+
+         <record id="crm_tech_helpdesk" model="designation.master">
+            <field name="name">CRM Technical Helpdesk</field>
+        </record>
+
+         <record id="product_specialist" model="designation.master">
+            <field name="name">Product Specialist</field>
+        </record>
+
+         <record id="sales_marketing_head" model="designation.master">
+            <field name="name">Sales and Marketing Head</field>
+        </record>
+
+           <record id="senior_team_lead" model="designation.master">
+            <field name="name">Senior Team Lead</field>
+        </record>
+
+         <record id="telemarketer" model="designation.master">
+            <field name="name">Telemarketer</field>
+        </record>
+
+         <record id="recrutiment_sourcer" model="designation.master">
+            <field name="name">Recruitment Sourcer</field>
+        </record>
+
+         <record id="recruit_sourcing_marketing_mngr" model="designation.master">
+            <field name="name">Recruitment Sourcing and Marketing Manager</field>
+        </record>
+
+         <record id="recruitment_head" model="designation.master">
+            <field name="name">Recruitment Head</field>
+        </record>
+
+           <record id="scdaas_p3" model="designation.master">
+            <field name="name">SCDaaS Service Delivery Consultant â€“ P3</field>
+        </record>
+
+         <record id="system_administrator" model="designation.master">
+            <field name="name">System Administrator</field>
+        </record>
+
+         <record id="service_dlvry_supp_coord" model="designation.master">
+            <field name="name">Service Delivery Support Coordinator</field>
+        </record>
+
+         <record id="jr_client_service_mngr" model="designation.master">
+            <field name="name">Junior Client Services Manager</field>
+        </record>
+
+         <record id="system_integration_engg" model="designation.master">
+            <field name="name">Systems Integration Engineer</field>
+        </record>
+
+         <record id="software_engineer_l3" model="designation.master">
+            <field name="name">Software Engineer L3</field>
+        </record>
+
+           <record id="intern_marketting" model="designation.master">
+            <field name="name">Intern for Marketing</field>
+        </record>
+
+         <record id="software_engineer" model="designation.master">
+            <field name="name">Software Engineer</field>
+        </record>
+
+         <record id="snr_service_delivery_consba" model="designation.master">
+            <field name="name">Senior Service Delivery Consultant BA</field>
+        </record>
+
+         <record id="snr_customer_channel_analyst" model="designation.master">
+            <field name="name">Senior Customer Channel Analyst</field>
+        </record>
+
+         <record id="reports_analyst" model="designation.master">
+            <field name="name">Reports Analyst</field>
+        </record>
+
+        <record id="implementation_spec_l1" model="designation.master">
+            <field name="name">Implementation Specialist  L1</field>
+        </record>
+
+         <record id="integration_consultant" model="designation.master">
+            <field name="name">Integration Consultant</field>
+        </record>
+
+         <record id="content_monitoring_moderator_jr" model="designation.master">
+            <field name="name">Content Monitoring Moderator (Junior)</field>
+        </record>
+
+         <record id="brand_ambassador" model="designation.master">
+            <field name="name">Brand Ambassador</field>
+        </record>
+
+         <record id="digital_asset_mngr" model="designation.master">
+            <field name="name">Digital Asset Manager</field>
+        </record>
+
+         <record id="senior_ui_developer" model="designation.master">
+            <field name="name">Senior UI Developer</field>
+        </record>
+
+           <record id="lead_supp" model="designation.master">
+            <field name="name">Lead Support</field>
+        </record>
+
+         <record id="japanese_learning_spec" model="designation.master">
+            <field name="name">Japanese Learning Specialist</field>
+        </record>
+
+         <record id="crm_admin" model="designation.master">
+            <field name="name">CRM Admin</field>
+        </record>
+
+         <record id="client_rltnsp_mngr" model="designation.master">
+            <field name="name">Client Relationship Manager</field>
+        </record>
+
+         <record id="oracle_dba" model="designation.master">
+            <field name="name">Oracle DBA</field>
+        </record>
+
+        <record id="user_mngmnt_advisor" model="designation.master">
+            <field name="name">User Management Advisor</field>
+        </record>
+
+         <record id="seo_writer" model="designation.master">
+            <field name="name">SEO Writer</field>
+        </record>
+
+         <record id="senior_operations_spec" model="designation.master">
+            <field name="name">Senior Operations Specialist</field>
+        </record>
+
+         <record id="operations_admin" model="designation.master">
+            <field name="name">Operations Admin</field>
+        </record>
+
+         <record id="ux_designer_id" model="designation.master">
+            <field name="name">UX Designer</field>
+        </record>
+
+         <record id="software_develop_mngr" model="designation.master">
+            <field name="name">Software Development Manager</field>
+        </record>
+
+           <record id="sca_developer" model="designation.master">
+            <field name="name">SCA Developer</field>
+        </record>
+
+         <record id="general_mngr" model="designation.master">
+            <field name="name">General Manager</field>
+        </record>
+
+         <record id="commercial_analyst" model="designation.master">
+            <field name="name">Commercial Analyst</field>
+        </record>
+
+         <record id="training_cordinator" model="designation.master">
+            <field name="name">Training Coordinator</field>
+        </record>
+
+         <record id="acting_team_lead" model="designation.master">
+            <field name="name">Acting Team Lead</field>
+        </record>
+
+         <record id="senior_software_tester" model="designation.master">
+            <field name="name">Senior Software Tester</field>
+        </record>
+
+        <record id="receptionist" model="designation.master">
+            <field name="name">Receptionist</field>
+        </record>
+
+         <record id="acntng_lead" model="designation.master">
+            <field name="name">Accounting Lead</field>
+        </record>
+
+         <record id="senior_operations_mngr" model="designation.master">
+            <field name="name">Senior Operations Manager</field>
+        </record>
+
+         <record id="coric_consultant_p2" model="designation.master">
+            <field name="name">Coric Consultant (P2)</field>
+        </record>
+
+         <record id="software_developer" model="designation.master">
+            <field name="name">Software Developer</field>
+        </record>
+
+         <record id="customer_success_mngr" model="designation.master">
+            <field name="name">Customer Success Manager</field>
+        </record>
+
+        <record id="team_supervisor" model="designation.master">
+            <field name="name">Team Supervisor</field>
+        </record>
+
+         <record id="client_rltnshp_spec" model="designation.master">
+            <field name="name">Client Relationship Specialist</field>
+        </record>
+
+         <record id="test_engineer" model="designation.master">
+            <field name="name">Test Engineer</field>
+        </record>
+
+         <record id="lead_bsns_analyst" model="designation.master">
+            <field name="name">Lead Business Analyst</field>
+        </record>
+
+         <record id="odoo_dev_l1_id" model="designation.master">
+            <field name="name">Odoo Developer L1</field>
+        </record>
+
+         <record id="program_manager" model="designation.master">
+            <field name="name">Program Manager</field>
+        </record>
+
+        <record id="jnr_bsns_dvelop_mngr" model="designation.master">
+            <field name="name">Junior Business Development Manager</field>
+        </record>
+
+         <record id="senior_hr_executive" model="designation.master">
+            <field name="name">Senior HR Executive</field>
+        </record>
+
+         <record id="sales_opr_mngr" model="designation.master">
+            <field name="name">Sales Operations Manager</field>
+        </record>
+
+         <record id="infra_engg_aws" model="designation.master">
+            <field name="name">Infrastructure Engineer AWS</field>
+        </record>
+
+         <record id="cust_service_rep" model="designation.master">
+            <field name="name">Customer Service Representative</field>
+        </record>
+
+         <record id="workforce_coordinator" model="designation.master">
+            <field name="name">Workforce Coordinator</field>
+        </record>
+
+        <record id="bahasa_csr" model="designation.master">
+            <field name="name">Bahasa CSR</field>
+        </record>
+
+         <record id="head_shared_services" model="designation.master">
+            <field name="name">Head of Shared Services</field>
+        </record>
+
+         <record id="parttime_inv_coord" model="designation.master">
+            <field name="name">Part-time Inventory Coordinator</field>
+        </record>
+
+         <record id="us_tech_recruiter" model="designation.master">
+            <field name="name">US Technical Recruiter</field>
+        </record>
+
+         <record id="senior_data_analyst" model="designation.master">
+            <field name="name">Senior Data Analyst</field>
+        </record>
+
+         <record id="talent_cord_ded" model="designation.master">
+            <field name="name">Talent Coordinator/Dedicated</field>
+        </record>
+
+        <record id="web_devop" model="designation.master">
+            <field name="name">Web Developer</field>
+        </record>
+
+         <record id="snr_db_admin" model="designation.master">
+            <field name="name">Senior Database Administrator</field>
+        </record>
+
+         <record id="project_mngmnt_officer" model="designation.master">
+            <field name="name">Project Management Officer</field>
+        </record>
+
+         <record id="president_chief_execoffcr" model="designation.master">
+            <field name="name">President and Chief Executive Officer</field>
+        </record>
+
+         <record id="junior_acnt_executive" model="designation.master">
+            <field name="name">Junior Account Executive</field>
+        </record>
+
+         <record id="senior_executive" model="designation.master">
+            <field name="name">Senior Recruiter</field>
+        </record>
+
+
+
+
+    </data>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template" xml:space="preserve">
+
+<t t-extend="ListView.buttons">
+    <t t-jquery="button.oe_list_add" t-operation="after">
+        <t t-if="widget.model=='your.model'">
+            <button class="oe_button oe_list_add_planing_daily oe_highlight"
+            type="button">Load Employees From EVOX</button>
+        </t>
+    </t>
+</t>
+
+
+     <t t-extend="ListView.buttons" t-name="employee.buttons">
+        <t t-jquery="button.o_list_button_add" t-operation="after">
+            <t t-call="LeadMiningRequest.generate_leads_button"/>
+        </t>
+    </t>
+
+</templates>

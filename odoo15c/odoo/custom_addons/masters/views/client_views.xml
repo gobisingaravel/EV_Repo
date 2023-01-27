@@ -1,0 +1,82 @@
+<odoo>
+  <data>
+
+
+    <!-- client master list view definition -->
+    <record model="ir.ui.view" id="client_master_list_view">
+        <field name="name">client.master.list</field>
+        <field name="model">client.master</field>
+        <field name="arch" type="xml">
+            <tree string="Clients">
+                <field name="name"/>
+                <field name="account_code"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="client_master_form_view" model="ir.ui.view">
+        <field name="name">client.master.view.form</field>
+        <field name="model">client.master</field>
+        <field name="priority">32</field>
+        <field name="arch" type="xml">
+            <form string="Clients">
+                <sheet>
+                     <header>
+                        <button name="create_user" string="Create User" type="object" class="oe_highlight"
+                                attrs="{'invisible':[('user_check_tick','=',True)]}"/>
+                    </header>
+                    <div class="oe_button_box" name="button_box" attrs="{'invisible': [('id', '=', False)]}"/>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Name"/>
+                        <h1><field name="name" required="1"/></h1>
+                    </div>
+                    <notebook>
+                        <page name="client_details" string="Client Details">
+                            <group>
+                                 <group>
+                                    <field name="account_id"/>
+                                    <field name="account_code"/>
+                                    <field name="modified_on_date"/>
+                                </group>
+                                 <group>
+                                     <field name="mail"/>
+                                     <field name="password"/>
+                                     <field name="user_check_tick" invisible="1"/>
+                                     <field name="user_id"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+
+<!--                <div class="oe_chatter">-->
+<!--                    <field name="message_follower_ids" groups="base.group_user"/>-->
+<!--                    <field name="activity_ids"/>-->
+<!--                    <field name="message_ids"/>-->
+<!--                </div>-->
+
+            </form>
+        </field>
+    </record>
+
+
+    <!-- action opening view on client master -->
+    <record model="ir.actions.act_window" id="client_master_action_window">
+        <field name="name">Clients</field>
+        <field name="res_model">client.master</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!-- Top menu item -->
+    <menuitem name="Masters"
+              id="menu_masters"/>
+
+    <menuitem name="Client"
+              id="menu_client_master"
+              parent="menu_masters"
+              action="client_master_action_window"/>
+
+  </data>
+</odoo>

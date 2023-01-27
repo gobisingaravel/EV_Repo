@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_applicant_client,hr_applicant_client,model_hr_applicant,group_hr_recruitment_client_own_documents,1,0,0,0
+access_hr_applicant_manager,hr_applicant_manager,model_hr_applicant,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
+access_hr_job_client,hr_job_client,model_hr_job,group_hr_recruitment_client_own_documents,1,0,0,0
+access_hr_recruitment_stage_client,hr.recruitment.stage.client,hr_recruitment.model_hr_recruitment_stage,group_hr_recruitment_client_own_documents,1,0,0,0
+hr.access_hr_job_user,hr.job user,hr.model_hr_job,hr_recruitment.group_hr_recruitment_user,1,0,0,0
+access_hr_job_manager,hr.job manager,model_hr_job,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
+access_calendar_event_type_hr_client,calendar.event.type.client,calendar.model_calendar_event_type,group_hr_recruitment_client_own_documents,1,1,1,0
+access_mail_activity_client,mail.activity.client,mail.model_mail_activity,group_hr_recruitment_client_own_documents,1,1,1,1
+
+
+

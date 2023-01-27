@@ -1,0 +1,72 @@
+<odoo>
+  <data>
+
+
+    <!-- client master list view definition -->
+    <record model="ir.ui.view" id="designation_master_list_view">
+        <field name="name">designation.master.list</field>
+        <field name="model">designation.master</field>
+        <field name="arch" type="xml">
+            <tree string="Designation">
+                <field name="name"/>
+                <field name="designation_code"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="designation_master_form_view" model="ir.ui.view">
+        <field name="name">designation.master.view.form</field>
+        <field name="model">designation.master</field>
+        <field name="priority">32</field>
+        <field name="arch" type="xml">
+            <form string="Designation">
+                <sheet>
+                    <div class="oe_button_box" name="button_box" attrs="{'invisible': [('id', '=', False)]}"/>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Name"/>
+                        <h1><field name="name" required="1"/></h1>
+                    </div>
+                    <notebook>
+                        <page name="designation_details" string="Designation Details">
+                            <group>
+                                 <group>
+                                    <field name="designation_id"/>
+                                    <field name="designation_code"/>
+                                </group>
+                                 <group>
+                                     <field name="is_active"/>
+                                     <field name="modified_on_date"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+
+
+    <!-- action opening view on client master -->
+    <record model="ir.actions.act_window" id="designation_master_action_window">
+        <field name="name">Designation</field>
+        <field name="res_model">designation.master</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+
+    <menuitem name="Designation"
+              id="menu_designation_master"
+              parent="menu_masters"
+              action="designation_master_action_window"/>
+
+  </data>
+</odoo>

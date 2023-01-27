@@ -1,0 +1,68 @@
+<odoo>
+  <data>
+
+
+    <record model="ir.ui.view" id="status_master_list_view">
+        <field name="name">status.master.list</field>
+        <field name="model">status.master</field>
+        <field name="arch" type="xml">
+            <tree string="Status">
+                <field name="name"/>
+                <field name="status_code"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="status_master_form_view" model="ir.ui.view">
+        <field name="name">status.master.view.form</field>
+        <field name="model">status.master</field>
+        <field name="priority">32</field>
+        <field name="arch" type="xml">
+            <form string="Status">
+                <sheet>
+                    <div class="oe_button_box" name="button_box" attrs="{'invisible': [('id', '=', False)]}"/>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Name"/>
+                        <h1><field name="name" required="1"/></h1>
+                    </div>
+                    <notebook>
+                        <page name="status_details" string="Status Details">
+                            <group>
+                                 <group>
+                                    <field name="status_id"/>
+                                    <field name="status_code"/>
+                                </group>
+                                 <group>
+                                     <field name="modified_on_date"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+
+                <div class="oe_chatter">
+                    <field name="message_follower_ids" groups="base.group_user"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids"/>
+                </div>
+
+            </form>
+        </field>
+    </record>
+
+
+    <record model="ir.actions.act_window" id="status_master_action_window">
+        <field name="name">Designation</field>
+        <field name="res_model">status.master</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <menuitem name="Employment Status"
+              id="menu_status_master"
+              parent="menu_masters"
+              action="status_master_action_window"/>
+
+  </data>
+</odoo>

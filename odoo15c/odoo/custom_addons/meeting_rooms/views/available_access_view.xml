@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+    <record id="accessories_form_view" model="ir.ui.view">
+        <field name="name">available.accessories.view.form</field>
+        <field name="model">available.accessories</field>
+        <field name="priority">32</field>
+        <field name="arch" type="xml">
+            <form string="Accessories">
+                <header>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box" attrs="{'invisible': [('id', '=', False)]}"/>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Name"/>
+                        <h1><field name="name" required="1"/></h1>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="accessories_view_tree_from_event" model="ir.ui.view">
+        <field name="name">available.accessories.view.tree</field>
+        <field name="model">available.accessories</field>
+        <field name="priority">32</field>
+        <field name="arch" type="xml">
+            <tree string="Accessories">
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="accessories_action" model="ir.actions.act_window">
+        <field name="name">Accessories</field>
+        <field name="res_model">available.accessories</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+
+
+
+
+</data>
+</odoo>

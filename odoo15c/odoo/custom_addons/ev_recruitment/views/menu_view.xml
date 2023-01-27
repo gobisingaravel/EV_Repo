@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<odoo>
+
+
+
+    <menuitem id="menu_hr_department_masters"
+              name="Departments"
+              parent="masters.menu_masters"
+              action="hr_recruitment.action_hr_department"/>
+
+
+     <menuitem
+            id="menu_designation_masters_recruitment"
+            name="Designation"
+            parent="hr_recruitment.menu_hr_recruitment_configuration"
+            action="masters.designation_master_action_window"
+            sequence="8" groups="base.group_no_one"/>
+
+
+
+</odoo>

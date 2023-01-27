@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<record id="wizard_import_hr_applicants" model="ir.ui.view">
+			<field name="name">wizard.wizard.import.chart.form</field>
+			<field name="model">import.hr.applicants</field>
+			<field name="arch" type="xml">
+				<form string="Import Applicants" >
+					<group>
+                    <field name="import_option" widget="radio" />
+                </group>
+              
+                <group>
+                    <field name="file_select" filename="name"/>
+                </group>	
+					<footer>
+	
+						<button string="Import" name="imoport_file"
+							type="object" class="oe_highlight" />
+						<button string="Cancel" class="oe_link" special="cancel" />
+						<div style="float: right;">
+                            <strong>Download Sample:</strong>
+                            <a role="button" href="/import_hr_applicants/static/sample CSV-XLS/sample CSV/Applicant.csv" class="btn-primary" style="margin: 0 10px; font-size: 12px; line-height: 1.5; border-radius: 3px; padding: 8px 10px; color: #ffffff;">
+                            <i class="fa fa-download"/>
+                            CSV file
+                            </a>
+                            <a role="button" href="/import_hr_applicants/static/sample CSV-XLS/sample XLS/Applicant.xlsx" class="btn-primary" style="font-size: 12px; line-height: 1.5; border-radius: 3px; padding: 8px 10px; color: #ffffff;">
+                            <i class="fa fa-download"/>
+                            Excel file
+                            </a>
+                        </div>
+					</footer>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_import_applicants" model="ir.actions.act_window">
+			<field name="name">Import Applicants</field>
+			<field name="res_model">import.hr.applicants</field>
+			<field name="view_mode">form</field>
+			<field name="view_id" ref="wizard_import_hr_applicants" />
+			<field name="target">new</field>
+		</record>
+
+
+		<menuitem
+    		id="menu_import_applicants"
+    		action="action_import_applicants"
+    		name="Import Applicants"
+    		parent="hr_recruitment.menu_crm_case_categ0_act_job"
+    		sequence="4"/>
+
+	</data>
+</odoo>
