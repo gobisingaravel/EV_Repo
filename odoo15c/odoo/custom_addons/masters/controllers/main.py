@@ -127,7 +127,6 @@ class Home(main.Home):
 
         response = requests.request("POST", url, headers=headers, json={"username":  request.params['login'],"password":request.params['password']})
         data = json.loads(response.content)
-
         return data
 
 
