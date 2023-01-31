@@ -38,7 +38,7 @@ class Transactions(models.Model):
     def configure_meeting(self):
         meeting = self.env['meetings.details']
         for rec in self:
-            meetings_id = meeting.search([('meeting_room_id','=',rec.meeting_room_id.id),('country_master_id','=',rec.country_master_id.id),('office_id','=',rec.office_id.id),('start_date','>=',rec.start_date),('stop_date','<=',rec.stop_date)],limit=1)
+            meetings_id = meeting.search([('meeting_room_id','=',rec.meeting_room_id.id),('country_master_id','=',rec.country_master_id.id),('office_id','=',rec.office_id.id),('start_date','<=',rec.start_date),('stop_date','>=',rec.start_date)],limit=1)
             if meetings_id:
                 raise UserError(
                     _('You may not be able to book this meeting room while it is currently booked by %s for other meeting.',meetings_id.user_id.name))
