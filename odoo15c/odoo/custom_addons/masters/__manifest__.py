@@ -34,10 +34,10 @@
         'views/supervisor_views.xml',
         # 'views/webclient_templates.xml',
 
-        'views/res_config_settings_views.xml',
-        'views/webclient_templates_right.xml',
-        'views/webclient_templates_left.xml',
-        'views/webclient_templates_middle.xml',
+        # 'views/res_config_settings_views.xml',
+        # 'views/webclient_templates_right.xml',
+        # 'views/webclient_templates_left.xml',
+        # 'views/webclient_templates_middle.xml',
 
     ],
     # only loaded in demonstration mode

@@ -11,5 +11,5 @@ from . import res_users
 from . import supervisor
 from . import country_master
 
-from . import res_config_settings
-from . import ir_attachment
+# from . import res_config_settings
+# from . import ir_attachment
