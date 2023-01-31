@@ -26,6 +26,8 @@ class HrEmployee(models.Model):
     user_response_id = fields.Char(string="ID")
     token = fields.Char(string="Token")
     dpa_ticket_at = fields.Datetime(string="DPA Ticket")
+    company_id = fields.Many2one('res.company',required=False)
+
 
 
     @api.model
@@ -69,10 +71,12 @@ class HrEmployee(models.Model):
 
 
     def create_user(self):
-        user_id = self.env['res.users'].create({'name': self.name,
+        user_id = self.env['res.users'].sudo().create({'name': self.name,
                                                 'login': self.work_email,
                                                 'password': self.password,
                                                 'designation_id': self.designation_id.id,
+                                                'company_id': 1,
+                                                "company_ids": [(6,0,[1])],
                                                 })
         if self.designation_id.name:
             user_id.write({'groups_id': [(3, self.env.ref('project.group_project_manager').id),

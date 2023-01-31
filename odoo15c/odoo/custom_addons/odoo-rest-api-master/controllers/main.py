@@ -82,10 +82,12 @@ class OdooAPI(http.Controller):
             if rec['name']:
                 vals = {
                     'name': rec['name'],
-                    'work_email': rec['work_email']
+                    'work_email': rec['work_email'],
+                    'mobile_phone': rec['mobile_phone'],
+                    'password': rec['password'],
+                    'employee_num': rec['employee_num'],
                 }
                 new_user = request.env['hr.employee'].sudo().create(vals)
-                new_user.create_user()
                 args = {'message':'Success','Id':new_user.id,'success':True}
         return args
 
