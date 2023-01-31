@@ -3,6 +3,17 @@
 <odoo>
     <data noupdate="1">
 
+        <record model="ir.config_parameter" id="jira_authentication">
+            <field name="key">connector_jira_ev.jira_key</field>
+            <field name="value">vVuBhWU7kaKCbFYUWclY0D83</field>
+        </record>
+
+        <record model="ir.config_parameter" id="jira_login_id">
+            <field name="key">connector_jira_ev.jira_login</field>
+            <field name="value">vishnu.prakash@eastvantage.com</field>
+        </record>
+
+
           <!-- Load Projects from Jira -->
         <record id="load_projects_from_jira_id" model="ir.cron">
             <field name="name">Fetch Projects from Jira</field>

@@ -23,8 +23,12 @@ class Project(models.Model):
         user = self.env['res.users'].browse(current_uid)
         login = user.login
 
+        jira_key = self.env['ir.config_parameter'].sudo().get_param('connector_jira_ev.jira_key', '')
+
+        jira_login_id = self.env['ir.config_parameter'].sudo().get_param('connector_jira_ev.jira_login', '')
+
         project_url = "https://eastvantage.atlassian.net/rest/api/3/project/search?jql=assignee=currentuser()&startAt=0&maxResults=100"
-        auth = HTTPBasicAuth('vishnu.prakash@eastvantage.com', "McV7jO4eJJCUPjldqGcTDBA7")
+        auth = HTTPBasicAuth(jira_login_id, jira_key)
         headers = {
             "Accept": "application/json"
         }
@@ -60,8 +64,23 @@ class Project(models.Model):
                     auth=auth
                 )
                 issue_data = json.loads(response.content)
+                # user_mail_url = "https://eastvantage.atlassian.net/rest/api/user/email?accountId"
+                # user_url = "https://eastvantage.atlassian.net/rest/api/2/users/search?query"
+                # response = requests.request(
+                #     "GET",
+                #     user_url,
+                #     headers=headers,
+                #     auth=auth
+                # )
+                # user_data = json.loads(response.content)
                 if issue_data.get('issues'):
                     for issues in issue_data.get('issues'):
+                        # user = [user['emailAddress'] for user in user_data if user['accountID'] == issues['fields']['assignee']['accountId']]
+                        # if user[0]:
+                        #     self.env.cr.execute(
+                        #         'select u.id from res_users as u where u.login = %s',(user[0]))
+                        #     user_id = self.env.cr.fetchall()
+                        #     user_id = self.env['res.users'].browse(user_id[0])
                         self.env.cr.execute(
                             'select t.id from project_task as t where t.task_id_jira = %s and t.task_key_jira = %s',
                             (issues['id'], issues['key']))
