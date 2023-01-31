@@ -4,16 +4,16 @@
     <data noupdate="1">
 
           <!-- Load Users from EVOX -->
-        <record id="load_users_from_evox_id" model="ir.cron">
-            <field name="name">Fetch Users from EVOX</field>
-            <field name="model_id" ref="model_res_users"/>
-            <field name="type">ir.actions.server</field>
-            <field name="state">code</field>
-            <field name="code">model.get_users()</field>
-            <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
-            <field name="numbercall">-1</field>
-        </record>
+<!--        <record id="load_users_from_evox_id" model="ir.cron">-->
+<!--            <field name="name">Fetch Users from EVOX</field>-->
+<!--            <field name="model_id" ref="model_res_users"/>-->
+<!--            <field name="type">ir.actions.server</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.get_users()</field>-->
+<!--            <field name="interval_number">1</field>-->
+<!--            <field name="interval_type">days</field>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--        </record>-->
 
 <!--          &lt;!&ndash; Load Employees from EVOX &ndash;&gt;-->
 <!--        <record id="load-employees_from_evox_id" model="ir.cron">-->
@@ -29,16 +29,16 @@
 
 
          <!-- Load Clients from EVOX -->
-        <record id="load_clients_from_evox_id" model="ir.cron">
-            <field name="name">Fetch Clients from EVOX</field>
-            <field name="model_id" ref="model_client_master"/>
-            <field name="type">ir.actions.server</field>
-            <field name="state">code</field>
-            <field name="code">model.get_clients()</field>
-            <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
-            <field name="numbercall">-1</field>
-        </record>
+<!--        <record id="load_clients_from_evox_id" model="ir.cron">-->
+<!--            <field name="name">Fetch Clients from EVOX</field>-->
+<!--            <field name="model_id" ref="model_client_master"/>-->
+<!--            <field name="type">ir.actions.server</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.get_clients()</field>-->
+<!--            <field name="interval_number">1</field>-->
+<!--            <field name="interval_type">days</field>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--        </record>-->
 
          <!-- Load Departments from EVOX -->
         <record id="load_departments_from_evox_id" model="ir.cron">
@@ -52,53 +52,53 @@
             <field name="numbercall">-1</field>
         </record>
 
-         <!-- Load Designations from EVOX -->
-        <record id="load_designations_from_evox_id" model="ir.cron">
-            <field name="name">Fetch Designations from EVOX</field>
-            <field name="model_id" ref="model_designation_master"/>
-            <field name="type">ir.actions.server</field>
-            <field name="state">code</field>
-            <field name="code">model.get_designation()</field>
-            <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
-            <field name="numbercall">-1</field>
-        </record>
+<!--         &lt;!&ndash; Load Designations from EVOX &ndash;&gt;-->
+<!--        <record id="load_designations_from_evox_id" model="ir.cron">-->
+<!--            <field name="name">Fetch Designations from EVOX</field>-->
+<!--            <field name="model_id" ref="model_designation_master"/>-->
+<!--            <field name="type">ir.actions.server</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.get_designation()</field>-->
+<!--            <field name="interval_number">1</field>-->
+<!--            <field name="interval_type">days</field>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--        </record>-->
 
-         <!-- Load Emp Status from EVOX -->
-        <record id="load_status_from_evox_id" model="ir.cron">
-            <field name="name">Fetch Employment Status from EVOX</field>
-            <field name="model_id" ref="model_status_master"/>
-            <field name="type">ir.actions.server</field>
-            <field name="state">code</field>
-            <field name="code">model.get_status()</field>
-            <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
-            <field name="numbercall">-1</field>
-        </record>
+<!--         &lt;!&ndash; Load Emp Status from EVOX &ndash;&gt;-->
+<!--        <record id="load_status_from_evox_id" model="ir.cron">-->
+<!--            <field name="name">Fetch Employment Status from EVOX</field>-->
+<!--            <field name="model_id" ref="model_status_master"/>-->
+<!--            <field name="type">ir.actions.server</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.get_status()</field>-->
+<!--            <field name="interval_number">1</field>-->
+<!--            <field name="interval_type">days</field>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--        </record>-->
 
           <!-- Load Country from EVOX -->
-        <record id="load_country_from_evox_id" model="ir.cron">
-            <field name="name">Fetch Country from EVOX</field>
-            <field name="model_id" ref="model_country_master"/>
-            <field name="type">ir.actions.server</field>
-            <field name="state">code</field>
-            <field name="code">model.get_country()</field>
-            <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
-            <field name="numbercall">-1</field>
-        </record>
+<!--        <record id="load_country_from_evox_id" model="ir.cron">-->
+<!--            <field name="name">Fetch Country from EVOX</field>-->
+<!--            <field name="model_id" ref="model_country_master"/>-->
+<!--            <field name="type">ir.actions.server</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.get_country()</field>-->
+<!--            <field name="interval_number">1</field>-->
+<!--            <field name="interval_type">days</field>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--        </record>-->
 
          <!-- Load Location from EVOX -->
-        <record id="load_location_from_evox_id" model="ir.cron">
-            <field name="name">Fetch Location from EVOX</field>
-            <field name="model_id" ref="model_location_master"/>
-            <field name="type">ir.actions.server</field>
-            <field name="state">code</field>
-            <field name="code">model.get_location()</field>
-            <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
-            <field name="numbercall">-1</field>
-        </record>
+<!--        <record id="load_location_from_evox_id" model="ir.cron">-->
+<!--            <field name="name">Fetch Location from EVOX</field>-->
+<!--            <field name="model_id" ref="model_location_master"/>-->
+<!--            <field name="type">ir.actions.server</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.get_location()</field>-->
+<!--            <field name="interval_number">1</field>-->
+<!--            <field name="interval_type">days</field>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--        </record>-->
 
          <!-- Load Supervisors from EVOX -->
         <record id="load_supervisor_from_evox_id" model="ir.cron">

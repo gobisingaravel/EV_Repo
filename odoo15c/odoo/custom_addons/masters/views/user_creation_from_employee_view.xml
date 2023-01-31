@@ -22,12 +22,12 @@
                     <field name="password" invisible="0"/>
                     <field name="user_check_tick" invisible="1"/>
                 </field>
-                <xpath expr="//form/sheet" position="before">
+               <!-- <xpath expr="//form/sheet" position="before">
                     <header>
                         <button name="create_user" string="Create User" type="object" class="oe_highlight"
                                 attrs="{'invisible':[('user_check_tick','=',True)]}"/>
                     </header>
-                </xpath>
+                </xpath>-->
                 <field name="work_email" position="attributes">
                     <attribute name="required">1</attribute>
                 </field>

@@ -57,4 +57,3 @@ class ResUsers(models.Model):
     #         **self.env['hr.employee']._sync_user(self)
     #     ))
 
-

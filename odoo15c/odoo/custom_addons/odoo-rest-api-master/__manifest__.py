@@ -33,7 +33,7 @@
     "installable": True,
     "auto_install": False,
 
-    'external_dependencies': {
-        'python': ['pypeg2']
-    }
+    # 'external_dependencies': {
+    #     'python': ['pypeg2']
+    # }
 }

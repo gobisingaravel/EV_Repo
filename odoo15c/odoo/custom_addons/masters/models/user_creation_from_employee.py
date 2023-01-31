@@ -4,6 +4,9 @@ from odoo import models, fields, api, _
 import requests
 import json
 
+from werkzeug.urls import url_encode
+
+
 
 class HrEmployee(models.Model):
     _inherit = 'hr.employee'
@@ -25,13 +28,18 @@ class HrEmployee(models.Model):
     dpa_ticket_at = fields.Datetime(string="DPA Ticket")
 
 
+    @api.model
+    def create(self, vals):
+        employee = super(HrEmployee, self).create(vals)
+        employee.create_user()
+        return employee
+
+
     def get_data(self):
         data = {}
         user_id = self.env.user
         uid = user_id.user_res_id
         url = "https://evox2.eastvantage.com/api/user/%s/my_team_list"%uid
-        # payload = {'username': user_id.login,
-        #            'password': user_id.password}
         payload = {}
         headers = {
             'Authorization': 'Bearer' + str(user_id.token),
@@ -61,7 +69,27 @@ class HrEmployee(models.Model):
 
 
     def create_user(self):
-        user_id = self.env['res.users'].create({'name': self.name,'login': self.work_email,'password': self.password})
+        user_id = self.env['res.users'].create({'name': self.name,
+                                                'login': self.work_email,
+                                                'password': self.password,
+                                                'designation_id': self.designation_id.id,
+                                                })
+        if self.designation_id.name:
+            user_id.write({'groups_id': [(3, self.env.ref('project.group_project_manager').id),
+                                      (3, self.env.ref('hr_timesheet.group_timesheet_manager').id),
+                                      ]})
+        elif self.designation_id.name:
+            user_id.write({'groups_id': [(3, self.env.ref('project.group_project_manager').id),
+                                      (3, self.env.ref('hr_timesheet.group_timesheet_manager').id),
+                                      (3, self.env.ref('hr_timesheet.group_hr_timesheet_approver').id),
+                                      ]})
+        else:
+            user_id.write({'groups_id': [(3, self.env.ref('project.group_project_user').id),
+                                      (3, self.env.ref('hr_timesheet.group_hr_timesheet_approver').id),
+                                      (3, self.env.ref('hr_timesheet.group_hr_timesheet_user').id),
+                                      ]})
+
+
         self.address_home_id = user_id.partner_id.id
         self.user_check_tick = True
         self.user_id = user_id.id
@@ -74,4 +102,7 @@ class HrEmployee(models.Model):
             self.user_check_tick = True
         else:
             self.user_check_tick = False
+
+
+
 
