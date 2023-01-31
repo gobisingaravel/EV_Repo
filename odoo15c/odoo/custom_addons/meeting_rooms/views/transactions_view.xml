@@ -23,11 +23,11 @@
                         <group name="details">
                             <field name="start_date" required="1"/>
                             <field name="country_master_id" required="1"/>
-                            <field name="meeting_room_id"/>
+                            <field name="meeting_room_id" context="{'default_country_master_id': country_master_id,'default_office_id': office_id}" />
                         </group>
                         <group name="details">
                             <field name="stop_date" required="1"/>
-                            <field name="office_id" required="1"/>
+                            <field name="office_id" context="{'default_country_master_id': country_master_id}" required="1"/>
                              <field name="user_id"/>
                             <field name="meetings_id" invisible="1"/>
                         </group>
