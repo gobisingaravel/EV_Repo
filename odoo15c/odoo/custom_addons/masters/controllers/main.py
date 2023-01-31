@@ -112,54 +112,54 @@ class Home(main.Home):
         if not odoo.tools.config['list_db']:
             values['disable_database_manager'] = True
 
-        conf_param = request.env['ir.config_parameter'].sudo()
-        orientation = conf_param.get_param('masters.orientation')
-        image = conf_param.get_param('masters.image')
-        url = conf_param.get_param('masters.url')
-
-        background_type = conf_param.get_param('masters.background')
-
-        if background_type == 'color':
-            values['bg'] = ''
-            values['color'] = conf_param.get_param('masters.color')
-        elif background_type == 'image':
-            exist_rec = request.env['ir.attachment'].search([('is_background', '=', True)])
-            if exist_rec:
-                exist_rec.unlink()
-            attachments = request.env['ir.attachment'].create({
-                'name': 'Background Image',
-                'datas': image,
-                'type': 'binary',
-                'mimetype': 'image/png',
-                'public': True,
-                'is_background': True
-            })
-            base_url = conf_param.get_param('web.base.url')
-            url = base_url + '/web/image?' + 'model=ir.attachment&id=' + str(attachments.id) + '&field=datas'
-            values['bg_img'] = url or ''
-        elif background_type == 'url':
-            pre_exist = request.env['ir.attachment'].search([('url', '=', url)])
-            if not pre_exist:
-                attachments = request.env['ir.attachment'].create({
-                    'name': 'Background Image URL',
-                    'url': url,
-                    'type': 'url',
-                    'public': True
-                })
-            else:
-                attachments = pre_exist
-            encode = hashlib.md5(pycompat.to_text(attachments.url).encode("utf-8")).hexdigest()[0:7]
-            encode_url = "/web/image/{}-{}".format(attachments.id, encode)
-            values['bg_img'] = encode_url or ''
-
-        if orientation == 'right':
-            response = request.render('masters.login_template_right', values)
-        elif orientation == 'left':
-            response = request.render('masters.login_template_left', values)
-        elif orientation == 'middle':
-            response = request.render('masters.login_template_middle', values)
-        else:
-            response = request.render('web.login', values)
+        # conf_param = request.env['ir.config_parameter'].sudo()
+        # orientation = conf_param.get_param('masters.orientation')
+        # image = conf_param.get_param('masters.image')
+        # url = conf_param.get_param('masters.url')
+        #
+        # background_type = conf_param.get_param('masters.background')
+        #
+        # if background_type == 'color':
+        #     values['bg'] = ''
+        #     values['color'] = conf_param.get_param('masters.color')
+        # elif background_type == 'image':
+        #     exist_rec = request.env['ir.attachment'].search([('is_background', '=', True)])
+        #     if exist_rec:
+        #         exist_rec.unlink()
+        #     attachments = request.env['ir.attachment'].create({
+        #         'name': 'Background Image',
+        #         'datas': image,
+        #         'type': 'binary',
+        #         'mimetype': 'image/png',
+        #         'public': True,
+        #         'is_background': True
+        #     })
+        #     base_url = conf_param.get_param('web.base.url')
+        #     url = base_url + '/web/image?' + 'model=ir.attachment&id=' + str(attachments.id) + '&field=datas'
+        #     values['bg_img'] = url or ''
+        # elif background_type == 'url':
+        #     pre_exist = request.env['ir.attachment'].search([('url', '=', url)])
+        #     if not pre_exist:
+        #         attachments = request.env['ir.attachment'].create({
+        #             'name': 'Background Image URL',
+        #             'url': url,
+        #             'type': 'url',
+        #             'public': True
+        #         })
+        #     else:
+        #         attachments = pre_exist
+        #     encode = hashlib.md5(pycompat.to_text(attachments.url).encode("utf-8")).hexdigest()[0:7]
+        #     encode_url = "/web/image/{}-{}".format(attachments.id, encode)
+        #     values['bg_img'] = encode_url or ''
+        #
+        # if orientation == 'right':
+        #     response = request.render('masters.login_template_right', values)
+        # elif orientation == 'left':
+        #     response = request.render('masters.login_template_left', values)
+        # elif orientation == 'middle':
+        #     response = request.render('masters.login_template_middle', values)
+        # else:
+        response = request.render('web.login', values)
         response.headers['X-Frame-Options'] = 'DENY'
         return response
 
