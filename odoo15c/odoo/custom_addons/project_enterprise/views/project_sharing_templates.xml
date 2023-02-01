@@ -17,7 +17,7 @@
                 <!-- Windows Phone -->
                 <meta name="msapplication-navbutton-color" content="#875A7B"/>
                 <meta name="msapplication-TileColor" content="#875A7B"/>
-<!--                <meta name="msapplication-TileImage" content="/web_enterprise/static/img/mobile-icons/windows-144x144.png"/>-->
+<!--  DB              <meta name="msapplication-TileImage" content="/web_enterprise/static/img/mobile-icons/windows-144x144.png"/>-->
             </t>
             <t t-set="head" t-value="head_project_sharing_enterprise + (head or '')" />
         </xpath>
