@@ -4,7 +4,7 @@
 {
     'name': "Meeting Rooms",
     'category': 'Meeting Rooms',
-    'version': '1.2',
+    'version': '1.3',
     'summary': "Manage meetings",
     'description': """
 Create meeting rooms for your event.
