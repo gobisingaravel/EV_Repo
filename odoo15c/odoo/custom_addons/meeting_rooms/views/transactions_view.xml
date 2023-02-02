@@ -62,7 +62,7 @@
         <field name="model">meeting.transactions</field>
         <field name="priority" eval="2"/>
         <field name="arch" type="xml">
-            <calendar string="Meetings" mode="week" date_start="start_date" date_stop="stop_date" color="meeting_room_id" quick_add="False"
+            <calendar string="Meetings" mode="week" date_start="start_date" date_stop="stop_date" color="state" quick_add="False"
                 event_open_popup="true"
                >
                 <field name="status"/>
