@@ -9,6 +9,6 @@ class ProjectTask(models.Model):
 
     task_id_jira = fields.Char(string="Issue ID(Jira)")
     task_key_jira = fields.Char(string="Issue Key(Jira)")
-    priority = fields.Selection([('highest','Highest'),('high','High'),('medium','Medium'),('low','Low'),('lowest','Lowest')])
+    priority = fields.Selection([('0', 'Normal'), ('1', 'Urgent'),('highest','Highest'),('high','High'),('medium','Medium'),('low','Low'),('lowest','Lowest')])
 
 
