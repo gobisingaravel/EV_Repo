@@ -141,7 +141,7 @@ class OdooAPI(http.Controller):
                         'name': rec['name'],
                         'date_hired': rec['date_hired'],
                         'designation_id': designation,
-                        'country_master_id': country_id.id,
+                        # 'country_master_id': country_id.id,
                     })
                     # employee_id.work_email = rec['work_email']
                     # employee_id.password = rec['password']
