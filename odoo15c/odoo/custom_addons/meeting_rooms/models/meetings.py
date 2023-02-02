@@ -23,3 +23,4 @@ class Meetings(models.Model):
         'End Date', store=True, tracking=True)
     meeting_room_id = fields.Many2one('meeting.rooms',string="Meeting Room")
     user_id = fields.Many2one('res.users',string="User")
+    booked = fields.Boolean(string="Booked")

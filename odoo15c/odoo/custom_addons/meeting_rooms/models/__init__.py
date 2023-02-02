@@ -6,4 +6,5 @@ from . import meeting_office
 from . import transactions
 from . import available_access
 from . import meetings
+from . import required_items
 # from . import country_master

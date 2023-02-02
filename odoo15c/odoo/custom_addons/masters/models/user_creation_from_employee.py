@@ -75,6 +75,8 @@ class HrEmployee(models.Model):
                                                 'login': self.work_email,
                                                 'password': self.password,
                                                 'designation_id': self.designation_id.id,
+                                                'employee_id':self.id,
+                                                'employee_ids':(0, 0, self.id),
                                                 'company_id': 1,
                                                 "company_ids": [(6,0,[1])],
                                                 })

@@ -1,0 +1,143 @@
+<?xml version="1.0" ?>
+<odoo>
+
+            <!-- Approve: Meeting Rooms -->
+
+            <record id="email_template_meeting_approve" model="mail.template">
+                <field name="name">Approve: Meeting Rooms</field>
+                <field name="model_id" ref="meeting_rooms.model_meeting_transactions"/>
+                <field name="email_from"></field>
+                <field name="partner_to"></field>
+                <field name="subject">Confirm the booking for the meeting room</field>
+                <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                            Dear
+                        </p>
+                        <p>
+                            The information about a conference space that has been reserved for longer than two hours is listed below. Please review it and provide your kind approval so that the reservations can be confirmed
+                        </p>
+                    </div>
+                    <br/>
+                    <table id="email_table_template">
+                        <tr style="background: #99CCFF;">
+                             <td width="24%" style="text-align:center;">
+                                 <span><b>Purpose</b></span>
+                             </td>
+                             <td width="11%" style="text-align:center;">
+                                 <strong>Location</strong>
+                             </td>
+                             <td width="11%" style="text-align:center;">
+                                 <strong>Meeting Room</strong>
+                             </td>
+                             <td width="11%" style="text-align:center;">
+                                 <strong>Booked By</strong>
+                             </td>
+                            <td width="11%" style="text-align:center;">
+                                 <strong>Start</strong>
+                             </td>
+                             <td width="20%" style="text-align:center;">
+                                 <strong>End</strong>
+                             </td>
+                        </tr>
+                        <tr>
+                             <td width="24%" style="text-align:center;">
+                                <strong t-out="object.name or ''"/>
+                             </td>
+                              <td width="24%" style="text-align:center;">
+                                <strong t-out="object.country_master_id.name or ''"/>,<strong t-out="object.office_id.name or ''"/>
+                             </td>
+                             <td width="24%" style="text-align:center;"> <strong t-out="object.meeting_room_id.name or ''"/></td>
+                             <td width="24%" style="text-align:center;"><strong t-out="object.user_id.name or ''"/></td>
+                             <td width="24%" style="text-align:center;"><strong t-out="object.start_date or ''"/></td>
+                             <td width="24%" style="text-align:center;"><strong t-out="object.stop_date or ''"/></td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <div>
+                        <p>Send an email to if you need any additional information <t t-out="object.user_id.login or ''"/></p>
+                        <br/>
+                        <strong>
+                            Thanks &amp; Regards
+                            <br/>
+                            EV Support.
+                        </strong>
+                    </div>
+
+                </field>
+            </record>
+
+
+              <!-- Send Mail To IT Team -->
+
+            <record id="email_template_it_equipments" model="mail.template">
+                <field name="name">Request: IT Equipments</field>
+                <field name="model_id" ref="meeting_rooms.model_meeting_transactions"/>
+                <field name="email_from"></field>
+                <field name="partner_to"></field>
+                <field name="subject">IT equipment placed up in conference space.</field>
+                <field name="body_html" type="html">
+                    <div style="margin: 0px; padding: 0px;">
+                        <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                            Dear
+                        </p>
+                        <p>
+                            <t t-out="object.user_id.name"/>  requests the equipment for the meeting room in order to conduct a meeting. The equipment information and meeting room information are mentioned below.
+                        </p>
+                        <br/>Please set up the conference room's equipment before the meeting.
+                         <br/>Equipment Required:
+                            <br/>
+                            <t t-out="object.get_items()"/>
+<!--                        %for item in object.required_items_ids:-->
+<!--                            <li>{{{ item.name }}}</li>-->
+<!--                        % endfor %-->
+                    </div>
+                    <br/>
+                    <p>Meeting Details</p>
+                    <br/>
+                    <table id="email_table_template">
+                        <tr style="background: #99CCFF;">
+                             <td width="24%" style="text-align:center;">
+                                 <span><b>Purpose</b></span>
+                             </td>
+                             <td width="11%" style="text-align:center;">
+                                 <strong>Location</strong>
+                             </td>
+                             <td width="11%" style="text-align:center;">
+                                 <strong>Meeting Room</strong>
+                             </td>
+                             <td width="11%" style="text-align:center;">
+                                 <strong>Booked By</strong>
+                             </td>
+                            <td width="11%" style="text-align:center;">
+                                 <strong>Start</strong>
+                             </td>
+                             <td width="20%" style="text-align:center;">
+                                 <strong>End</strong>
+                             </td>
+                        </tr>
+                        <tr>
+                             <td width="24%" style="text-align:center;">
+                                <strong t-out="object.name or ''"/>
+                             </td>
+                              <td width="24%" style="text-align:center;">
+                                <strong t-out="object.country_master_id.name or ''"/>,<strong t-out="object.office_id.name or ''"/>
+                             </td>
+                             <td width="24%" style="text-align:center;"> <strong t-out="object.meeting_room_id.name or ''"/></td>
+                             <td width="24%" style="text-align:center;"><strong t-out="object.user_id.name or ''"/></td>
+                             <td width="24%" style="text-align:center;"><strong t-out="object.start_date or ''"/></td>
+                             <td width="24%" style="text-align:center;"><strong t-out="object.stop_date or ''"/></td>
+                        </tr>
+                    </table>
+                    <br/>
+                    <div>
+                        <strong>
+                            Thanks &amp; Regards
+                            <br/>
+                            EV Support.
+                        </strong>
+                    </div>
+
+                </field>
+            </record>
+</odoo>

@@ -3,7 +3,7 @@
 <odoo>
     <data noupdate="1">
 
-        <!-- Employment Status -->
+        <!-- Country -->
 
         <record id="india" model="country.master">
             <field name="name">India</field>
@@ -11,6 +11,29 @@
 
         <record id="philippines" model="country.master">
             <field name="name">Philippines</field>
+        </record>
+
+
+        <!-- Items -->
+
+        <record id="projector_id" model="required.items">
+            <field name="name">Projector</field>
+        </record>
+
+        <record id="monitor_id" model="required.items">
+            <field name="name">Monitor</field>
+        </record>
+
+        <record id="laptop_id" model="required.items">
+            <field name="name">Laptop</field>
+        </record>
+
+        <record id="desktop_id" model="required.items">
+            <field name="name">Desktop</field>
+        </record>
+
+        <record id="audio_id" model="required.items">
+            <field name="name">Audio Device</field>
         </record>
 
 

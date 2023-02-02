@@ -32,28 +32,47 @@ class Transactions(models.Model):
 
     meeting_room_ids = fields.Many2many('meeting.rooms', 'transactions_room_rel', 'transactions_id', 'meeting_room_id',
                                       'Meeting Rooms')
-
+    approve_mail_sent = fields.Boolean(string="Approve Mail Sent")
+    requirements_needed = fields.Boolean(string="Need IT Equipments")
+    required_items_ids = fields.Many2many('required.items',string="Equipments")
+    state = fields.Selection([('approved','Approved'),('waiting','Waiting for Approval')])
 
 
     def configure_meeting(self):
         meeting = self.env['meetings.details']
         for rec in self:
-            meetings_id = meeting.search([('meeting_room_id','=',rec.meeting_room_id.id),('country_master_id','=',rec.country_master_id.id),('office_id','=',rec.office_id.id),('start_date','<=',rec.start_date),('stop_date','>=',rec.start_date)],limit=1)
+            meetings_id = meeting.search([('booked','=',True),('meeting_room_id','=',rec.meeting_room_id.id),('country_master_id','=',rec.country_master_id.id),('office_id','=',rec.office_id.id),('start_date','<=',rec.start_date),('stop_date','>=',rec.start_date)],limit=1)
             if meetings_id:
                 raise UserError(
                     _('You may not be able to book this meeting room while it is currently booked by %s for other meeting.',meetings_id.user_id.name))
             else:
-                vals = {'name': rec.name,
-                        'country_master_id':rec.country_master_id.id,
-                        'office_id':rec.office_id.id,
-                        'user_id': rec.user_id.id,
-                        'meeting_room_id':rec.meeting_room_id.id,
-                        'start_date':rec.start_date,
-                        'stop_date':rec.stop_date}
+                start = rec.start_date
+                end = rec.stop_date
+                difference = end - start
+                difference_in_seconds = difference.total_seconds()
+                hours = difference_in_seconds / 3600.0
 
-                meeting_id = meeting.create(vals)
-                rec.meetings_id = meeting_id.id
-                rec.status = 'booked'
+                if hours >= 2:
+                    mail_template = self.env.ref('meeting_rooms.email_template_meeting_approve')
+                    mail_template.send_mail(self.id, force_send=True)
+                    rec.approve_mail_sent = True
+                    rec.state = 'waiting'
+                else:
+                    vals = {'name': rec.name,
+                            'country_master_id':rec.country_master_id.id,
+                            'office_id':rec.office_id.id,
+                            'user_id': rec.user_id.id,
+                            'meeting_room_id':rec.meeting_room_id.id,
+                            'start_date':rec.start_date,
+                            'stop_date':rec.stop_date,
+                            'booked':True}
+
+                    meeting_id = meeting.create(vals)
+                    rec.meetings_id = meeting_id.id
+                    rec.status = 'booked'
+                    if rec.requirements_needed and rec.required_items_ids:
+                        rec.mail_it_team()
+
             return {
                 'type': 'ir.actions.client',
                 'tag': 'reload',
@@ -66,6 +85,37 @@ class Transactions(models.Model):
         return super(Transactions, self).unlink()
 
 
+    def approve_meeting(self):
+        meeting = self.env['meetings.details']
+        for rec in self:
+            vals = {'name': rec.name,
+                    'country_master_id': rec.country_master_id.id,
+                    'office_id': rec.office_id.id,
+                    'user_id': rec.user_id.id,
+                    'meeting_room_id': rec.meeting_room_id.id,
+                    'start_date': rec.start_date,
+                    'stop_date': rec.stop_date,
+                    'booked': True}
 
+            meeting_id = meeting.create(vals)
+            rec.meetings_id = meeting_id.id
+            rec.status = 'booked'
+            rec.state = 'approved'
+            if rec.requirements_needed and rec.required_items_ids:
+                rec.mail_it_team()
+        return {
+            'type': 'ir.actions.client',
+            'tag': 'reload',
+        }
+
+    def mail_it_team(self):
+        mail_template = self.env.ref('meeting_rooms.email_template_it_equipments')
+        mail_template.send_mail(self.id, force_send=True)
+
+
+    def get_items(self):
+        item = [item.name for rec in self if rec.required_items_ids for item in rec.required_items_ids]
+        result = ',\n'.join(map(str, item))
+        return result
 
 

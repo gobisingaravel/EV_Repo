@@ -5,3 +5,5 @@ access_meeting_transactions_user,meeting.transactions,model_meeting_transactions
 access_available_accessories_user,available.accessories,model_available_accessories,base.group_user,1,1,1,1
 access_meetings_details_user,meetings.details,model_meetings_details,base.group_user,1,1,1,1
 access_meeting_booked_wizard_user,meeting.booked.wizard,model_meeting_booked_wizard,base.group_user,1,1,1,1
+access_required_items_user,required.items,model_required_items,base.group_user,1,1,1,1
+

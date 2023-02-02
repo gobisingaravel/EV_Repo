@@ -9,7 +9,8 @@
         <field name="arch" type="xml">
             <form string="Transactions">
                 <header>
-                        <button name="configure_meeting" string="Book a Meeting" type="object" class="oe_highlight"/>
+                        <button name="configure_meeting" string="Book a Meeting" type="object" class="oe_highlight" attrs="{'invisible': ['|',('approve_mail_sent', '=', True),('status', '=', 'booked')]}"/>
+                        <button name="approve_meeting" string="Approve Meeting" type="object" class="oe_highlight" attrs="{'invisible': ['|',('approve_mail_sent', '=', False),('status', '=', 'booked')]}"/>
                         <field name="status" widget="statusbar" options="{'clickable': '0'}"/>
                 </header>
                 <sheet>
@@ -24,11 +25,14 @@
                             <field name="start_date" required="1"/>
                             <field name="country_master_id" required="1"/>
                             <field name="meeting_room_id" context="{'default_country_master_id': country_master_id,'default_office_id': office_id}" />
+                            <field name="approve_mail_sent" invisible="1"/>
+                            <field name="requirements_needed"/>
                         </group>
                         <group name="details">
                             <field name="stop_date" required="1"/>
                             <field name="office_id" context="{'default_country_master_id': country_master_id}" required="1"/>
                              <field name="user_id"/>
+                            <field name="required_items_ids" widget="many2many_checkboxes" attrs="{'invisible': [('requirements_needed', '=', False)]}"/>
                             <field name="meetings_id" invisible="1"/>
                         </group>
                     </group>
@@ -43,8 +47,9 @@
         <field name="model">meeting.transactions</field>
         <field name="priority">32</field>
         <field name="arch" type="xml">
-            <tree string="Transactions" sample="1" expand="1">
-                <field name="name" decoration-bf="1"/>
+            <tree string="Transactions">
+                <field name="name" />
+                <field name="state"/>
             </tree>
         </field>
     </record>
@@ -94,6 +99,20 @@
             </p>
         </field>
     </record>
+
+    <record id="meeting_transactions_notbooked_action" model="ir.actions.act_window">
+        <field name="name">To Approve</field>
+        <field name="res_model">meeting.transactions</field>
+        <field name="view_mode">calendar,tree,form</field>
+        <field name="domain">[('approve_mail_sent','=',True)]</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+             <p class="o_view_nocontent_smiling_face">
+                Create a transaction
+            </p>
+        </field>
+    </record>
+
 
 
 

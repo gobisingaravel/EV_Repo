@@ -22,7 +22,8 @@
                         <group name="details">
                             <field name="stop_date"/>
                             <field name="office_id"/>
-                             <field name="user_id"/>
+                            <field name="user_id"/>
+                            <field name="booked"/>
                         </group>
                     </group>
                 </sheet>

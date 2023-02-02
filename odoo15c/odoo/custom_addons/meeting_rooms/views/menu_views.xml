@@ -39,6 +39,7 @@
                     sequence="3"
                     groups="base.group_no_one"/>
 
+
             <menuitem name="Accessories"
                    id="menu_accessories"
                    action="accessories_action"
@@ -60,7 +61,19 @@
                       sequence="6"
                       groups="meeting_rooms.group_show_meeting_rooms"/>
 
+            <menuitem name="Meetings to Approve"
+                    id="menu_transactions_approve"
+                    action="meeting_transactions_notbooked_action"
+                    parent="menu_meeting_room_configuration"
+                    sequence="2"
+                    />
 
+            <menuitem name="Items"
+                      id="menu_items"
+                      action="items_action"
+                      parent="menu_meeting_room_configuration"
+                      sequence="6"
+                      groups="meeting_rooms.group_show_meeting_rooms"/>
 
 
 

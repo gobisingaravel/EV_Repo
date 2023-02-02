@@ -4,7 +4,7 @@
 {
     'name': "Meeting Rooms",
     'category': 'Meeting Rooms',
-    'version': '1.1',
+    'version': '1.2',
     'summary': "Manage meetings",
     'description': """
 Create meeting rooms for your event.
@@ -15,11 +15,13 @@ Create meeting rooms for your event.
         'data/groups.xml',
         'data/system_parameter.xml',
         'data/data.xml',
+        'data/mail_template.xml',
         'views/meeting_rooms_view.xml',
         'views/meeting_office_view.xml',
         'views/transactions_view.xml',
         'views/available_access_view.xml',
         'views/meeting_view.xml',
+        'views/required_items_view.xml',
         # 'views/country_master_view.xml',
         'views/menu_views.xml',
         'wizard/meeting_booked_wizard.xml',

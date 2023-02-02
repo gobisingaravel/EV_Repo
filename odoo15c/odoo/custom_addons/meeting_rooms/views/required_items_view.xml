@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+    <record id="items_form_view" model="ir.ui.view">
+        <field name="name">required.items.view.form</field>
+        <field name="model">required.items</field>
+        <field name="priority">32</field>
+        <field name="arch" type="xml">
+            <form string="Items">
+                <sheet>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only" string="Name"/>
+                        <h1><field name="name" required="1"/></h1>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="items_view_tree_from" model="ir.ui.view">
+        <field name="name">required.items.view.tree</field>
+        <field name="model">required.items</field>
+        <field name="priority">32</field>
+        <field name="arch" type="xml">
+            <tree string="Items">
+                <field name="name" decoration-bf="1"/>
+            </tree>
+        </field>
+    </record>
+
+
+    <record id="items_action" model="ir.actions.act_window">
+        <field name="name">Items</field>
+        <field name="res_model">required.items</field>
+        <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+
+
+</data>
+</odoo>
