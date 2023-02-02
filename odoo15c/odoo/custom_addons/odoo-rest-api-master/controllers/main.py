@@ -79,17 +79,87 @@ class OdooAPI(http.Controller):
     @http.route('/create_users', type='json', auth='none')
     def create_user(self, **rec):
         if request.jsonrequest:
-            if rec['name']:
-                vals = {
-                    'name': rec['name'],
-                    'work_email': rec['work_email'],
-                    'mobile_phone': rec['mobile_phone'],
-                    'password': rec['password'],
-                    'employee_num': rec['employee_num'],
-                }
-                new_user = request.env['hr.employee'].sudo().create(vals)
-                args = {'message':'Success','Id':new_user.id,'success':True}
-        return args
+            if rec['id']:
+                employee_id = request.env['hr.employee'].sudo().search([('user_response_id','=',rec['id'])])
+                country_id = request.env['country.master'].sudo().search([('country_evox_id','=',rec['country_id'])])
+                if rec['department_id']:
+                    department_id = request.env['hr.department'].sudo().search([('department_id', '=', rec['department_id'])])
+                    if department_id:
+                        department = department_id.id
+                    else:
+                        department_obj = request.env['hr.department'].sudo().create({'name':rec['department_name'],'department_id':rec['department_id']})
+                        department = department_obj.id
+                if rec['job_title']:
+                    designation_id = request.env['designation.master'].sudo().search([('name', '=', rec['job_title'])])
+                    if designation_id:
+                        designation = designation_id.id
+                    else:
+                        designation_obj = request.env['designation.master'].sudo().create({'name':rec['job_title']})
+                        designation = designation_obj.id
+                if not employee_id:
+                    vals = {
+                        'user_response_id':rec['id'],
+                        'name': rec['name'],
+                        'job_title':rec['job_title'],
+                        'work_email': rec['work_email'],
+                        'mobile_phone': rec['mobile_phone'],
+                        'password': rec['password'],
+                        'employee_num': rec['employee_num'],
+                        'bhr_num': rec['bhr_num'],
+                        'nick_name': rec['nick_name'],
+                        'birthday': rec['birthday'],
+                        'date_hired': rec['date_hired'],
+                        'designation_id': designation,
+                        'department_id': department,
+                        'country_master_id': country_id.id,
+                    }
+                    new_user = request.env['hr.employee'].sudo().create(vals)
+                    args = {'message':'Success','Id':new_user.id,'success':True}
+                    return args
+                else:
+                    employee_id.update({
+                        'work_email': rec['work_email'],
+                        'password': rec['password'],
+                        'mobile_phone': rec['mobile_phone'],
+                        'employee_num': rec['employee_num'],
+                        'bhr_num': rec['bhr_num'],
+                        'nick_name': rec['nick_name'],
+                        'name': rec['name'],
+                        'birthday': rec['birthday'],
+                        'date_hired': rec['date_hired'],
+                        'job_title': rec['job_title'],
+                        'department_id': department,
+                        'designation_id': designation,
+                        'country_master_id': country_id.id,
+                    })
+                    employee_id.user_id.update({
+                        'login': rec['work_email'],
+                        'password': rec['password'],
+                        'employee_num': rec['employee_num'],
+                        'bhr_num': rec['bhr_num'],
+                        'nick_name': rec['nick_name'],
+                        'name': rec['name'],
+                        'date_hired': rec['date_hired'],
+                        'designation_id': designation,
+                        'country_master_id': country_id.id,
+                    })
+                    # employee_id.work_email = rec['work_email']
+                    # employee_id.password = rec['password']
+                    # employee_id.mobile_phone = rec['mobile_phone']
+                    # employee_id.employee_num = rec['employee_num']
+                    # employee_id.bhr_num = rec['bhr_num']
+                    # employee_id.nick_name = rec['nick_name']
+                    # employee_id.name = rec['name']
+                    # employee_id.birthday = rec['birthday']
+                    # employee_id.date_hired = rec['date_hired']
+                    # employee_id.department_id = department
+                    # employee_id.designation_id = designation
+                    # employee_id.job_title = rec['job_title']
+                    # employee_id.user_id.login = rec['work_email']
+                    # employee_id.user_id.password = rec['password']
+
+                    args = {'message': employee_id.name +" "+'already exist, Updated the record with new info', 'success': True}
+                    return args
 
 
     @http.route('/create_clients', type='json', auth='none')
@@ -110,7 +180,7 @@ class OdooAPI(http.Controller):
         if request.jsonrequest:
             if rec['name']:
                 vals = {
-                    'name': rec['name']
+                    'name': rec['name'],
                 }
                 new_country = request.env['country.master'].sudo().create(vals)
                 args = {'message': 'Success', 'Id': new_country.id, 'success': True}
@@ -120,8 +190,9 @@ class OdooAPI(http.Controller):
     @http.route('/create_department', type='json', auth='none')
     def create_department(self, **rec):
         if request.jsonrequest:
-            if rec['name']:
+            if rec['id']:
                 vals = {
+                    'department_id': rec['id'],
                     'name': rec['name']
                 }
                 new_dept = request.env['hr.department'].sudo().create(vals)

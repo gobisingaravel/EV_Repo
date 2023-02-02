@@ -27,6 +27,8 @@ class HrEmployee(models.Model):
     token = fields.Char(string="Token")
     dpa_ticket_at = fields.Datetime(string="DPA Ticket")
     company_id = fields.Many2one('res.company',required=False)
+    country_master_id = fields.Many2one('country.master',string="Country")
+
 
 
 
@@ -75,6 +77,10 @@ class HrEmployee(models.Model):
                                                 'login': self.work_email,
                                                 'password': self.password,
                                                 'designation_id': self.designation_id.id,
+                                                'employee_num': self.employee_num,
+                                                'nick_name': self.nick_name,
+                                                'bhr_num': self.bhr_num,
+                                                'country_master_id':self.country_master_id.id,
                                                 'employee_id':self.id,
                                                 'employee_ids':(0, 0, self.id),
                                                 'company_id': 1,

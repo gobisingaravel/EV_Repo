@@ -22,6 +22,8 @@ class ResUsers(models.Model):
     deleted_date = fields.Datetime(string="Deleted at")
     force_change_pwd = fields.Boolean(string="Force Change Password")
     supervisor_master_id = fields.Many2one('supervisor.master',string="Supervisor")
+    country_master_id = fields.Many2one('country.master',string="Country")
+
 
 
     def get_users(self):

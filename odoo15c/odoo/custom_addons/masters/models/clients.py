@@ -9,10 +9,10 @@ class ClientMaster(models.Model):
     _name = 'client.master'
     _description = 'Client Master'
 
-    _inherit = [
-        'mail.thread',
-        'mail.activity.mixin'
-    ]
+    # _inherit = [
+    #     'mail.thread',
+    #     'mail.activity.mixin'
+    # ]
 
 
     name = fields.Char(string="Name")

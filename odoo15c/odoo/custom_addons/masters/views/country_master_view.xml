@@ -13,6 +13,11 @@
                         <label for="name" class="oe_edit_only" string="Name"/>
                         <h1><field name="name" required="1"/></h1>
                     </div>
+                    <group>
+                        <group>
+                            <field name="country_evox_id"/>
+                        </group>
+                    </group>
                 </sheet>
             </form>
         </field>

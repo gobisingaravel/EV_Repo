@@ -10,6 +10,7 @@ class CountryMaster(models.Model):
     _description = 'Country Master'
 
     name = fields.Char(string="Name")
+    country_evox_id = fields.Char(string="ID")
 
 
     def get_country(self):

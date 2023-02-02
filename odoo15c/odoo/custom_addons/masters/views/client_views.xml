@@ -66,6 +66,8 @@
         <field name="name">Clients</field>
         <field name="res_model">client.master</field>
         <field name="view_mode">tree,form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
     </record>
 
 
