@@ -16,7 +16,7 @@
     'version': '0.4',
 
     # any module necessary for this one to work correctly
-    'depends': ['base','mail','hr','hr_timesheet','project'],
+    'depends': ['base','mail','hr','hr_timesheet','project','hr_recruitment'],
 
     # always loaded
     'data': [

@@ -4,10 +4,6 @@
 
 
 
-    <menuitem id="menu_hr_department_masters"
-              name="Departments"
-              parent="masters.menu_masters"
-              action="hr_recruitment.action_hr_department"/>
 
 
      <menuitem
