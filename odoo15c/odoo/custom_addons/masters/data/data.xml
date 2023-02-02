@@ -41,16 +41,16 @@
 <!--        </record>-->
 
          <!-- Load Departments from EVOX -->
-        <record id="load_departments_from_evox_id" model="ir.cron">
-            <field name="name">Fetch Departments from EVOX</field>
-            <field name="model_id" ref="model_hr_department"/>
-            <field name="type">ir.actions.server</field>
-            <field name="state">code</field>
-            <field name="code">model.get_department()</field>
-            <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
-            <field name="numbercall">-1</field>
-        </record>
+<!--        <record id="load_departments_from_evox_id" model="ir.cron">-->
+<!--            <field name="name">Fetch Departments from EVOX</field>-->
+<!--            <field name="model_id" ref="model_hr_department"/>-->
+<!--            <field name="type">ir.actions.server</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.get_department()</field>-->
+<!--            <field name="interval_number">1</field>-->
+<!--            <field name="interval_type">days</field>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--        </record>-->
 
 <!--         &lt;!&ndash; Load Designations from EVOX &ndash;&gt;-->
 <!--        <record id="load_designations_from_evox_id" model="ir.cron">-->
@@ -101,16 +101,16 @@
 <!--        </record>-->
 
          <!-- Load Supervisors from EVOX -->
-        <record id="load_supervisor_from_evox_id" model="ir.cron">
-            <field name="name">Fetch Supervisors from EVOX</field>
-            <field name="model_id" ref="model_supervisor_master"/>
-            <field name="type">ir.actions.server</field>
-            <field name="state">code</field>
-            <field name="code">model.get_supervisor()</field>
-            <field name="interval_number">1</field>
-            <field name="interval_type">days</field>
-            <field name="numbercall">-1</field>
-        </record>
+<!--        <record id="load_supervisor_from_evox_id" model="ir.cron">-->
+<!--            <field name="name">Fetch Supervisors from EVOX</field>-->
+<!--            <field name="model_id" ref="model_supervisor_master"/>-->
+<!--            <field name="type">ir.actions.server</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.get_supervisor()</field>-->
+<!--            <field name="interval_number">1</field>-->
+<!--            <field name="interval_type">days</field>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--        </record>-->
 
 
 

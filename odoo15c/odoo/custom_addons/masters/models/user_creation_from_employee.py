@@ -80,7 +80,6 @@ class HrEmployee(models.Model):
                                                 'employee_num': self.employee_num,
                                                 'nick_name': self.nick_name,
                                                 'bhr_num': self.bhr_num,
-                                                'country_master_id':self.country_master_id.id,
                                                 'employee_id':self.id,
                                                 'employee_ids':(0, 0, self.id),
                                                 'company_id': 1,
