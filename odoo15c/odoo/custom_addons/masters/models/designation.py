@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, _
-
+import requests
+import json
 
 
 class DesignationMaster(models.Model):
