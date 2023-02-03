@@ -21,6 +21,7 @@ class SupervisorMaster(models.Model):
     supervisorid = fields.Integer(string="Supervisor ID")
     user_id = fields.Many2one('res.users',string="User")
     user_ids = fields.Many2many('res.users', string="User")
+    employee_id = fields.Many2one('hr.employee',string="User")
 
 
     def get_supervisor(self):

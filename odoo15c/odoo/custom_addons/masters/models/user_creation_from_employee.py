@@ -84,7 +84,9 @@ class HrEmployee(models.Model):
                                                 'employee_ids':(0, 0, self.id),
                                                 'company_id': 1,
                                                 "company_ids": [(6,0,[1])],
+                                                'active': self.active
                                                 })
+
         if self.designation_id.name:
             user_id.write({'groups_id': [(3, self.env.ref('project.group_project_manager').id),
                                       (3, self.env.ref('hr_timesheet.group_timesheet_manager').id),

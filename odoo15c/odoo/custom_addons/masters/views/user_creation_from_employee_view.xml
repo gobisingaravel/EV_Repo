@@ -53,5 +53,15 @@
 
             </field>
         </record>
+
+
+          <menuitem
+                id="menu_hr_employee_user_id"
+                name="Users"
+                action="hr.open_view_employee_list_my"
+                parent="menu_masters"
+                sequence="1"/>
+
+
     </data>
 </odoo>

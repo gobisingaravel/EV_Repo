@@ -59,10 +59,10 @@
             </field>
         </record>
 
-        <menuitem action="base.action_res_users"
-                  id="menu_action_res_users_master"
-                  parent="menu_masters"
-                  />
+<!--        <menuitem action="base.action_res_users"-->
+<!--                  id="menu_action_res_users_master"-->
+<!--                  parent="menu_masters"-->
+<!--                  />-->
 
 
     </data>
