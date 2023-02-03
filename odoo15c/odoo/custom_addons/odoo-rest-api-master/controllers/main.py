@@ -116,7 +116,6 @@ class OdooAPI(http.Controller):
                         'nick_name': rec['nick_name'],
                         'birthday': rec['birthday'],
                         'date_hired': rec['date_hired'],
-                        'termination_date': rec['termination_date'],
                         'designation_id': designation,
                         'department_id': department,
                         'country_master_id': country_id.id,
@@ -125,6 +124,8 @@ class OdooAPI(http.Controller):
                         'company_id': 1
                     }
                     new_user = request.env['hr.employee'].sudo().create(vals)
+                    if rec['termination_date'] != "NULL":
+                        new_user.termination_date = rec['termination_date']
                     args = {'message':'Success','Id':new_user.id,'success':True}
                     return args
                 else:
@@ -138,7 +139,6 @@ class OdooAPI(http.Controller):
                         'name': rec['name'],
                         'birthday': rec['birthday'],
                         'date_hired': rec['date_hired'],
-                        'termination_date': rec['termination_date'],
                         'job_title': rec['job_title'],
                         'department_id': department,
                         'designation_id': designation,
@@ -147,6 +147,8 @@ class OdooAPI(http.Controller):
                         'active': rec['active'],
                         'company_id': 1
                     })
+                    if rec['termination_date'] != "NULL":
+                        employee_id.termination_date = rec['termination_date']
                     employee_id.user_id.update({
                         'login': rec['work_email'],
                         'password': rec['password'],
