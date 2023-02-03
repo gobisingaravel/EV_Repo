@@ -80,7 +80,7 @@ class OdooAPI(http.Controller):
     def create_user(self, **rec):
         if request.jsonrequest:
             if rec['id']:
-                employee_id = request.env['hr.employee'].sudo().search([('user_response_id','=',rec['id'])])
+                employee_id = request.env['hr.employee'].sudo().search([('user_response_id','=',rec['id']),('active','in',[False,True])])
                 country_id = request.env['country.master'].sudo().search([('country_evox_id','=',rec['country_id'])])
                 if rec['department_id']:
                     department_id = request.env['hr.department'].sudo().search([('department_id', '=', rec['department_id'])])
@@ -120,7 +120,7 @@ class OdooAPI(http.Controller):
                         'department_id': department,
                         'country_master_id': country_id.id,
                         'employment_status_id': status,
-                        'active':rec['active'],
+                        'active':True if rec['active'] == 'True' else False,
                         'company_id': 1
                     }
                     new_user = request.env['hr.employee'].sudo().create(vals)
@@ -144,7 +144,7 @@ class OdooAPI(http.Controller):
                         'designation_id': designation,
                         'country_master_id': country_id.id,
                         'employment_status_id': status,
-                        'active': rec['active'],
+                        'active': True if rec['active'] == 'True' else False,
                         'company_id': 1
                     })
                     if rec['termination_date'] != "NULL":
@@ -158,7 +158,7 @@ class OdooAPI(http.Controller):
                         'name': rec['name'],
                         'date_hired': rec['date_hired'],
                         'designation_id': designation,
-                        'active': rec['active']
+                        'active': True if rec['active'] == 'True' else False
                     })
 
 
