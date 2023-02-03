@@ -246,8 +246,8 @@ class OdooAPI(http.Controller):
             supervisor_id = request.env['supervisor.master'].sudo().search([('supervisorid', '=', rec['supervisor_id']),('employee_id.user_response_id', '=',rec['employee_id'])],limit=1)
             if rec['action'] == 'insert':
                 if not supervisor_id:
-                    employee_id = request.env['hr.employee'].sudo().search([('user_response_id','=',rec['employee_id'])])
-                    supervisor_employee_id = request.env['hr.employee'].sudo().search([('user_response_id', '=', rec['supervisor_id'])])
+                    employee_id = request.env['hr.employee'].sudo().search([('user_response_id','=',rec['employee_id']),('active','in',[False,True])])
+                    supervisor_employee_id = request.env['hr.employee'].sudo().search([('user_response_id', '=', rec['supervisor_id']),('active','in',[False,True])])
                     supervisor_obj = request.env['supervisor.master'].sudo().create({'name': supervisor_employee_id.name,
                                                                                      'supervisor_id':supervisor_employee_id.id,
                                                                                      'supervisorid': rec['supervisor_id'],
