@@ -8,8 +8,7 @@
         <field name="model">supervisor.master</field>
         <field name="arch" type="xml">
             <tree string="Supervisors">
-                <field name="name"/>
-                <field name="supervisorid"/>
+                <field name="supervisor_id"/>
             </tree>
         </field>
     </record>
@@ -23,8 +22,8 @@
             <form string="Supervisors">
                 <sheet>
                     <div class="oe_title">
-                        <label for="name" class="oe_edit_only" string="Name"/>
-                        <h1><field name="name" required="1"/></h1>
+                        <label for="supervisor_id" class="oe_edit_only" string="Name"/>
+                        <h1><field name="supervisor_id" required="0"/></h1>
                     </div>
                     <notebook>
                         <page name="supervisor_details" string="Supervisor Details">
