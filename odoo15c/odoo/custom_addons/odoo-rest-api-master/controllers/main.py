@@ -96,6 +96,13 @@ class OdooAPI(http.Controller):
                     else:
                         designation_obj = request.env['designation.master'].sudo().create({'name':rec['job_title']})
                         designation = designation_obj.id
+                if rec['emp_status']:
+                    status_id = request.env['status.master'].sudo().search([('name', '=', rec['emp_status'])])
+                    if status_id:
+                        status = status_id.id
+                    else:
+                        status_obj = request.env['status.master'].sudo().create({'name': rec['emp_status']})
+                        status = status_obj.id
                 if not employee_id:
                     vals = {
                         'user_response_id':rec['id'],
@@ -109,9 +116,13 @@ class OdooAPI(http.Controller):
                         'nick_name': rec['nick_name'],
                         'birthday': rec['birthday'],
                         'date_hired': rec['date_hired'],
+                        'termination_date': rec['termination_date'],
                         'designation_id': designation,
                         'department_id': department,
                         'country_master_id': country_id.id,
+                        'employment_status_id': status,
+                        'active':rec['active'],
+                        'company_id': 1
                     }
                     new_user = request.env['hr.employee'].sudo().create(vals)
                     args = {'message':'Success','Id':new_user.id,'success':True}
@@ -127,10 +138,14 @@ class OdooAPI(http.Controller):
                         'name': rec['name'],
                         'birthday': rec['birthday'],
                         'date_hired': rec['date_hired'],
+                        'termination_date': rec['termination_date'],
                         'job_title': rec['job_title'],
                         'department_id': department,
                         'designation_id': designation,
                         'country_master_id': country_id.id,
+                        'employment_status_id': status,
+                        'active': rec['active'],
+                        'company_id': 1
                     })
                     employee_id.user_id.update({
                         'login': rec['work_email'],
@@ -141,22 +156,9 @@ class OdooAPI(http.Controller):
                         'name': rec['name'],
                         'date_hired': rec['date_hired'],
                         'designation_id': designation,
-                        # 'country_master_id': country_id.id,
+                        'active': rec['active']
                     })
-                    # employee_id.work_email = rec['work_email']
-                    # employee_id.password = rec['password']
-                    # employee_id.mobile_phone = rec['mobile_phone']
-                    # employee_id.employee_num = rec['employee_num']
-                    # employee_id.bhr_num = rec['bhr_num']
-                    # employee_id.nick_name = rec['nick_name']
-                    # employee_id.name = rec['name']
-                    # employee_id.birthday = rec['birthday']
-                    # employee_id.date_hired = rec['date_hired']
-                    # employee_id.department_id = department
-                    # employee_id.designation_id = designation
-                    # employee_id.job_title = rec['job_title']
-                    # employee_id.user_id.login = rec['work_email']
-                    # employee_id.user_id.password = rec['password']
+
 
                     args = {'message': employee_id.name +" "+'already exist, Updated the record with new info', 'success': True}
                     return args
@@ -239,12 +241,20 @@ class OdooAPI(http.Controller):
     @http.route('/create_supervisor', type='json', auth='none')
     def create_supervisor(self, **rec):
         if request.jsonrequest:
-            if rec['name']:
-                vals = {
-                    'name': rec['name']
-                }
-                supervisor = request.env['supervisor.master'].sudo().create(vals)
-                args = {'message': 'Success', 'Id': supervisor.id, 'success': True}
+            supervisor_id = request.env['supervisor.master'].sudo().search([('supervisorid', '=', rec['supervisor_id']),('employee_id.user_response_id', '=',rec['employee_id'])],limit=1)
+            if rec['action'] == 'insert':
+                if not supervisor_id:
+                    employee_id = request.env['hr.employee'].sudo().search([('user_response_id','=',rec['employee_id'])])
+                    supervisor_employee_id = request.env['hr.employee'].sudo().search([('user_response_id', '=', rec['supervisor_id'])])
+                    supervisor_obj = request.env['supervisor.master'].sudo().create({'name': supervisor_employee_id.name,
+                                                                                     'supervisor_id':supervisor_employee_id.id,
+                                                                                     'supervisorid': rec['supervisor_id'],
+                                                                                      'employee_id': employee_id.id})
+                    supervisor = supervisor_obj.id
+                    args = {'message': 'Success! Created', 'Id': supervisor, 'success': True}
+            else:
+                supervisor_id.unlink()
+                args = {'message': 'Success! Deleted', 'success': True}
         return args
 
 
