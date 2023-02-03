@@ -114,18 +114,18 @@ class OdooAPI(http.Controller):
                         'employee_num': rec['employee_num'],
                         'bhr_num': rec['bhr_num'],
                         'nick_name': rec['nick_name'],
-                        'birthday': rec['birthday'],
-                        'date_hired': rec['date_hired'],
-                        'designation_id': designation,
-                        'department_id': department,
+                        'designation_id': designation if rec['job_title'] else False,
+                        'department_id': department if rec['department_id'] else False,
                         'country_master_id': country_id.id,
-                        'employment_status_id': status,
+                        'employment_status_id': status if rec['emp_status'] else False,
                         'active':True if rec['active'] == 'True' else False,
                         'company_id': 1
                     }
                     new_user = request.env['hr.employee'].sudo().create(vals)
-                    if rec['termination_date'] != "NULL":
-                        new_user.termination_date = rec['termination_date']
+                    new_user.termination_date = rec['termination_date']  if rec['termination_date'] != "NULL" else ''
+                    new_user.birthday = rec['birthday'] if rec['birthday'] != "NULL" else ''
+                    new_user.date_hired = rec['date_hired'] if rec['date_hired'] != "NULL" else ''
+
                     args = {'message':'Success','Id':new_user.id,'success':True}
                     return args
                 else:
@@ -137,18 +137,22 @@ class OdooAPI(http.Controller):
                         'bhr_num': rec['bhr_num'],
                         'nick_name': rec['nick_name'],
                         'name': rec['name'],
-                        'birthday': rec['birthday'],
-                        'date_hired': rec['date_hired'],
                         'job_title': rec['job_title'],
-                        'department_id': department,
-                        'designation_id': designation,
+                        'department_id': department if rec['department_id'] else False,
+                        'designation_id': designation if rec['job_title'] else False,
                         'country_master_id': country_id.id,
-                        'employment_status_id': status,
+                        'employment_status_id': status  if rec['emp_status'] else False,
                         'active': True if rec['active'] == 'True' else False,
                         'company_id': 1
                     })
-                    if rec['termination_date'] != "NULL":
-                        employee_id.termination_date = rec['termination_date']
+
+                    employee_id.termination_date = rec['termination_date'] if rec['termination_date'] != "NULL" else ''
+                    employee_id.birthday = rec['birthday'] if rec['birthday'] != "NULL" else  ''
+                    employee_id.date_hired = rec['date_hired'] if rec['date_hired'] != "NULL" else ''
+                    employee_id.user_id.date_hired = rec['date_hired'] if rec['date_hired'] != "NULL" else ''
+
+
+
                     employee_id.user_id.update({
                         'login': rec['work_email'],
                         'password': rec['password'],
@@ -156,10 +160,11 @@ class OdooAPI(http.Controller):
                         'bhr_num': rec['bhr_num'],
                         'nick_name': rec['nick_name'],
                         'name': rec['name'],
-                        'date_hired': rec['date_hired'],
-                        'designation_id': designation,
+                        'designation_id': designation if rec['job_title'] else False,
                         'active': True if rec['active'] == 'True' else False
                     })
+
+
 
 
                     args = {'message': employee_id.name +" "+'already exist, Updated the record with new info', 'success': True}
